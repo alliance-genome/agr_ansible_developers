@@ -1,0 +1,14 @@
+---
+
+- name: Recursively remove directory
+  file:
+    path: agr_loader
+    state: absent
+
+- git:
+    repo: 'https://github.com/alliance-genome/agr_loader.git'
+    version: "{{ DEV_BRANCH }}"
+    dest: "agr_loader"
+
+- name: Build the docker image
+  command: docker build -t "{{ LOADER_TEST_RUN_IMAGE_NAME }}" agr_loader

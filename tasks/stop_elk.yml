@@ -1,0 +1,16 @@
+- name: Stop ES Server
+  docker_container:
+    name: "{{ ES_SERVER_NAME }}"
+    state: absent
+- name: Stop ES Server
+  docker_container:
+    name: "cerebro"
+    state: absent
+- name: Stop ES Server
+  docker_container:
+    name: "{{ LOG_SERVER_NAME }}"
+    state: absent
+- name: Stop ES Server
+  docker_container:
+    name: "{{ KIBANA_SERVER_NAME }}"
+    state: absent

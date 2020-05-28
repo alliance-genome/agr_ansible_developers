@@ -1,0 +1,28 @@
+- name: Pull ES Env Image
+  docker_image:
+    name: "{{ ES_ENV_IMAGE_NAME }}"
+
+- name: Pull Cerebro Image
+  docker_image:
+    name: "yannart/cerebro:latest"
+
+- name: Run ES
+  docker_container:
+    name: "{{ ES_SERVER_NAME }}"
+    image: "{{ ES_ENV_IMAGE_NAME }}"
+    networks:
+      - name: "{{ NET }}"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    env:
+      discovery.type: single-node
+
+- name: Run Cerebro
+  docker_container:
+    name: "cerebro"
+    image: "yannart/cerebro:latest"
+    networks:
+      - name: "{{ NET }}"
+    ports:
+      - "9000:9000"
