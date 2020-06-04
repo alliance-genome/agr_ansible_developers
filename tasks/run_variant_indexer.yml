@@ -1,0 +1,17 @@
+---
+
+- name: Run Loader
+  docker_container:
+    name: "agr.{{ env }}.varinat_indexer"
+    image: "agrdocker/agr_varinat_indexer:3.1.0"
+    detach: no
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "udp://{{ GELF_LOG_SERVER_NAME }}:12201"
+    volumes:
+      - "agr_variant_data:/workdir/agr_java_software/data"
+    networks:
+      - name: "{{ NET }}"
+    command: java -jar agr_variant_indexer/target/agr_variant_indexer-jar-with-dependencies.jar
+    env:
+      ES_HOST: "es01,es02,es03,es04,es05,es06,es07,es08"

@@ -1,0 +1,125 @@
+---
+
+- name: Pull ES Env Image
+  docker_image:
+    name: "{{ ES_ENV_IMAGE_NAME }}"
+
+- name: Run ES Cluster Node 01
+  docker_container:
+    name: "es01"
+    image: "{{ ES_ENV_IMAGE_NAME }}"
+    networks:
+      - name: "{{ NET }}"
+    ports:
+      - "9201:9200"
+    env:
+      node.name: es01
+      cluster.name: variant_cluster
+      discovery.seed_hosts: es02,es03,es04,es05,es06,es07,es08
+      cluster.initial_master_nodes: es01,es02,es03,es04,es05,es06,es07,es08
+      ES_JAVA_OPTS: "-Xms16g -Xmx16g"
+
+- name: Run ES Cluster Node 02
+  docker_container:
+    name: "es02"
+    image: "{{ ES_ENV_IMAGE_NAME }}"
+    networks:
+      - name: "{{ NET }}"
+    ports:
+      - "9202:9200"
+    env:
+      node.name: es02
+      cluster.name: variant_cluster
+      discovery.seed_hosts: es01,es02,es03,es04,es05,es06,es07,es08
+      cluster.initial_master_nodes: es01,es02,es03,es04,es05,es06,es07,es08
+      ES_JAVA_OPTS: "-Xms16g -Xmx16g"
+
+- name: Run ES Cluster Node 03
+  docker_container:
+    name: "es03"
+    image: "{{ ES_ENV_IMAGE_NAME }}"
+    networks:
+      - name: "{{ NET }}"
+    ports:
+      - "9203:9200"
+    env:
+      node.name: es03
+      cluster.name: variant_cluster
+      discovery.seed_hosts: es01,es02,es03,es04,es05,es06,es07,es08
+      cluster.initial_master_nodes: es01,es02,es03,es04,es05,es06,es07,es08
+      ES_JAVA_OPTS: "-Xms16g -Xmx16g"
+
+- name: Run ES Cluster Node 04
+  docker_container:
+    name: "es04"
+    image: "{{ ES_ENV_IMAGE_NAME }}"
+    networks:
+      - name: "{{ NET }}"
+    ports:
+      - "9204:9200"
+    env:
+      node.name: es04
+      cluster.name: variant_cluster
+      discovery.seed_hosts: es01,es02,es03,es04,es05,es06,es07,es08
+      cluster.initial_master_nodes: es01,es02,es03,es04,es05,es06,es07,es08
+      ES_JAVA_OPTS: "-Xms16g -Xmx16g"
+
+- name: Run ES Cluster Node 05
+  docker_container:
+    name: "es05"
+    image: "{{ ES_ENV_IMAGE_NAME }}"
+    networks:
+      - name: "{{ NET }}"
+    ports:
+      - "9205:9200"
+    env:
+      node.name: es05
+      cluster.name: variant_cluster
+      discovery.seed_hosts: es01,es02,es03,es04,es05,es06,es07,es08
+      cluster.initial_master_nodes: es01,es02,es03,es04,es05,es06,es07,es08
+      ES_JAVA_OPTS: "-Xms16g -Xmx16g"
+
+- name: Run ES Cluster Node 06
+  docker_container:
+    name: "es06"
+    image: "{{ ES_ENV_IMAGE_NAME }}"
+    networks:
+      - name: "{{ NET }}"
+    ports:
+      - "9206:9200"
+    env:
+      node.name: es06
+      cluster.name: variant_cluster
+      discovery.seed_hosts: es01,es02,es03,es04,es05,es06,es07,es08
+      cluster.initial_master_nodes: es01,es02,es03,es04,es05,es06,es07,es08
+      ES_JAVA_OPTS: "-Xms16g -Xmx16g"
+
+- name: Run ES Cluster Node 07
+  docker_container:
+    name: "es07"
+    image: "{{ ES_ENV_IMAGE_NAME }}"
+    networks:
+      - name: "{{ NET }}"
+    ports:
+      - "9207:9200"
+    env:
+      node.name: es07
+      cluster.name: variant_cluster
+      discovery.seed_hosts: es01,es02,es03,es04,es05,es06,es07,es08
+      cluster.initial_master_nodes: es01,es02,es03,es04,es05,es06,es07,es08
+      ES_JAVA_OPTS: "-Xms16g -Xmx16g"
+
+- name: Run ES Cluster Node 08
+  docker_container:
+    name: "es08"
+    image: "{{ ES_ENV_IMAGE_NAME }}"
+    networks:
+      - name: "{{ NET }}"
+    ports:
+      - "9208:9200"
+    env:
+      node.name: es08
+      cluster.name: variant_cluster
+      discovery.seed_hosts: es01,es02,es03,es04,es05,es06,es07,es08
+      cluster.initial_master_nodes: es01,es02,es03,es04,es05,es06,es07,es08
+      ES_JAVA_OPTS: "-Xms16g -Xmx16g"
