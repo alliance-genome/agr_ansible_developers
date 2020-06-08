@@ -15,3 +15,5 @@
     command: java -jar agr_variant_indexer/target/agr_variant_indexer-jar-with-dependencies.jar
     env:
       ES_HOST: "es01,es02,es03,es04,es05,es06,es07,es08"
+      VARIANT_DOCUMENT_CREATOR_THREADS: 12
+      VARIANT_ES_INDEX_NUMBER_OF_SHARDS: 32
