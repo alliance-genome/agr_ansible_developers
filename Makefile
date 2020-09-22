@@ -1,3 +1,5 @@
+include .makerc
+
 build: pull
 	docker build -t agrdocker/agr_ansible_run:latest .
 
