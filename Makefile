@@ -7,13 +7,27 @@ pull:
 bash:
 	docker run -it agrdocker/agr_ansible_run:latest bash
 
-launch:
-	docker run -it agrdocker/agr_ansible_run:latest ansible-playbook -e env=olin -i hosts launch_aws.yml --vault-password-file=.password
+launch: require-ENV
+	docker run -it agrdocker/agr_ansible_run:latest ansible-playbook -e env=${ENV} -i hosts launch_aws.yml --vault-password-file=.password
 
-restart_elk:
-	docker run -it agrdocker/agr_ansible_run:latest ansible-playbook -e env=olin -i hosts restart_elk.yml --vault-password-file=.password
+startdb: require-ENV
+	docker run -it agrdocker/agr_ansible_run:latest ansible-playbook -e env=${ENV} -i hosts start_neo.yml --vault-password-file=.password
 
-run_loader:
-	docker run -it agrdocker/agr_ansible_run:latest ansible-playbook -e ALLIANCE_RELEASE=3.1.0 -e env=olin -e DEV_BRANCH=bug_fixes_3.1.0 -i hosts launch_loader.yml --vault-password-file=.password
+stopdb: require-ENV
+	docker run -it agrdocker/agr_ansible_run:latest ansible-playbook -e env=${ENV} -i hosts stop_neo.yml --vault-password-file=.password
+
+restartdb: require-ENV
+	docker run -it agrdocker/agr_ansible_run:latest ansible-playbook -e env=${ENV} -i hosts restart_neo.yml --vault-password-file=.password
+
+restart_elk: require-ENV
+	docker run -it agrdocker/agr_ansible_run:latest ansible-playbook -e env=${ENV} -i hosts restart_elk.yml --vault-password-file=.password
+
+run_loader: require-ENV require-ALLIANCE_RELEASE require-DEV_BRANCH
+	docker run -it agrdocker/agr_ansible_run:latest ansible-playbook -e ALLIANCE_RELEASE=${ALLIANCE_RELEASE} -e env=${ENV} -e DEV_BRANCH=${DEV_BRANCH} -i hosts launch_loader.yml --vault-password-file=.password
 
 
+require-%:
+	@ if [ "${${*}}" = "" ]; then \
+		echo "Environment variable $* not set"; \
+		exit 1; \
+	fi

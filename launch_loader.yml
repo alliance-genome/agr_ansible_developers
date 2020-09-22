@@ -1,6 +1,6 @@
 ---
 
-- import_playbook: playbook_pre_tasks.yml
+- import_playbook: playbook_launch_pre_tasks.yml
 
 - name: Run Loader
   hosts: remote
@@ -16,9 +16,8 @@
     - "environments/shared_variables.yml"
 
   tasks:
-    - name: Setup Docker, Start ES, Start Neo, Run Indexer
+    - name: Build Loader, Run Loader
       block:
-        - include_tasks: tasks/start_neo_env.yml
         - include_tasks: tasks/build_loader.yml
         - include_tasks: tasks/run_loader.yml
         - set_fact:

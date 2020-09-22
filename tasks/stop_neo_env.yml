@@ -1,0 +1,4 @@
+- name: Stop and Remove Neo container
+  docker_container:
+    name: "{{ NEO_SERVER_NAME }}"
+    state: absent

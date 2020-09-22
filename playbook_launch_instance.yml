@@ -20,6 +20,7 @@
         zone: us-east-2a
         vpc_subnet_id: subnet-3d788c54
         assign_public_ip: yes
+        instance_profile_name: S3DataAccess
         aws_access_key: "{{ AWS_ACCESS_KEY }}"
         aws_secret_key: "{{ AWS_SECRET_KEY }}"
         volumes:
@@ -38,15 +39,9 @@
     - name: Add all instance public IPs to host group
       add_host:
         hostname: "{{ item.public_ip }}"
-        groupname: launched
+        groupname: remote
       with_items: "{{ ec2.instances }}"
-      register: launched
-
-    - name: Save IP to inventory file
-      copy:
-        content: "{{ item.public_ip }}"
-        dest: ./ip_file
-      with_items: "{{ ec2.instances }}"
+      register: remote
 
     - name: Retrieve all volumes for a queried instance
       ec2_vol:
