@@ -15,7 +15,7 @@
         keypair: AGR-ssl2
         group: ["default", "SSH", "Everyone", "HTTP/HTTPS"]
         instance_type: "{{ COMPUTE_INSTANCE_TYPE }}"
-        image: ami-040ed4d275bf17303
+        image: ami-0af8a4497a35daeab
         region: us-east-2
         zone: us-east-2a
         vpc_subnet_id: subnet-3d788c54
