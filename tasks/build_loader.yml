@@ -11,4 +11,4 @@
     dest: "agr_loader"
 
 - name: Build the docker image
-  command: docker build -t "{{ LOADER_TEST_RUN_IMAGE_NAME }}" agr_loader
+  command: docker build --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ LOADER_TEST_RUN_IMAGE_NAME }}" agr_loader

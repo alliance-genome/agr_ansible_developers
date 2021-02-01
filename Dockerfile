@@ -1,4 +1,4 @@
-FROM agrdocker/agr_base_linux_env:latest
+FROM 100225593120.dkr.ecr.us-east-1.amazonaws.com/agr_base_linux_env:latest
 
 WORKDIR /usr/src/ansible
 
