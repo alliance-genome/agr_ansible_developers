@@ -2,8 +2,8 @@
 
 - name: Run Loader
   docker_container:
-    name: "agr.{{ env }}.varinat_indexer"
-    image: "agrdocker/agr_varinat_indexer:3.1.0"
+    name: "agr.{{ env }}.variant_indexer"
+    image: "agrdocker/agr_variant_indexer:3.1.0"
     detach: no
     log_driver: "gelf"
     log_options:
