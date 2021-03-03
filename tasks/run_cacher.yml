@@ -3,11 +3,12 @@
 - name: Run Cacher
   docker_container:
     name: "{{ CACHER_RUN_NAME }}"
-    image: "{{ JAVA_SOFTWARE_RUN_IMAGE }}"
+    image: "{{ JAVA_SOFTWARE_IMAGE_NAME }}"
     detach: no
+    recreate: yes
     log_driver: "gelf"
     log_options:
-      gelf-address: "udp://{{ GELF_LOG_SERVER_NAME }}:12201"
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
     networks:
       - name: "{{ NET }}"
     env:

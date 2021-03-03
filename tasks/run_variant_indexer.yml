@@ -5,9 +5,10 @@
     name: "agr.{{ env }}.varinat_indexer"
     image: "agrdocker/agr_varinat_indexer:3.1.0"
     detach: no
+    recreate: yes
     log_driver: "gelf"
     log_options:
-      gelf-address: "udp://{{ GELF_LOG_SERVER_NAME }}:12201"
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
     volumes:
       - "agr_variant_data:/workdir/agr_java_software/data"
     networks:
