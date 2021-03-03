@@ -1,15 +1,45 @@
 ---
-- name: Launch Custom Build and Web Server
-  hosts: local
-  connection: local
-  gather_facts: False
+- import_playbook: playbook_launch_pre_tasks.yml
+- import_playbook: playbook_launch_instance.yml
+  when: not SERVER_ALREADY_ONLINE
+
+- name: Run Custom Build and Web Server
+  hosts: test
+  user: core
+  gather_facts: false
+
+  vars:
+    API_ACCESS_TOKEN: "{{ LOADER_BUILD_API_ACCESS_TOKEN }}"
 
   vars_files:
     - "environments/{{ env }}/main.yml" # ENV must always be loaded first
     - "environments/shared_secrets.yml"
     - "environments/shared_variables.yml"
 
+  roles:
+    - role: install_python
+      become: true
+      when: not SERVER_ALREADY_ONLINE
+    - role: setup_docker
+      become: true
+      when: not SERVER_ALREADY_ONLINE
+    - role: setup_swap
+      become: true
+      when: not SERVER_ALREADY_ONLINE
+
   tasks:
+    - name: Start Elk
+      block:
+        - include_tasks: tasks/start_elk.yml
+        - set_fact:
+            failed_flag: "passed"
+      rescue:
+        - debug:
+            msg: "Error Detected Failing Build"
+        - set_fact:
+            failed_flag: "failed"
+      when: not SERVER_ALREADY_ONLINE
+
     - name: Build Loader, Run Loader
       block:
         - include_tasks: tasks/build_loader.yml
@@ -48,11 +78,10 @@
         - set_fact:
             failed_flag: "failed"
 
-
-    - name: Check Failures
-      hosts: remote
-      gather_facts: False
-      tasks:
-        - fail:
-            msg: "The execution has failed because of errors."
-          when: failed_flag == "failed"
+#    - name: Check Failures
+#      hosts: remote
+#      gather_facts: False
+#      tasks:
+#        - fail:
+#            msg: "The execution has failed because of errors."
+#          when: failed_flag == "failed"

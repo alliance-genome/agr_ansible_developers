@@ -1,5 +1,6 @@
 ---
 
+# Ansible Specific Vars
 ansible_ssh_user: core
 ansible_python_interpreter: /home/core/pypy/bin/pypy
 
@@ -37,7 +38,7 @@ API_SERVER_NAME: "agr.{{ env }}.api.server"
 NEO_SERVER_NAME: "agr.{{ env }}.neo4j.server"
 INFINISPAN_SERVER_NAME: "agr.{{ env }}.infinispan.server"
 
-#Elk Servers
+# Elk Servers
 ES_SERVER_NAME: "elasticsearch" # Must be set to elasticsearch in order for log and kibana to work
 LOG_SERVER_NAME: "agr.{{ env }}.log.server" # Gelf runs outside the docker network
 GELF_LOG_SERVER_NAME: "localhost" # Gelf runs outside the docker network

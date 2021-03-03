@@ -1,14 +1,20 @@
 ---
 
 - name: Recursively remove directory
+  ignore_errors: yes # If the directory is missing, ignore the error.
   file:
-    path: agr_indexer
+    path: agr_java_software
     state: absent
 
+- name: Create directory
+  file:
+    path: agr_java_software
+    state: directory
+
 - git:
-    repo: 'git@github.com:alliance-genome/agr_java_software.git'
+    repo: 'https://github.com/alliance-genome/agr_java_software.git'
     version: "{{ GITHUB_JAVA_SOFTWARE_BRANCH }}"
     dest: "agr_java_software"
 
 - name: Build the indexer docker image
-  command: docker build --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ JAVA_SOFTWARE_IMAGE_NAME }}" agr_indexer
+  command: docker build --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ JAVA_SOFTWARE_IMAGE_NAME }}" agr_java_software

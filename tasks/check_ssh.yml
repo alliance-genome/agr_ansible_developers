@@ -6,3 +6,7 @@
     timeout: 300
     state: started
   with_items: "{{ ec2.instances }}"
+
+- pause:
+    seconds: 15
+    when: not SERVER_ALREADY_ONLINE

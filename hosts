@@ -1,4 +1,5 @@
 [local]
 localhost
 
-[remote]
+[test]
+3.88.140.90

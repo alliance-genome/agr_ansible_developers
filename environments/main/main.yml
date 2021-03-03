@@ -2,18 +2,18 @@
 
 # Name used for AWS URL.
 # Please replace with your name, e.g. "olin".
-NET: "default"
+NET: "main"
 
-PLAYBOOK_NAME: "{{ lookup('env','PLAYBOOK_NAME') or '{{ NET }} Test Server' }}"
+PLAYBOOK_NAME: "{{ lookup('env','PLAYBOOK_NAME') or 'Test Server' }}"
 THREADED: "{{ lookup('env','THREADED') or 'true' }}"
 DOWNLOAD_HOST: "download.alliancegenome.org"
 FMS_API_URL: "https://fms.alliancegenome.org"
-GENERATE_REPORTS: "false"
+GENERATE_REPORTS: false
 COMPUTE_INSTANCE_TYPE: r5d.8xlarge
 
 # Loader settings
 GITHUB_LOADER_BRANCH: "master"
-LOADER_TEST_SET: "false"
+LOADER_TEST_SET: false
 
 # QC settings
 GITHUB_QC_BRANCH: "master"
@@ -21,7 +21,7 @@ GITHUB_QC_BRANCH: "master"
 # Indexer settings
 # Flagging the following variable as "true" will skip the loader / QC steps and
 # attempt to proceed with an existing Neo4J data image from AWS.
-DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true
+DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: false
 # If downloading an image, please specify which tag to use.
 NEO4J_DATA_IMAGE_FROM_AWS_TAG: 4.0.0
 GITHUB_JAVA_SOFTWARE_BRANCH: "master"

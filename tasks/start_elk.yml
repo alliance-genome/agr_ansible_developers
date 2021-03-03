@@ -20,7 +20,7 @@
 
 - name: Run Cerebro
   docker_container:
-    name: "cerebro"
+    name: "agr.{{ env }}.cerebro.server"
     image: "yannart/cerebro:latest"
     networks:
       - name: "{{ NET }}"
@@ -37,10 +37,12 @@
     image: "{{ LOG_IMAGE_NAME }}"
     networks:
       - name: "{{ NET }}"
+    env:
+      xpack.monitoring.elasticsearch.hosts: "http://{{ ES_SERVER_NAME }}:9200"
     ports:
       - "9600:9600"
       - "12201:12201/udp"
-    command: ./bin/logstash -e "input { gelf { type => docker } } output { elasticsearch { hosts => [\"{{ ES_SERVER_NAME }}\"] } stdout { } }"
+    command: ./bin/logstash -e "input { gelf { type => docker } } output { elasticsearch { hosts => [\"{{ ES_SERVER_NAME }}\"] ilm_enabled => true ilm_policy => \"ilm-history-ilm-policy\" } }"
 
 - name: Pull Kibana Image
   docker_image:
@@ -50,6 +52,8 @@
   docker_container:
     name: "{{ KIBANA_SERVER_NAME }}"
     image: "{{ KIBANA_IMAGE_NAME }}"
+    env:
+      ELASTICSEARCH_HOSTS: "http://{{ ES_SERVER_NAME }}:9200"
     networks:
       - name: "{{ NET }}"
     ports:
