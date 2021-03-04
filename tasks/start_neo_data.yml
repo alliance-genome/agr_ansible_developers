@@ -1,3 +1,10 @@
+- name: Copy over support script
+  copy:
+    src: scripts/wait4bolt_outside.sh
+    dest: "{{ NEO4J_SUPPORT_SCRIPT_PATH }}"
+    owner: core
+    mode: '0744'
+
 - name: Pull Neo4j Data Image
   docker_image:
     name: "{{ NEO_DATA_IMAGE }}"
@@ -20,5 +27,10 @@
       NEO4J_dbms_memory_heap_maxSize: "{{ NEO_MAX_HEAP }}"
       NEO4J_AUTH: "none"
 
-- pause:
-    minutes: 2
+- name: Wait for Neo4j to come online.
+  shell: docker exec -t {{ NEO_SERVER_NAME }} \
+    bash -c "until echo 'match (n) return count(n);' | bin/cypher-shell -a bolt://localhost:7687; do echo $? ; sleep 1; done"
+  register: result
+  until: result.stdout.find("count")
+  retries: 60
+  delay: 10
