@@ -2,7 +2,7 @@
 - import_playbook: playbook_launch_pre_tasks.yml
 
 - name: Run QC
-  hosts: launched
+  hosts: remote
   user: core
   gather_facts: False
 

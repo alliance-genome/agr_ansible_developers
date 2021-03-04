@@ -12,12 +12,30 @@ FMS_API_URL: "https://fms.alliancegenome.org"
 GENERATE_REPORTS: false
 COMPUTE_INSTANCE_TYPE: r5d.8xlarge
 
+##################
+# Neo4J settings #
+##################
+# If building Neo4j from "scratch" by running the Loader, please specify the tag to be used for the Neo4j ENV image.
+# A list of available tags can be found here:
+# https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_neo4j_env?region=us-east-1
+NEO_ENV_IMAGE_FROM_AWS_TAG: build
+
+# Flagging the following variable as true to download a pre-populated Neo4J data image from AWS ECR.
+# This assumes that you **do not** wish to run the Loader / QC and instead proceed starting with the Indexer.
+DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true
+
+# If DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS is true, a pre-populated Neo4J database will be downloaded from AWS ECR.
+# Please specify the tag to use for this Neo4J data image.
+# Available tags can be found here:
+# https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_neo4j_data_image?region=us-east-1
+NEO4J_DATA_IMAGE_FROM_AWS_TAG: build
+
 ###################
 # Loader settings #
 ###################
 # Set the following value to true in order to download a pre-compiled image of the loader from AWS.
-DOWNLOAD_LOADER_IMAGE_FROM_AWS: false
-# If the above is true, specify the tag for the Loader image.
+DOWNLOAD_LOADER_IMAGE_FROM_AWS: true
+# If the above is true, please specify the tag for the Loader image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_loader_run?region=us-east-1
 LOADER_IMAGE_FROM_AWS_TAG: build
@@ -33,20 +51,10 @@ LOADER_TEST_SET: false
 # Indexer and Cacher settings #
 ###############################
 
-# Flagging the following variable as true to download a pre-populated Neo4J data image from AWS ECR.
-# This assumes that you *do not* wish to run the Loader / QC and instead proceed starting with the Indexer.
-DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true
-
-# If DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS is true, a pre-populated Neo4J database will be downloaded from AWS ECR.
-# Please specify the tag to use for this Neo4J data image.
-# Available tags can be found here:
-# https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_neo4j_data_image?region=us-east-1
-NEO4J_DATA_IMAGE_FROM_AWS_TAG: build
-
 # Set the following value to true in order to download a pre-compiled image of Java Software from AWS.
 # This includes the Indexer and Cacher.
 DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS: false
-# If the above is true, specify the tag for the Java Software image.
+# If the above is true, please specify the tag for the Java Software image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_java_software?region=us-east-1
 JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG: build
@@ -55,6 +63,9 @@ JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG: build
 # Please specify the GitHub branch to use in order to build Java Software.
 GITHUB_JAVA_SOFTWARE_BRANCH: "master"
 
-# QC settings
-# GITHUB_QC_BRANCH: "master"
+###############
+# QC Settings #
+###############
+
+GITHUB_QC_BRANCH: "master"
 
