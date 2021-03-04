@@ -1,10 +1,3 @@
-- name: Copy over support script
-  copy:
-    src: scripts/wait4bolt_outside.sh
-    dest: "{{ NEO4J_SUPPORT_SCRIPT_PATH }}"
-    owner: core
-    mode: '0744'
-
 - name: Pull Neo4j Data Image
   docker_image:
     name: "{{ NEO_DATA_IMAGE }}"

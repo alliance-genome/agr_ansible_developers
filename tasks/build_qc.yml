@@ -1,9 +1,15 @@
 ---
 
 - name: Recursively remove directory
+  ignore_errors: yes # If the directory is missing, ignore the error.
   file:
     path: agr_qc
     state: absent
+
+- name: Create directory
+  file:
+    path: agr_qc
+    state: directory
 
 - git:
     repo: 'git@github.com:alliance-genome/agr_qc.git'

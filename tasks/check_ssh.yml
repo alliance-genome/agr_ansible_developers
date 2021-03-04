@@ -9,4 +9,3 @@
 
 - pause:
     seconds: 15
-    when: not SERVER_ALREADY_ONLINE

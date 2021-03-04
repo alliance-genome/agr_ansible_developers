@@ -1,14 +1,28 @@
 ---
+- name: Pull Neo4j Data Image
+  docker_image:
+    name: "{{ LOADER_IMAGE_NAME }}"
+  when: DOWNLOAD_LOADER_IMAGE_FROM_AWS
 
 - name: Recursively remove directory
+  ignore_errors: yes # If the directory is missing, ignore the error.
   file:
     path: agr_loader
     state: absent
+  when: not DOWNLOAD_LOADER_IMAGE_FROM_AWS
+
+- name: Create directory
+  file:
+    path: agr_loader
+    state: directory
+  when: not DOWNLOAD_LOADER_IMAGE_FROM_AWS
 
 - git:
     repo: 'https://github.com/alliance-genome/agr_loader.git'
     version: "{{ GITHUB_LOADER_BRANCH }}"
     dest: "agr_loader"
+  when: not DOWNLOAD_LOADER_IMAGE_FROM_AWS
 
 - name: Build the loader docker image
-  command: docker build --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ LOADER_TEST_RUN_IMAGE_NAME }}" agr_loader
+  command: docker build --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ LOADER_IMAGE_NAME }}" agr_loader
+  when: not DOWNLOAD_LOADER_IMAGE_FROM_AWS

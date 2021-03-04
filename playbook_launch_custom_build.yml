@@ -4,7 +4,7 @@
   when: not SERVER_ALREADY_ONLINE
 
 - name: Run Custom Build and Web Server
-  hosts: test
+  hosts: launched
   user: core
   gather_facts: false
 
@@ -49,7 +49,6 @@
             msg: "Error Detected Failing Build"
         - set_fact:
             failed_flag: "failed"
-      when: not SERVER_ALREADY_ONLINE
 
     - name: Build Loader, Run Loader
       block:
