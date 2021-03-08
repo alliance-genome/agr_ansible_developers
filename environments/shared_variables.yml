@@ -56,6 +56,10 @@ LOG_IMAGE_NAME: "docker.elastic.co/logstash/logstash:7.7.0"
 UI_RUN_NAME: "agr.{{ env }}.ui.server"
 UI_IMAGE_NAME: "{{ REGISTRY }}/agr_ui_server:{{ UI_IMAGE_FROM_AWS_TAG }}"
 
+# Nginx
+NGINX_RUN_NAME: "agr.{{ NET }}.nginx.server"
+NGINX_IMAGE_NAME: "{{ REGISTRY }}/agr_nginx:{{ NGINX_IMAGE_FROM_AWS_TAG }}"
+
 # Misc Config Options
 LOG_SERVER_ADDRESS: "udp://localhost:12201"
 NEO_VOLUME_NAME: agr_shared

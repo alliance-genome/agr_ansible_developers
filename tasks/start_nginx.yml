@@ -1,0 +1,16 @@
+---
+
+- name: Run Nginx
+  docker_container:
+    name: "{{ NGINX_RUN_NAME }}"
+    image: "{{ NGINX_IMAGE_NAME }}"
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - name: "{{ NET }}"
+    env:
+      API_URL: "http://{{ API_SERVER_NAME }}:8080"
+    volumes:
+      - /home/core/.htpasswd:/etc/nginx/.htpasswd
+      - /home/core/ssl:/etc/ssl/certs

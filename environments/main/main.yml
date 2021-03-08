@@ -107,9 +107,9 @@ UI_IMAGE_FROM_AWS_TAG: build
 # Please specify the GitHub branch to use in order to build the QC software.
 GITHUB_UI_BRANCH: "master"
 
-#####################################
-# Elasticsearch, Kibana, & Logstash #
-#####################################
+##############################################
+# Elasticsearch, Kibana, & Logstash settings #
+##############################################
 # The Elasticsearch build environment to pull from AWS ECR.
 # Possible tags are here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_elasticsearch_env?region=us-east-1
@@ -119,3 +119,11 @@ ES_IMAGE_FROM_AWS_TAG: build
 # Possible tags are here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_kibana_env?region=us-east-1
 KIBANA_IMAGE_FROM_AWS_TAG: build
+
+##################
+# Nginx settings #
+##################
+# The Nginx image is pulled from AWS ECR.
+# Possible tags are here:
+# https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_nginx?region=us-east-1
+NGINX_IMAGE_FROM_AWS_TAG: build
