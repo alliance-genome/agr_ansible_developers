@@ -61,11 +61,11 @@ QC_IMAGE_FROM_AWS_TAG: build
 # Please specify the GitHub branch to use in order to build the QC software.
 GITHUB_QC_BRANCH: "master"
 
-###############################
-# Indexer and Cacher settings #
-###############################
+#####################################
+# Indexer, Cacher, and API settings #
+#####################################
 # Set the following value to true in order to download a pre-compiled image of Java Software from AWS.
-# This includes the Indexer and Cacher.
+# This includes the Indexer, Cacher, and API.
 DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS: false
 # If the above is true, please specify the tag for the Java Software image.
 # Available tags can be found here:

@@ -39,6 +39,9 @@ INDEXER_RUN_NAME: "agr.{{ env }}.indexer"
 # Cacher Variables
 CACHER_RUN_NAME: "agr.{{ env }}.cacher"
 
+# API Variables
+API_SERVER_NAME: "agr.{{ env }}.api.server"
+
 # Elasticsearch, Kibana, & Logstash
 LOG_SERVER_NAME: "agr.{{ env }}.log.server" # Gelf runs outside the docker network
 KIBANA_SERVER_NAME: "agr.{{ env }}.kibana.server"
@@ -76,7 +79,6 @@ APOLLO_IMAGE_NAME: agr_jbrowse_run
 # Server Names (currently unused)
 JBROWSE_SERVER_NAME: "agr.{{ env }}.jbrowse.server"
 APOLLO_SERVER_NAME: "agr.{{ env }}.apollo.server"
-API_SERVER_NAME: "agr.{{ env }}.api.server"
 
 # Running Names (currently unused)
 API_TEST_NAME: "agr.{{ env }}.api.test"
