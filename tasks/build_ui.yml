@@ -20,7 +20,7 @@
 - git:
     repo: 'git@github.com:alliance-genome/agr_ui.git'
     version: "{{ GITHUB_UI_BRANCH }}"
-    dest: "agr_qc"
+    dest: "agr_ui"
 
 - name: Build the ui docker image
   command: docker build --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ UI_IMAGE_NAME }}" agr_ui

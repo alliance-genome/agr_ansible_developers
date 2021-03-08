@@ -1,0 +1,13 @@
+---
+
+- name: Run UI
+  docker_container:
+    name: "{{ UI_RUN_NAME }}"
+    image: "{{ UI_IMAGE_NAME }}"
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
+    networks:
+      - name: "{{ NET }}"
+    env:
+      API_URL: "http://{{ API_SERVER_NAME }}:8080"
