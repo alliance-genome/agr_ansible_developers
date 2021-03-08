@@ -47,10 +47,23 @@ GITHUB_LOADER_BRANCH: "master"
 # If running the loader test set (a subset of data), set the following to true.
 LOADER_TEST_SET: false
 
+###############
+# QC settings #
+###############
+# Set the following value to true in order to download a pre-compiled image of the QC software from AWS.
+DOWNLOAD_QC_IMAGE_FROM_AWS: false
+# If the above is true, please specify the tag for the QC image.
+# Available tags can be found here:
+# https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_qc_run?region=us-east-1
+QC_IMAGE_FROM_AWS_TAG: build
+
+# If DOWNLOAD_QC_IMAGE_FROM_AWS is false, the QC software will be built from GitHub.
+# Please specify the GitHub branch to use in order to build the QC software.
+GITHUB_QC_BRANCH: "master"
+
 ###############################
 # Indexer and Cacher settings #
 ###############################
-
 # Set the following value to true in order to download a pre-compiled image of Java Software from AWS.
 # This includes the Indexer and Cacher.
 DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS: false
@@ -63,9 +76,46 @@ JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG: build
 # Please specify the GitHub branch to use in order to build Java Software.
 GITHUB_JAVA_SOFTWARE_BRANCH: "master"
 
-###############
-# QC Settings #
-###############
+#######################
+# Infinispan settings #
+#######################
+# If building Infinispan from "scratch" by running the Cacher, please specify the tag to be used for the ENV image.
+# A list of available tags can be found here:
+# https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_infinispan_env?region=us-east-1
+INFINISPAN_ENV_IMAGE_FROM_AWS_TAG: build
 
-GITHUB_QC_BRANCH: "master"
+# Set the following value to true in order to download a pre-populated image of Infinispan from AWS.
+DOWNLOAD_INFINISPAN_DATA_IMAGE_FROM_AWS: false
 
+# If DOWNLOAD_INFINISPAN_DATA_IMAGE_FROM_AWS is true, a pre-populated Infinispan image will be downloaded from AWS ECR.
+# Please specify the tag to use for this Infinispan data image.
+# Available tags can be found here:
+# https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_infinispan_data_image?region=us-east-1
+INFINISPAN_DATA_IMAGE_FROM_AWS_TAG: build
+
+###############
+# UI settings #
+###############
+# Set the following value to true in order to download a pre-compiled image of the QC software from AWS.
+DOWNLOAD_UI_IMAGE_FROM_AWS: false
+# If the above is true, please specify the tag for the QC image.
+# Available tags can be found here:
+# https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_ui_server?region=us-east-1
+UI_IMAGE_FROM_AWS_TAG: build
+
+# If DOWNLOAD_QC_IMAGE_FROM_AWS is false, the QC software will be built from GitHub.
+# Please specify the GitHub branch to use in order to build the QC software.
+GITHUB_UI_BRANCH: "master"
+
+#####################################
+# Elasticsearch, Kibana, & Logstash #
+#####################################
+# The Elasticsearch build environment to pull from AWS ECR.
+# Possible tags are here:
+# https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_elasticsearch_env?region=us-east-1
+ES_IMAGE_FROM_AWS_TAG: build
+
+# The Kibana build environment to pull from AWS ECR.
+# Possible tags are here:
+# https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_kibana_env?region=us-east-1
+KIBANA_IMAGE_FROM_AWS_TAG: build

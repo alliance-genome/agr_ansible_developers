@@ -1,5 +1,5 @@
 ---
-- name: Pull Neo4j Data Image
+- name: Pull Loader Image
   docker_image:
     name: "{{ LOADER_IMAGE_NAME }}"
   when: DOWNLOAD_LOADER_IMAGE_FROM_AWS
