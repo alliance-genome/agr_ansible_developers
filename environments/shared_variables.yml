@@ -46,7 +46,7 @@ ES_SERVER_NAME: "elasticsearch" # Must be set to elasticsearch in order for Logs
 GELF_LOG_SERVER_NAME: "localhost" # Gelf runs outside the docker network
 
 ES_ENV_IMAGE_NAME: "{{ REGISTRY }}/agr_elasticsearch_env:{{ ES_IMAGE_FROM_AWS_TAG }}"
-KIBANA_IMAGE_NAME: "{{ REGISTRY }}/agr_elasticsearch_env:{{ KIBANA_IMAGE_FROM_AWS_TAG }}"
+KIBANA_IMAGE_NAME: "{{ REGISTRY }}/agr_kibana_env:{{ KIBANA_IMAGE_FROM_AWS_TAG }}"
 LOG_IMAGE_NAME: "docker.elastic.co/logstash/logstash:7.7.0"
 
 # UI

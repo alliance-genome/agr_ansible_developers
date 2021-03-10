@@ -17,8 +17,8 @@
   tasks:
     - name: Fetch on-demand pricing
       shell: >-
-        aws pricing get-products --service-code AmazonEC2 --region us-east-1
-        --filters "Type=TERM_MATCH,Field=usageType,Value=boxUsage:{{ COMPUTE_INSTANCE_TYPE }}" "Type=TERM_MATCH,Field=location,Value=US East (N. Virginia)" "Type=TERM_MATCH,Field=operatingSystem,Value=Linux" "Type=TERM_MATCH,Field=preInstalledSw,Value=NA"
+        aws pricing get-products --service-code AmazonEC2 --region us-east-2
+        --filters "Type=TERM_MATCH,Field=usageType,Value=boxUsage:{{ COMPUTE_INSTANCE_TYPE }}" "Type=TERM_MATCH,Field=location,Value=US East (Ohio)" "Type=TERM_MATCH,Field=operatingSystem,Value=Linux" "Type=TERM_MATCH,Field=preInstalledSw,Value=NA"
         | jq -rc '.PriceList[]' | jq -r '.terms.OnDemand[].priceDimensions[].pricePerUnit.USD'
       environment:
         AWS_ACCESS_KEY_ID: "{{ AWS_ACCESS_KEY }}"
@@ -36,7 +36,6 @@
         spot_wait_timeout: "{{ on_demand | ternary(omit, 300) }}"
         image: ami-0af8a4497a35daeab
         region: us-east-2
-        zone: us-east-2a
         vpc_subnet_id: subnet-3d788c54
         assign_public_ip: yes
         instance_profile_name: S3DataAccess
@@ -67,7 +66,7 @@
     - name: Retrieve all volumes for a queried instance
       ec2_vol:
         instance: '{{ item }}'
-        region: us-east-1
+        region: us-east-2
         state: list
         aws_access_key: "{{ AWS_ACCESS_KEY }}"
         aws_secret_key: "{{ AWS_SECRET_KEY }}"
@@ -76,7 +75,7 @@
 
     - name: Ensure all volumes are tagged
       ec2_tag:
-        region: us-east-1
+        region: us-east-2
         resource: '{{ item.1.id }}'
         aws_access_key: "{{ AWS_ACCESS_KEY }}"
         aws_secret_key: "{{ AWS_SECRET_KEY }}"
