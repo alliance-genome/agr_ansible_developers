@@ -1,12 +1,12 @@
-- name: Pull Neo4j Env Image
+- name: Pulling Neo4j Env Image {{ NEO_ENV_IMAGE_NAME }}
   docker_image:
     name: "{{ NEO_ENV_IMAGE_NAME }}"
 
-- name: Create Neo4j Shared Volume
+- name: Creating Neo4j Shared Volume
   docker_volume:
     name: "{{ NEO_VOLUME_NAME }}"
 
-- name: Run Neo4j
+- name: Running Neo4j Image {{ NEO_ENV_IMAGE_NAME }}
   docker_container:
     name: "{{ NEO_SERVER_NAME }}"
     image: "{{ NEO_ENV_IMAGE_NAME }}"

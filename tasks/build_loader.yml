@@ -1,5 +1,4 @@
----
-- name: Pull Loader Image
+- name: Pulling Loader Image {{ LOADER_IMAGE_NAME }} from AWS ECR.
   docker_image:
     name: "{{ LOADER_IMAGE_NAME }}"
   when: DOWNLOAD_LOADER_IMAGE_FROM_AWS
@@ -23,6 +22,6 @@
     dest: "agr_loader"
   when: not DOWNLOAD_LOADER_IMAGE_FROM_AWS
 
-- name: Build the loader docker image
+- name: Building the loader docker image using the branch {{ GITHUB_LOADER_BRANCH }} from GitHub.
   command: docker build --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ LOADER_IMAGE_NAME }}" agr_loader
   when: not DOWNLOAD_LOADER_IMAGE_FROM_AWS

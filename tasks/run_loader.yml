@@ -1,6 +1,6 @@
 ---
 
-- name: Run Loader
+- name: Running Loader with Alliance Release set to {{ ALLIANCE_RELEASE }}.
   docker_container:
     name: "{{ LOADER_RUN_NAME }}"
     image: "{{ LOADER_IMAGE_NAME }}"
