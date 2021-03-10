@@ -1,9 +1,16 @@
 ---
+# IMPORTANT!
+# Before using this repository, please create a folder for yourself in the "environments" folder.
+# Copy this file to your folder and edit all appropriate values.
 
 # Name used for AWS URL.
 # Please replace with your name, e.g. "olin".
 # Do not leave this variable as "main".
 NET: "main"
+
+# TODO Check with Olin where this might be used? Might not be necessary with developer changes.
+# Safe to leave this as "build" for now.
+ALLIANCE_RELEASE: "build"
 
 PLAYBOOK_NAME: "{{ lookup('env','PLAYBOOK_NAME') or 'Test Server' }}"
 THREADED: "{{ lookup('env','THREADED') or 'true' }}"

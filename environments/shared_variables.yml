@@ -2,8 +2,6 @@
 
 # Ansible Specific Vars
 ansible_ssh_user: core
-
-ALLIANCE_RELEASE: "{{ lookup('env','ALLIANCE_RELEASE') }}"
 REGISTRY: 100225593120.dkr.ecr.us-east-1.amazonaws.com
 
 # Neo4j Variables

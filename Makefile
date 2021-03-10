@@ -12,30 +12,23 @@ pull: registry-docker-login
 bash:
 	docker run -it ${REG}/${CONTAINER}:${TAG} bash
 
-launch: require-ENV
+launch:
 	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_aws.yml --vault-password-file=.password
 
-startdb: require-ENV
+startdb:
 	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts start_neo.yml --vault-password-file=.password
 
-stopdb: require-ENV
+stopdb:
 	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts stop_neo.yml --vault-password-file=.password
 
-restartdb: require-ENV
+restartdb:
 	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts restart_neo.yml --vault-password-file=.password
 
-restart_elk: require-ENV
+restart_elk:
 	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts restart_elk.yml --vault-password-file=.password
 
-run_loader: require-ENV require-ALLIANCE_RELEASE require-DEV_BRANCH
-	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e ALLIANCE_RELEASE=${ALLIANCE_RELEASE} -e env=${ENV} -e DEV_BRANCH=${DEV_BRANCH} -i hosts launch_loader.yml --vault-password-file=.password
-
-
-require-%:
-	@ if [ "${${*}}" = "" ]; then \
-		echo "Environment variable $* not set"; \
-		exit 1; \
-	fi
+run_loader:
+	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_loader.yml --vault-password-file=.password
 
 registry-docker-login:
 ifneq ($(shell echo ${REG} | egrep "ecr\..+\.amazonaws\.com"),)
