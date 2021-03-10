@@ -1,5 +1,5 @@
 - name: Launch Post Tasks
-  hosts: remote
+  hosts: launched
   user: core
   gather_facts: False
 

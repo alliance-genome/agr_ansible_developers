@@ -2,7 +2,6 @@
 
 # Ansible Specific Vars
 ansible_ssh_user: core
-ansible_python_interpreter: /home/core/pypy/bin/pypy
 
 ALLIANCE_RELEASE: "{{ lookup('env','ALLIANCE_RELEASE') }}"
 REGISTRY: 100225593120.dkr.ecr.us-east-1.amazonaws.com
@@ -34,7 +33,7 @@ JAVA_SOFTWARE_RUN_IMAGE_NAME: "{{ REGISTRY }}/agr_java_software:{{ JAVA_SOFTWARE
 INDEXER_RUN_NAME: "agr.{{ env }}.indexer"
 # Unsure of Indexer "test" implementation. TODO ask Olin.
 # INDEXER_TEST_NAME: "agr.{{ env }}.indexer.test"
-# INDEXER_TEST_IMAGE_NAME: "{{ REGISTRY }}/{{ agr_java_software }}:{{ env }}_indexer"
+# INDEXER_TEST_IMAGE_NAME: "{{ REGISTRY }}/agr_java_software:{{ env }}_indexer"
 
 # Cacher Variables
 CACHER_RUN_NAME: "agr.{{ env }}.cacher"
@@ -48,8 +47,8 @@ KIBANA_SERVER_NAME: "agr.{{ env }}.kibana.server"
 ES_SERVER_NAME: "elasticsearch" # Must be set to elasticsearch in order for Logstash and Kibana to work
 GELF_LOG_SERVER_NAME: "localhost" # Gelf runs outside the docker network
 
-ES_ENV_IMAGE_NAME: "{{ REGISTRY }}/{{ agr_elasticsearch_env }}:{{ ES_IMAGE_FROM_AWS_TAG }}"
-KIBANA_IMAGE_NAME: "{{ REGISTRY }}/{{ agr_elasticsearch_env }}:{{ KIBANA_IMAGE_FROM_AWS_TAG }}"
+ES_ENV_IMAGE_NAME: "{{ REGISTRY }}/agr_elasticsearch_env:{{ ES_IMAGE_FROM_AWS_TAG }}"
+KIBANA_IMAGE_NAME: "{{ REGISTRY }}/agr_elasticsearch_env:{{ KIBANA_IMAGE_FROM_AWS_TAG }}"
 LOG_IMAGE_NAME: "docker.elastic.co/logstash/logstash:7.7.0"
 
 # UI

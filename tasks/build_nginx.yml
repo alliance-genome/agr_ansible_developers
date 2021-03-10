@@ -2,6 +2,3 @@
 - name: Pull Nginx Image
   docker_image:
     name: "{{ NGINX_IMAGE_NAME }}"
-
-- name: Build the nginx docker image
-  command: docker build --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ NGINX_IMAGE_NAME }}" agr_nginx

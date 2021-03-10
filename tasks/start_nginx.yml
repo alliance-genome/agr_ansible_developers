@@ -1,4 +1,15 @@
 ---
+- name: Create Nginx Config Directory
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "/home/core/nginx_config"
+
+- name: Copy Nginx Config
+  template:
+    src: webserver.conf.j2
+    dest: "/home/core/nginx_config/default.conf"
 
 - name: Run Nginx
   docker_container:
@@ -14,3 +25,4 @@
     volumes:
       - /home/core/.htpasswd:/etc/nginx/.htpasswd
       - /home/core/ssl:/etc/ssl/certs
+      - /home/core/nginx_config:/etc/nginx/conf.d/
