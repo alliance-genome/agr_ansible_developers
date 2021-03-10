@@ -18,6 +18,8 @@
   roles:
     - role: install_python
       become: true
+    - role: setup_nvme_drives
+      become: true
     - role: setup_docker
       become: true
     - role: setup_swap
