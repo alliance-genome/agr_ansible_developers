@@ -3,7 +3,7 @@
 ### Before cloning this repository.
 - Contact someone from the DevOps team in order to:
     - Obtain access to EC2 servers running on us-east-2.
-    - Obtain a copy of the Ansible vault password file to store in the repository on your local computer. **NEVER commit this file to the repository**.
+    - Obtain a copy of the Ansible vault password file to store in the repository on your local computer. **NEVER commit this file to the repository.**
     
 ### Clone the repository.
 - Clone `agr_ansible_developers` to your local machine.
@@ -50,8 +50,8 @@
 |`launch`| Launch the AWS EC2 instance.|
 |`terminate`| Terminate the AWS EC2 instance. Requires an updated `hosts` file with the current instance's IP address.|
 |`startdb`| Start the Neo4J database. Required before most other steps.|
-|`stopdb`| Stop the Neo4J database. **This also removes the container**|
-|`restartdb` | Restart the Neo4J database **This removes and creates a new container**|
+|`stopdb`| Stop the Neo4J database. **This also removes the container.**|
+|`restartdb` | Restart the Neo4J database **This removes and creates a new container.**|
 |`run_loader`| Run the loader.|
 |`run_indexer`| Run the indexer.|
 |`run_cacher`| Run the cacher.|
