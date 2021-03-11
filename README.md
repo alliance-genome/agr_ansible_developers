@@ -14,7 +14,7 @@
 - Copy the file `main.yml` from the `environments/template` directory to your newly created directory.
 
 ### Edit the configuration files before running.
-####main.yml
+#### main.yml
 - In your newly created directory, edit the `main.yml` file.
 - The `NET` value is used for the DNS name of your server. Please change it from `main` to another value, _e.g._ `olin`.
     - This value will be appended with `-dev`. 
@@ -26,7 +26,7 @@
 - For the remaining values, most of the configuration options allow the pipeline to be run using either **code from GitHub** or **images from AWS ECR**.
     - Please choose the appropriate configuration values based on the code you are testing.
     - If assistance is required, please post a message in the `#devops` channel on Slack and we'll be happy to help.
-####Makefile
+#### Makefile
 - Before running Ansible, edit the Makefile variable `ENV` at the top of the file to match the name of the folder you've created in `environments`.
 
 ### Launch the AWS EC2 instance.
@@ -58,10 +58,7 @@
 |`run_api`| Start the API.|
 |`run_ui`| Start the UI.|
 |`run_nginx`| Start Nginx.|
-|`run_jbrowse`| TODO Run a JBrowse instance.|
-
-
-
+|`run_jbrowse`| TODO ~~Run a JBrowse instance~~.|
 
 ### Terminate the AWS EC2 instance.
 - When you are finished working with your instance, be sure to shut it down with the command `make terminate` run from the `agr_ansible_developers` directory.
