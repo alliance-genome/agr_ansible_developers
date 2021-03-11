@@ -1,17 +1,17 @@
 ---
-- name: Create Nginx Config Directory
+- name: Creating Nginx config directory
   file:
     path: "{{ item }}"
     state: directory
   with_items:
     - "/home/core/nginx_config"
 
-- name: Copy Nginx Config
+- name: Copying Nginx config
   template:
     src: webserver.conf.j2
     dest: "/home/core/nginx_config/default.conf"
 
-- name: Run Nginx
+- name: Running Nginx
   docker_container:
     name: "{{ NGINX_RUN_NAME }}"
     image: "{{ NGINX_IMAGE_NAME }}"

@@ -1,17 +1,17 @@
 ---
-- name: Pull QC Image
+- name: Pulling Loader Image {{ QC_IMAGE_NAME }} from AWS ECR
   docker_image:
     name: "{{ QC_IMAGE_NAME }}"
   when: DOWNLOAD_QC_IMAGE_FROM_AWS
 
-- name: Recursively remove directory
+- name: Recursively removing directory agr_qc
   ignore_errors: yes # If the directory is missing, ignore the error.
   file:
     path: agr_qc
     state: absent
   when: not DOWNLOAD_QC_IMAGE_FROM_AWS
 
-- name: Create directory
+- name: Creating directory agr_qc
   file:
     path: agr_qc
     state: directory
@@ -22,5 +22,5 @@
     version: "{{ GITHUB_QC_BRANCH }}"
     dest: "agr_qc"
 
-- name: Build the qc docker image
+- name: Building the loader docker image using the branch {{ GITHUB_QC_BRANCH }} from GitHub
   command: docker build --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ QC_IMAGE_NAME }}" agr_qc

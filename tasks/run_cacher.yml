@@ -1,6 +1,6 @@
 ---
 
-- name: Run Cacher
+- name: Running Cacher
   docker_container:
     name: "{{ CACHER_RUN_NAME }}"
     image: "{{ JAVA_SOFTWARE_IMAGE_NAME }}"

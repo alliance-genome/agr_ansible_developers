@@ -1,6 +1,6 @@
 ---
 
-- name: Run UI
+- name: Starting the UI
   docker_container:
     name: "{{ UI_RUN_NAME }}"
     image: "{{ UI_IMAGE_NAME }}"

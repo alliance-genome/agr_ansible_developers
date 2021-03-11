@@ -1,16 +1,16 @@
-- name: Pulling Loader Image {{ LOADER_IMAGE_NAME }} from AWS ECR.
+- name: Pulling Loader Image {{ LOADER_IMAGE_NAME }} from AWS ECR
   docker_image:
     name: "{{ LOADER_IMAGE_NAME }}"
   when: DOWNLOAD_LOADER_IMAGE_FROM_AWS
 
-- name: Recursively remove directory
+- name: Recursively removing directory agr_loader
   ignore_errors: yes # If the directory is missing, ignore the error.
   file:
     path: agr_loader
     state: absent
   when: not DOWNLOAD_LOADER_IMAGE_FROM_AWS
 
-- name: Create directory
+- name: Creating directory agr_loader
   file:
     path: agr_loader
     state: directory
@@ -22,6 +22,6 @@
     dest: "agr_loader"
   when: not DOWNLOAD_LOADER_IMAGE_FROM_AWS
 
-- name: Building the loader docker image using the branch {{ GITHUB_LOADER_BRANCH }} from GitHub.
+- name: Building the loader docker image using the branch {{ GITHUB_LOADER_BRANCH }} from GitHub
   command: docker build --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ LOADER_IMAGE_NAME }}" agr_loader
   when: not DOWNLOAD_LOADER_IMAGE_FROM_AWS

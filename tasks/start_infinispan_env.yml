@@ -1,8 +1,8 @@
-- name: Pull Infinispan Env Image
+- name: Pulling Infinispan Env Image {{ INFINISPAN_ENV_IMAGE_NAME }}
   docker_image:
     name: "{{ INFINISPAN_ENV_IMAGE_NAME }}"
 
-- name: Run Infinispan
+- name: Running Infinispan
   docker_container:
     name: "{{ INFINISPAN_SERVER_NAME }}"
     image: "{{ INFINISPAN_ENV_IMAGE_NAME }}"

@@ -1,12 +1,12 @@
-- name: Pull ES Env Image
+- name: Pulling ES Env Image {{ ES_ENV_IMAGE_NAME }}
   docker_image:
     name: "{{ ES_ENV_IMAGE_NAME }}"
 
-- name: Pull Cerebro Image
+- name: Pulling Cerebro Image
   docker_image:
     name: "yannart/cerebro:latest"
 
-- name: Run ES
+- name: Starting Elasticsearch
   docker_container:
     name: "{{ ES_SERVER_NAME }}"
     image: "{{ ES_ENV_IMAGE_NAME }}"
@@ -18,7 +18,7 @@
     env:
       discovery.type: single-node
 
-- name: Run Cerebro
+- name: Starting Cerebro
   docker_container:
     name: "agr.{{ env }}.cerebro.server"
     image: "yannart/cerebro:latest"
@@ -27,11 +27,11 @@
     ports:
       - "9000:9000"
 
-- name: Pull Log Image
+- name: Pulling Logstash Image {{ LOG_IMAGE_NAME }}
   docker_image:
     name: "{{ LOG_IMAGE_NAME }}"
 
-- name: Run Log Server
+- name: Starting Logstash Server
   docker_container:
     name: "{{ LOG_SERVER_NAME }}"
     image: "{{ LOG_IMAGE_NAME }}"
@@ -44,11 +44,11 @@
       - "12201:12201/udp"
     command: ./bin/logstash -e "input { gelf { type => docker } } output { elasticsearch { hosts => [\"{{ ES_SERVER_NAME }}\"] ilm_enabled => true ilm_policy => \"ilm-history-ilm-policy\" } }"
 
-- name: Pull Kibana Image
+- name: Pulling Kibana Image {{ KIBANA_IMAGE_NAME }}
   docker_image:
     name: "{{ KIBANA_IMAGE_NAME }}"
 
-- name: Run Kibana
+- name: Starting Kibana
   docker_container:
     name: "{{ KIBANA_SERVER_NAME }}"
     image: "{{ KIBANA_IMAGE_NAME }}"

@@ -1,6 +1,6 @@
 ---
 
-- name: Run API
+- name: Starting API
   docker_container:
     name: "{{ API_SERVER_NAME }}"
     image: "{{ JAVA_SOFTWARE_IMAGE_NAME }}"

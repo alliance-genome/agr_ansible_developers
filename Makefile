@@ -1,7 +1,9 @@
 REG := 100225593120.dkr.ecr.us-east-1.amazonaws.com
 CONTAINER := agr_ansible_run
 TAG := latest
-include .makerc
+
+# Change this value to match the folder name you created in environments.
+ENV=main
 
 build: pull
 	docker build -t ${REG}/${CONTAINER}:${TAG} .

@@ -1,4 +1,4 @@
-- name: Stop and Remove Neo container
+- name: Stopping and Removing the Neo4j container
   docker_container:
     name: "{{ NEO_SERVER_NAME }}"
     state: absent

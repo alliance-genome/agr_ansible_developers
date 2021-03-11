@@ -1,8 +1,8 @@
-- name: Pull Neo4j Data Image
+- name: Pulling Neo4j Data Image {{ NEO_DATA_IMAGE }}
   docker_image:
     name: "{{ NEO_DATA_IMAGE }}"
 
-- name: Run Neo4j
+- name: Starting Neo4j
   docker_container:
     name: "{{ NEO_SERVER_NAME }}"
     image: "{{ NEO_DATA_IMAGE }}"
@@ -20,7 +20,7 @@
       NEO4J_dbms_memory_heap_maxSize: "{{ NEO_MAX_HEAP }}"
       NEO4J_AUTH: "none"
 
-- name: Wait for Neo4j to come online.
+- name: Waiting for Neo4j to come online
   shell: docker exec -t {{ NEO_SERVER_NAME }} \
     bash -c "until echo 'match (n) return count(n);' | bin/cypher-shell -a bolt://localhost:7687; do echo $? ; sleep 1; done"
   register: result

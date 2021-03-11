@@ -6,7 +6,7 @@
   docker_volume:
     name: "{{ NEO_VOLUME_NAME }}"
 
-- name: Running Neo4j Image {{ NEO_ENV_IMAGE_NAME }}
+- name: Starting Neo4j
   docker_container:
     name: "{{ NEO_SERVER_NAME }}"
     image: "{{ NEO_ENV_IMAGE_NAME }}"

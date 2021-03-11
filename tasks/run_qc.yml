@@ -1,6 +1,6 @@
 ---
 
-- name: Run QC
+- name: Running QC
   docker_container:
     name: "{{ QC_RUN_NAME }}"
     image: "{{ QC_TEST_IMAGE_NAME }}"

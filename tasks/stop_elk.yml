@@ -1,16 +1,16 @@
-- name: Stop ES Server
+- name: Stopping ES Server
   docker_container:
     name: "{{ ES_SERVER_NAME }}"
     state: absent
-- name: Stop ES Server
+- name: Stopping Cerebro Server
   docker_container:
-    name: "cerebro"
+    name: "agr.{{ env }}.cerebro.server"
     state: absent
-- name: Stop ES Server
+- name: Stopping Logstash Server
   docker_container:
     name: "{{ LOG_SERVER_NAME }}"
     state: absent
-- name: Stop ES Server
+- name: Stopping Kibana Server
   docker_container:
     name: "{{ KIBANA_SERVER_NAME }}"
     state: absent

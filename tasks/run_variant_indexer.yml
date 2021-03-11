@@ -1,6 +1,6 @@
 ---
 
-- name: Run Loader
+- name: Running Variant Indexer
   docker_container:
     name: "agr.{{ env }}.varinat_indexer"
     image: "agrdocker/agr_varinat_indexer:3.1.0"

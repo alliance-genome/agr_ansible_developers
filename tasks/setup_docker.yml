@@ -1,51 +1,51 @@
-- name: Make DockerHub config directory
+- name: Creating DockerHub config directory
   file:
     path: /home/core/.docker
     state: directory
     mode: 0755
 
-- name: Copy DockerHub config file
+- name: Copying DockerHub config file
   copy:
     content: "{{ DockerHubCredsFile }}"
     dest: "/home/core/.docker/config.json"
     mode: 0644
 
-- name: Make ssl directory
+- name: Creating SSL directory
   file:
     path: /home/core/ssl
     state: directory
     mode: 0755
 
-- name: Chmod Docker Sock File
+- name: Setting permissions on Docker sock file
   file:
     path: /var/run/docker.sock
     mode: o+rw
   become: true
   become_user: root
 
-- name: Copy ssl CRT File 
+- name: Copying SSL CRT file
   copy:
     content: "{{ AGR_WEB_CRT_FILE }}"
     dest: "/home/core/ssl/agr.crt"
     mode: 0644
 
-- name: Copy ssl KEY File 
+- name: Copying SSL KEY File
   copy:
     content: "{{ AGR_WEB_KEY_FILE }}"
     dest: "/home/core/ssl/agr.key"
     mode: 0644
 
-- name: Copy CA file
+- name: Copying CA file
   copy:
     src: files/ca-certs.pem
     dest: "/home/core/ssl/ca-certs.pem"
     mode: 0644
 
-- name: Create a docker network
+- name: Creating the docker network {{ NET }}
   docker_network:
     name: "{{ NET }}"
 
-- name: Set Max open files 
+- name: Setting max opened files
   sysctl:
     name: vm.max_map_count
     value: '262144'
@@ -55,7 +55,7 @@
   become: true
   become_user: root
 
-- name: Turn off locksmithd
+- name: Turning off locksmithd
   service:
     name: locksmithd
     state: stopped

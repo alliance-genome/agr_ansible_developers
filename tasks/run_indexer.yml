@@ -1,6 +1,6 @@
 ---
 
-- name: Run Indexer
+- name: Running Indexer
   docker_container:
     name: "{{ INDEXER_RUN_NAME }}"
     image: "{{ JAVA_SOFTWARE_IMAGE_NAME}}"

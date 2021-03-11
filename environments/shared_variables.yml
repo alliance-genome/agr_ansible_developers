@@ -24,7 +24,7 @@ INFINISPAN_SERVER_NAME: "agr.{{ env }}.infinispan.server"
 INFINISPAN_ENV_IMAGE_NAME: "{{ REGISTRY }}/agr_infinispan_env:{{ INFINISPAN_ENV_IMAGE_FROM_AWS_TAG }}"
 INFINISPAN_DATA_IMAGE: "{{ REGISTRY }}/agr_infinispan_data_image:{{ INFINISPAN_DATA_IMAGE_FROM_AWS_TAG }}"
 
-# Java Software Variables (used for Indexer and Cacher)
+# Java Software Variables (used for Indexer, Cacher, and API)
 JAVA_SOFTWARE_RUN_IMAGE_NAME: "{{ REGISTRY }}/agr_java_software:{{ JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG }}"
 
 # Indexer Variables

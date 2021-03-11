@@ -1,20 +1,27 @@
 ---
+- name: Pulling Java Software Image {{ JAVA_SOFTWARE_RUN_IMAGE_NAME }} from AWS ECR
+  docker_image:
+    name: "{{ JAVA_SOFTWARE_RUN_IMAGE_NAME }}"
+  when: DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS
 
-- name: Recursively remove directory
+- name: Recursively removing directory agr_java_software
   ignore_errors: yes # If the directory is missing, ignore the error.
   file:
     path: agr_java_software
     state: absent
+  when: not DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS
 
-- name: Create directory
+- name: Creating directory agr_java_software
   file:
     path: agr_java_software
     state: directory
+  when: not DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS
 
 - git:
     repo: 'https://github.com/alliance-genome/agr_java_software.git'
     version: "{{ GITHUB_JAVA_SOFTWARE_BRANCH }}"
     dest: "agr_java_software"
+  when: not DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS
 
-- name: Build the indexer docker image
+- name: Building the indexer docker image using the branch {{ GITHUB_JAVA_SOFTWARE_BRANCH }} from GitHub.
   command: docker build --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ JAVA_SOFTWARE_IMAGE_NAME }}" agr_java_software
