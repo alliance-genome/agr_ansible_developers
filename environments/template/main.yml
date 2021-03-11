@@ -56,6 +56,7 @@ GITHUB_LOADER_BRANCH: "AGR-2618"
 RUN_LOADER_TESTS: true
 
 # If running the loader test set (a subset of data), set the following to true.
+# TODO This is not yet implemented.
 LOADER_TEST_SET: false
 
 ###############
