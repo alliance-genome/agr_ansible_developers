@@ -2,7 +2,7 @@
 
 - import_playbook: playbook_launch_pre_tasks.yml
 
-- name: Run Neo
+- name: Run Neo4j
   hosts: remote
   user: core
   gather_facts: False
@@ -13,10 +13,9 @@
     - "environments/shared_variables.yml"
 
   tasks:
-    - name: Start Neo
+    - name: Stop Neo
       block:
-        - include_tasks: tasks/stop_neo_env.yml
-        - include_tasks: tasks/start_neo_env.yml
+        - include_tasks: tasks/stop_neo.yml
         - set_fact:
             failed_flag: "passed"
       rescue:
@@ -25,6 +24,29 @@
         - set_fact:
             failed_flag: "failed"
 
+    - name: Start Neo ENV
+      block:
+        - include_tasks: tasks/start_neo_env.yml
+        - set_fact:
+            failed_flag: "passed"
+      rescue:
+        - debug:
+            msg: "Error Detected Failing Build"
+        - set_fact:
+            failed_flag: "failed"
+    when: not DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS
+
+    - name: Start Neo Data
+    block:
+      - include_tasks: tasks/start_neo_data.yml
+      - set_fact:
+          failed_flag: "passed"
+    rescue:
+      - debug:
+          msg: "Error Detected Failing Build"
+      - set_fact:
+          failed_flag: "failed"
+    when: DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS
 
 - name: Check Failures
   hosts: remote

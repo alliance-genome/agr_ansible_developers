@@ -14,7 +14,7 @@
   tasks:
     - name: Stop Neo
       block:
-        - include_tasks: tasks/stop_neo_env.yml
+        - include_tasks: tasks/stop_neo.yml
         - set_fact:
             failed_flag: "passed"
       rescue:

@@ -10,12 +10,15 @@ NET: "main"
 
 ALLIANCE_RELEASE: 4.0.0
 
+# These values do not need to be altered often.
 PLAYBOOK_NAME: "{{ lookup('env','PLAYBOOK_NAME') or 'Test Server' }}"
 THREADED: "{{ lookup('env','THREADED') or 'true' }}"
 DOWNLOAD_HOST: "download.alliancegenome.org"
 FMS_API_URL: "https://fms.alliancegenome.org"
-GENERATE_REPORTS: false
 COMPUTE_INSTANCE_TYPE: r5d.8xlarge
+
+# TODO Generating reports is not yet supported.
+GENERATE_REPORTS: false
 
 ##################
 # Neo4J settings #

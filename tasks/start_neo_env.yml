@@ -24,3 +24,11 @@
       NEO4J_dbms_memory_pagecache_size: "{{ NEO_PAGE_CACHE }}"
       NEO4J_dbms_memory_heap_maxSize: "{{ NEO_MAX_HEAP }}"
       NEO4J_AUTH: "none" 
+
+- name: Waiting for Neo4j to come online
+  shell: docker exec -t {{ NEO_SERVER_NAME }} \
+    bash -c "until echo 'match (n) return count(n);' | bin/cypher-shell -a bolt://localhost:7687; do echo $? ; sleep 1; done"
+  register: result
+  until: result.stdout.find("count")
+  retries: 60
+  delay: 10

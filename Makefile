@@ -23,14 +23,26 @@ startdb: build
 stopdb: build
 	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts stop_neo.yml --vault-password-file=.password
 
-restartdb:
+restartdb: build
 	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts restart_neo.yml --vault-password-file=.password
-
-restart_elk:
-	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts restart_elk.yml --vault-password-file=.password
 
 run_loader: build
 	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_loader.yml --vault-password-file=.password
+
+run_indexer: build
+	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_indexer.yml --vault-password-file=.password
+
+run_cacher: build
+	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_cacher.yml --vault-password-file=.password
+
+run_api: build
+	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_api.yml --vault-password-file=.password
+
+run_ui: build
+	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_ui.yml --vault-password-file=.password
+
+run_nginx: build
+	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_nginx.yml --vault-password-file=.password
 
 terminate: build
 	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts playbook_terminate_instance.yml --vault-password-file=.password
