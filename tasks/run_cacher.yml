@@ -3,7 +3,7 @@
 - name: Running Cacher
   docker_container:
     name: "{{ CACHER_RUN_NAME }}"
-    image: "{{ JAVA_SOFTWARE_IMAGE_NAME }}"
+    image: "{{ JAVA_SOFTWARE_RUN_IMAGE_NAME }}"
     detach: no
     recreate: yes
     log_driver: "gelf"
