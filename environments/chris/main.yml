@@ -42,7 +42,7 @@ NEO4J_DATA_IMAGE_FROM_AWS_TAG: build
 # Loader settings #
 ###################
 # Set the following value to true in order to download a pre-compiled image of the loader from AWS.
-DOWNLOAD_LOADER_IMAGE_FROM_AWS: false
+DOWNLOAD_LOADER_IMAGE_FROM_AWS: true
 # If the above is true, please specify the tag for the Loader image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_loader_run?region=us-east-1
