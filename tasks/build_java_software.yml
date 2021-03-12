@@ -24,4 +24,4 @@
   when: not DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS
 
 - name: Building the indexer docker image using the branch {{ GITHUB_JAVA_SOFTWARE_BRANCH }} from GitHub.
-  command: docker build --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ JAVA_SOFTWARE_IMAGE_NAME }}" agr_java_software
+  command: docker build --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ JAVA_SOFTWARE_RUN_IMAGE_NAME }}" agr_java_software
