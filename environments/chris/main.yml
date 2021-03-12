@@ -30,7 +30,7 @@ NEO_ENV_IMAGE_FROM_AWS_TAG: build
 
 # Flagging the following variable as true to download a pre-populated Neo4J data image from AWS ECR.
 # This assumes that you **do not** wish to run the Loader / QC and instead proceed starting with the Indexer.
-DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: false
+DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true
 
 # If DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS is true, a pre-populated Neo4J database will be downloaded from AWS ECR.
 # Please specify the tag to use for this Neo4J data image.
