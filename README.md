@@ -65,4 +65,4 @@
 |`run_jbrowse`| TODO ~~Run a JBrowse instance~~.|
 
 ### Terminate the AWS EC2 instance.
-- When you are finished working with your instance, be sure to shut it down with the command `make terminate` run from the `agr_ansible_developers` directory.
+- When you are finished working with your instance, be sure to shut it down with the command `make terminate` run from the `agr_ansible_developers` directory. The `hosts` file _must include_ your server's IP address under the `[remote]` section.
