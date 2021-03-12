@@ -3,7 +3,7 @@ CONTAINER := agr_ansible_run
 TAG := latest
 
 # Change this value to match the folder name you created in environments.
-ENV=main
+ENV=chris
 
 build: pull
 	docker build -t ${REG}/${CONTAINER}:${TAG} .
