@@ -1,10 +1,13 @@
 # Ansible for Developers
 
-### Before cloning this repository.
+### Additional requirements before using this repository.
 - Contact someone from the DevOps team in order to:
     - Obtain access to EC2 servers running on us-east-2.
+    - Obtain access to AWS ECR for our Docker images.
     - Obtain a copy of the Ansible vault password file to store in the repository on your local computer. **NEVER commit this file to the repository.**
-    
+- Install AWS command line interface >= version 2 (AWS CLI v2). 
+- Test whether you can login to AWS ECR via Docker by running the following command:
+    - `aws ecr get-login-password | docker login -u AWS --password-stdin https://100225593120.dkr.ecr.us-east-1.amazonaws.com`
 ### Clone the repository.
 - Clone `agr_ansible_developers` to your local machine.
 
@@ -53,6 +56,7 @@
 |`stopdb`| Stop the Neo4J database. **This also removes the container.**|
 |`restartdb` | Restart the Neo4J database **This removes and creates a new container.**|
 |`run_loader`| Run the loader.|
+|`run_loader_tests`| Runs the loader's integrated tests. This requires a populated Neo4J server.|
 |`run_indexer`| Run the indexer.|
 |`run_cacher`| Run the cacher.|
 |`run_api`| Start the API.|
@@ -61,4 +65,4 @@
 |`run_jbrowse`| TODO ~~Run a JBrowse instance~~.|
 
 ### Terminate the AWS EC2 instance.
-- When you are finished working with your instance, be sure to shut it down with the command `make terminate` run from the `agr_ansible_developers` directory.
+- When you are finished working with your instance, be sure to shut it down with the command `make terminate` run from the `agr_ansible_developers` directory. The `hosts` file _must include_ your server's IP address under the `[remote]` section.

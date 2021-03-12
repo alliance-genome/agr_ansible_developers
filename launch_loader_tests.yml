@@ -1,10 +1,13 @@
 ---
 - import_playbook: playbook_launch_pre_tasks.yml
 
-- name: Run Neo
+- name: Run Loader Tests
   hosts: remote
   user: core
   gather_facts: False
+
+  vars:
+    API_ACCESS_TOKEN: "{{ LOADER_BUILD_API_ACCESS_TOKEN }}"
 
   vars_files:
     - "environments/{{ env }}/main.yml" # ENV must always be loaded first
@@ -12,9 +15,9 @@
     - "environments/shared_variables.yml"
 
   tasks:
-    - name: Start Neo ENV
+    - name: Run Loader Tests
       block:
-        - include_tasks: tasks/start_neo_env.yml
+        - include_tasks: tasks/run_loader_tests.yml
         - set_fact:
             failed_flag: "passed"
       rescue:
@@ -22,20 +25,6 @@
             msg: "Error Detected Failing Build"
         - set_fact:
             failed_flag: "failed"
-      when: not DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS
-
-    - name: Start Neo Data
-      block:
-        - include_tasks: tasks/start_neo_data.yml
-        - set_fact:
-            failed_flag: "passed"
-      rescue:
-        - debug:
-            msg: "Error Detected Failing Build"
-        - set_fact:
-            failed_flag: "failed"
-      when: DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS
-
 
 - name: Check Failures
   hosts: remote

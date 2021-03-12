@@ -6,7 +6,7 @@
 # Name used for AWS URL.
 # Please replace with your name, e.g. "olin".
 # Do not leave this variable as "main".
-NET: "main"
+NET: "chris"
 
 ALLIANCE_RELEASE: 4.0.0
 
@@ -30,7 +30,7 @@ NEO_ENV_IMAGE_FROM_AWS_TAG: build
 
 # Flagging the following variable as true to download a pre-populated Neo4J data image from AWS ECR.
 # This assumes that you **do not** wish to run the Loader / QC and instead proceed starting with the Indexer.
-DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: false
+DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true
 
 # If DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS is true, a pre-populated Neo4J database will be downloaded from AWS ECR.
 # Please specify the tag to use for this Neo4J data image.
@@ -42,7 +42,7 @@ NEO4J_DATA_IMAGE_FROM_AWS_TAG: build
 # Loader settings #
 ###################
 # Set the following value to true in order to download a pre-compiled image of the loader from AWS.
-DOWNLOAD_LOADER_IMAGE_FROM_AWS: True
+DOWNLOAD_LOADER_IMAGE_FROM_AWS: true
 # If the above is true, please specify the tag for the Loader image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_loader_run?region=us-east-1
@@ -50,7 +50,7 @@ LOADER_IMAGE_FROM_AWS_TAG: build
 
 # If DOWNLOAD_LOADER_IMAGE_FROM_AWS is false, the loader will be built from GitHub.
 # Please specify the GitHub branch to use in order to build the loader.
-GITHUB_LOADER_BRANCH: "master"
+GITHUB_LOADER_BRANCH: "AGR-2618"
 
 # If running the loader test set (a subset of data), set the following to true.
 # TODO This is not yet implemented.
