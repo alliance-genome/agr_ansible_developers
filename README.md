@@ -53,6 +53,7 @@
 |`stopdb`| Stop the Neo4J database. **This also removes the container.**|
 |`restartdb` | Restart the Neo4J database **This removes and creates a new container.**|
 |`run_loader`| Run the loader.|
+|`run_loader_tests`| Runs the loader's integrated tests. This requires a populated Neo4J server.|
 |`run_indexer`| Run the indexer.|
 |`run_cacher`| Run the cacher.|
 |`run_api`| Start the API.|

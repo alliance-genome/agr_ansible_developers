@@ -52,9 +52,6 @@ LOADER_IMAGE_FROM_AWS_TAG: build
 # Please specify the GitHub branch to use in order to build the loader.
 GITHUB_LOADER_BRANCH: "AGR-2618"
 
-# To run the full suite of loader tests after Neo4J is populated, set the following value to true.
-RUN_LOADER_TESTS: true
-
 # If running the loader test set (a subset of data), set the following to true.
 # TODO This is not yet implemented.
 LOADER_TEST_SET: false
