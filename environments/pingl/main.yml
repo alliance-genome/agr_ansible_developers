@@ -30,13 +30,13 @@ NEO_ENV_IMAGE_FROM_AWS_TAG: build
 
 # Flagging the following variable as true to download a pre-populated Neo4J data image from AWS ECR.
 # This assumes that you **do not** wish to run the Loader / QC and instead proceed starting with the Indexer.
-DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: false
+DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true
 
 # If DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS is true, a pre-populated Neo4J database will be downloaded from AWS ECR.
 # Please specify the tag to use for this Neo4J data image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_neo4j_data_image?region=us-east-1
-NEO4J_DATA_IMAGE_FROM_AWS_TAG: build
+NEO4J_DATA_IMAGE_FROM_AWS_TAG: stage
 
 ###################
 # Loader settings #
@@ -86,7 +86,7 @@ JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG: build
 
 # If DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS is false, Java Software will be built from GitHub.
 # Please specify the GitHub branch to use in order to build Java Software.
-GITHUB_JAVA_SOFTWARE_BRANCH: "master"
+GITHUB_JAVA_SOFTWARE_BRANCH: "release-4.0.0"
 
 #######################
 # Infinispan settings #
@@ -94,7 +94,7 @@ GITHUB_JAVA_SOFTWARE_BRANCH: "master"
 # If building Infinispan from "scratch" by running the Cacher, please specify the tag to be used for the ENV image.
 # A list of available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_infinispan_env?region=us-east-1
-INFINISPAN_ENV_IMAGE_FROM_AWS_TAG: build
+INFINISPAN_ENV_IMAGE_FROM_AWS_TAG: stage
 
 # Set the following value to true in order to download a pre-populated image of Infinispan from AWS.
 DOWNLOAD_INFINISPAN_DATA_IMAGE_FROM_AWS: false
