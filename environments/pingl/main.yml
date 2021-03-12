@@ -88,6 +88,8 @@ JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG: build
 # Please specify the GitHub branch to use in order to build Java Software.
 GITHUB_JAVA_SOFTWARE_BRANCH: "release-4.0.0"
 
+CACHER_SPECIFIC_FLAGS: ""
+
 #######################
 # Infinispan settings #
 #######################

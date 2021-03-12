@@ -24,3 +24,4 @@
 
 - name: Building the loader docker image using the branch {{ GITHUB_QC_BRANCH }} from GitHub
   command: docker build --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ QC_IMAGE_NAME }}" agr_qc
+  when: not DOWNLOAD_QC_IMAGE_FROM_AWS
