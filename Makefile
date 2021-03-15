@@ -41,7 +41,7 @@ run_indexer: build
 run_cacher: build
 	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_cacher.yml --vault-password-file=.password
 
-run_api: build
+start_api: build
 	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_api.yml --vault-password-file=.password
 
 start_ui: build

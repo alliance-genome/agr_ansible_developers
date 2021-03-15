@@ -33,6 +33,10 @@
 - Before running Ansible, edit the Makefile variable `ENV` at the top of the file to match the name of the folder you've created in `environments`.
 
 ### Launch the AWS EC2 instance.
+- Login to the AWS ECR repo via Docker by running the command `make registry-login-docker`.
+    - This command may fail for Python 3 virtual environments.
+    - In this case, please run the command manually: `aws ecr get-login-password | docker login -u AWS --password-stdin https://100225593120.dkr.ecr.us-east-1.amazonaws.com`.
+        - The command `aws` may need to be written as `awsv2` for certain Python installations. If `aws` fails, try using `awsv2`.
 - Run the command `make launch` from the root directory to launch your AWS instance.
 - Check the Slack `#aws` channel for your server IP address and URL.
 - Logs are viewable online: 
@@ -80,3 +84,88 @@
 
 ### Terminate the AWS EC2 instance.
 - When you are finished working with your instance, be sure to shut it down with the command `make terminate` run from the `agr_ansible_developers` directory. The `hosts` file _must include_ your server's IP address under the `[remote]` section.
+
+## Example use cases
+
+### Running the loader using a GitHub branch in the `build` environment.
+- Be sure to follow all the preliminary steps above at the top of this readme.
+- Ensure the following variables are set in your `main.yml` file:
+    - Neo4J
+        - `NEO_ENV_IMAGE_FROM_AWS_TAG: build`
+        - `DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: false`
+    - Loader
+        - `DOWNLOAD_LOADER_IMAGE_FROM_AWS: True`
+        - `GITHUB_LOADER_BRANCH: "AGR-1234"` (Set `AGR-1234` to your GitHub branch.)
+- Run the following command to bring your server online:
+    - `make launch`
+- Logs can be viewed from the web address: `http://{YOUR_NET_VALUE}-dev.alliancegenome.org:5601/app/logtrail`
+- Add the IP address of the server to the `[remote]` section of your `hosts` file.
+- Start Neo4J as an empty database:
+    - `make startdb`
+- Run the loader:
+    - `make run_loader`
+- When finished, terminate your server:
+    - `make terminate`
+
+### Running the indexer using a GitHub branch in the `stage` environment with a prepopulated `stage` Neo4J.
+- Be sure to follow all the preliminary steps above at the top of this readme.
+- Ensure the following variables are set in your `main.yml` file:
+    - Neo4J
+        - `DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true`
+        - `NEO4J_DATA_IMAGE_FROM_AWS_TAG: stage`
+    - Indexer, Cacher, and API settings
+        - `DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS: false`
+        - `GITHUB_JAVA_SOFTWARE_BRANCH: "AGR-1234"` (Set `AGR-1234` to your GitHub branch.)
+    - Elasticsearch, Kibana, & Logstash settings
+        - `ES_IMAGE_FROM_AWS_TAG: stage`
+- Run the following command to bring your server online:
+    - `make launch`
+- Logs can be viewed from the web address: `http://{YOUR_NET_VALUE}-dev.alliancegenome.org:5601/app/logtrail`
+- Add the IP address of the server to the `[remote]` section of your `hosts` file.
+- Start Neo4J as a prepopulated database:
+    - `make startdb`
+- Run the indexer with your custom branch:
+    - `make run_indexer`
+- When finished, terminate your server:
+    - `make terminate`
+  
+### Launch a website using a GitHub branch for the UI with prepopulated data from `build`.
+- Be sure to follow all the preliminary steps above at the top of this readme.
+- Ensure the following variables are set in your `main.yml` file:
+    - Neo4J
+        - `DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true`
+        - `NEO4J_DATA_IMAGE_FROM_AWS_TAG: build`
+    - Indexer, Cacher, and API settings
+        - `DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS: true`
+        - `JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG: build`
+    - Elasticsearch, Kibana, & Logstash settings
+        - `ES_IMAGE_FROM_AWS_TAG: build`
+    - Infinispan settings
+        - `DOWNLOAD_INFINISPAN_DATA_IMAGE_FROM_AWS: true`
+        - `INFINISPAN_DATA_IMAGE_FROM_AWS_TAG: build`
+    - UI settings
+        - `DOWNLOAD_UI_IMAGE_FROM_AWS: false`
+        - `GITHUB_UI_BRANCH: "AGR-1234"` (Set `AGR-1234` to your GitHub branch.)
+    - Nginx settings
+        - `NGINX_IMAGE_FROM_AWS_TAG: build`
+- Run the following command to bring your server online:
+    - `make launch`
+- Logs can be viewed from the web address: `http://{YOUR_NET_VALUE}-dev.alliancegenome.org:5601/app/logtrail`
+- Add the IP address of the server to the `[remote]` section of your `hosts` file.
+- Start Neo4J as a prepopulated database:
+    - `make startdb`
+- Run the indexer:
+    - `make run_indexer`
+    - After the indexer is finished, be sure to update the `site_index` as described above in the section above, "Important Note regarding the Indexer and generating indexes."
+- Start Infinispan with prepopulated data:
+    - `make start_infinispan`
+- Start the API:
+    - `make start_api`
+- Start the UI with your custom branch:
+    - `make start_ui`
+- Start Nginx:
+    - `make start_nginx`
+- Your site should now be online at the following address:
+    - `http://{YOUR_NET_VALUE}-dev.alliancegenome.org`
+- When finished, terminate your server:
+    - `make terminate`  
