@@ -104,6 +104,9 @@
     - `make startdb`
 - Run the loader:
     - `make run_loader`
+- If you've pushed changes to your GitHub branch and need to re-run the loader:
+    - `make restartdb`
+    - `make run_loader`
 - When finished, terminate your server:
     - `make terminate`
 
@@ -125,6 +128,8 @@
 - Start Neo4J as a prepopulated database:
     - `make startdb`
 - Run the indexer with your custom branch:
+    - `make run_indexer`
+- If you've pushed changes to your GitHub branch and need to re-run the indexer, simply run the same command again:
     - `make run_indexer`
 - When finished, terminate your server:
     - `make terminate`
@@ -163,6 +168,8 @@
     - `make start_api`
 - Start the UI with your custom branch:
     - `make start_ui`
+- If you've pushed changes to your GitHub branch and need to restart the UI, simply run the same command again:
+    - `make start_ui`  
 - Start Nginx:
     - `make start_nginx`
 - Your site should now be online at the following address:
