@@ -66,5 +66,17 @@
 |`start_nginx`| Start Nginx.|
 |`run_jbrowse`| TODO ~~Run a JBrowse instance~~.|
 
+### Important Note regarding the Indexer and generating indexes.
+- Once the indexer is run, it will generate a timestamped index using your ENV name, _e.g._ `site_index_chris_1615817944264
+`.
+- You'll need to launch Cerebro via the web interface on your server and assign an alias for this index in order to launch a functioning website.
+    - Visit http://\<your env name\>-dev.alliancegenome.org:9000/
+    - Login with the node address `http://elasticsearch:9200`
+    - Click `more` at the top navigation bar and choose `aliases`. 
+    - Under `changes` on the right, type `site_index` in the alias box and then choose your newly created index from the `select index` dropdown.
+    - Click the plus symbol to the far right.
+    - Click the apply button to the far right.
+- This process will need to be repeated _each time_ the indexer is run. We are currently working to automate this process and will update this README with any changes in the near future.  
+
 ### Terminate the AWS EC2 instance.
 - When you are finished working with your instance, be sure to shut it down with the command `make terminate` run from the `agr_ansible_developers` directory. The `hosts` file _must include_ your server's IP address under the `[remote]` section.
