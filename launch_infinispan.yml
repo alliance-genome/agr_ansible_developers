@@ -1,7 +1,7 @@
 ---
 - import_playbook: playbook_launch_pre_tasks.yml
 
-- name: Run Neo
+- name: Run Infinispan
   hosts: remote
   user: core
   gather_facts: False
@@ -12,9 +12,9 @@
     - "environments/shared_variables.yml"
 
   tasks:
-    - name: Start Neo4j with preloaded data
+    - name: Run Infinispan with preloaded data
       block:
-        - include_tasks: tasks/start_neo_data.yml
+        - include_tasks: tasks/start_infinispan_data.yml
         - set_fact:
             failed_flag: "passed"
       rescue:
@@ -22,11 +22,11 @@
             msg: "Error Detected Failing Build"
         - set_fact:
             failed_flag: "failed"
-      when: DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS
+      when: DOWNLOAD_INFINISPAN_DATA_IMAGE_FROM_AWS
 
-    - name: Start Neo env
+    - name: Run Infinispan env
       block:
-        - include_tasks: tasks/start_neo_env.yml
+        - include_tasks: tasks/start_infinispan_env.yml
         - set_fact:
             failed_flag: "passed"
       rescue:
@@ -34,7 +34,8 @@
             msg: "Error Detected Failing Build"
         - set_fact:
             failed_flag: "failed"
-      when: not DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS
+      when: not DOWNLOAD_INFINISPAN_DATA_IMAGE_FROM_AWS
+
 
 - name: Check Failures
   hosts: remote

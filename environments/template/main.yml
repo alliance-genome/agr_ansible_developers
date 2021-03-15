@@ -70,23 +70,6 @@ QC_IMAGE_FROM_AWS_TAG: build
 # Please specify the GitHub branch to use in order to build the QC software.
 GITHUB_QC_BRANCH: "master"
 
-#####################################
-# Indexer, Cacher, and API settings #
-#####################################
-# Set the following value to true in order to download a pre-compiled image of Java Software from AWS.
-# This includes the Indexer, Cacher, and API.
-DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS: false
-# If the above is true, please specify the tag for the Java Software image.
-# Available tags can be found here:
-# https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_java_software?region=us-east-1
-JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG: build
-
-# If DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS is false, Java Software will be built from GitHub.
-# Please specify the GitHub branch to use in order to build Java Software.
-GITHUB_JAVA_SOFTWARE_BRANCH: "master"
-
-CACHER_SPECIFIC_FLAGS: ""
-
 #######################
 # Infinispan settings #
 #######################
@@ -103,6 +86,26 @@ DOWNLOAD_INFINISPAN_DATA_IMAGE_FROM_AWS: false
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_infinispan_data_image?region=us-east-1
 INFINISPAN_DATA_IMAGE_FROM_AWS_TAG: build
+
+#####################################
+# Indexer, Cacher, and API settings #
+#####################################
+# Set the following value to true in order to download a pre-compiled image of Java Software from AWS.
+# This includes the Indexer, Cacher, and API.
+DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS: false
+# If the above is true, please specify the tag for the Java Software image.
+# Available tags can be found here:
+# https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_java_software?region=us-east-1
+JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG: build
+
+# If DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS is false, Java Software will be built from GitHub.
+# Please specify the GitHub branch to use in order to build Java Software.
+GITHUB_JAVA_SOFTWARE_BRANCH: "master"
+
+# To run specific classes of data with the cacher, please specify the names below.
+# Multiple class names can be used if separated by spaces.
+# e.g. CACHER_SPECIFIC_FLAGS: "GenePhenotypeCacher DiseaseCacher"
+CACHER_SPECIFIC_FLAGS: ""
 
 ##############################################
 # Elasticsearch, Kibana, & Logstash settings #

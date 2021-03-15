@@ -58,7 +58,8 @@
 |`run_loader`| Run the loader.|
 |`run_loader_tests`| Runs the loader's integrated tests. This requires a populated Neo4J server.|
 |`run_indexer`| Run the indexer.|
-|`run_cacher`| Run the cacher.|
+|`start_infinispan`| Start infinispan.|
+|`run_cacher`| Run the cacher. Requires starting infinispan first.|
 |`run_api`| Start the API.|
 |`run_ui`| Start the UI.|
 |`run_nginx`| Start Nginx.|

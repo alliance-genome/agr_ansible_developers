@@ -3,7 +3,7 @@ CONTAINER := agr_ansible_run
 TAG := latest
 
 # Change this value to match the folder name you created in environments.
-ENV=pingl
+ENV=chris
 
 build: pull
 	docker build -t ${REG}/${CONTAINER}:${TAG} .
@@ -31,6 +31,9 @@ run_loader: build
 
 run_loader_tests: build
 	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_loader_tests.yml --vault-password-file=.password
+
+start_infinispan: build
+	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_infinispan.yml --vault-password-file=.password
 
 run_indexer: build
 	docker run -it ${REG}/${CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_indexer.yml --vault-password-file=.password
@@ -60,4 +63,4 @@ endif
 	${DOCKER_LOGIN_CMD}
 endif
 
-# aws ecr get-login-password | docker login -u AWS --password-stdin https://100225593120.dkr.ecr.us-east-1.amazonaws.com
+# awsv2 ecr get-login-password | docker login -u AWS --password-stdin https://100225593120.dkr.ecr.us-east-1.amazonaws.com
