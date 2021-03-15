@@ -83,7 +83,7 @@
 - This process will need to be repeated _each time_ the indexer is run. We are currently working to automate this process and will update this README with any changes in the near future.  
 
 ### Terminate the AWS EC2 instance.
-- When you are finished working with your instance, be sure to shut it down with the command `make terminate` run from the `agr_ansible_developers` directory. The `hosts` file _must include_ your server's IP address under the `[remote]` section.
+- When you are finished working with your instance, be sure to shut it down with the command `make terminate` run from the `agr_ansible_developers` directory. The `hosts` file _must include_ your server's IP address under the `[remote]` section, as described earlier.
 
 ## Example use cases
 
