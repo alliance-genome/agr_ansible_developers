@@ -74,7 +74,7 @@
 - Once the indexer is run, it will generate a timestamped index using your ENV name, _e.g._ `site_index_chris_1615817944264
 `.
 - You'll need to launch Cerebro via the web interface on your server and assign an alias for this index in order to launch a functioning website.
-    - Visit http://\<your env name\>-dev.alliancegenome.org:9000/
+    - Visit `http://{YOUR_NET_VALUE}-dev.alliancegenome.org:9000/`
     - Login with the node address `http://elasticsearch:9200`
     - Click `more` at the top navigation bar and choose `aliases`. 
     - Under `changes` on the right, type `site_index` in the alias box and then choose your newly created index from the `select index` dropdown.
