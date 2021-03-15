@@ -15,6 +15,9 @@
     ports:
       - "9200:9200"
       - "9300:9300"
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
     env:
       discovery.type: single-node
 

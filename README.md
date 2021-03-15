@@ -38,7 +38,8 @@
 - Logs are viewable online: 
     - `http://{YOUR_NET_VALUE}-dev.alliancegenome.org:5601/app/logtrail`
     - Click the `All Systems` button at the bottom of the LogTrail screen to view output from different Docker containers on your server.
-
+    - After launching new services, the browser window may need to be refreshed before the output appears in the `All Systems` dropdown.
+  
 ### Edit the hosts file after running.
 #### hosts
 - After the instance is online, obtain the IP address from either the `#aws` Slack channel or the Ansible console on your local machine. The IP will be printed in the console after the server is launched.
@@ -61,8 +62,8 @@
 |`start_infinispan`| Start infinispan.|
 |`run_cacher`| Run the cacher. Requires starting infinispan first.|
 |`run_api`| Start the API.|
-|`run_ui`| Start the UI.|
-|`run_nginx`| Start Nginx.|
+|`start_ui`| Start the UI.|
+|`start_nginx`| Start Nginx.|
 |`run_jbrowse`| TODO ~~Run a JBrowse instance~~.|
 
 ### Terminate the AWS EC2 instance.

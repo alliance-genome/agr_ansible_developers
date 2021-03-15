@@ -36,7 +36,7 @@ DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true
 # Please specify the tag to use for this Neo4J data image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_neo4j_data_image?region=us-east-1
-NEO4J_DATA_IMAGE_FROM_AWS_TAG: stage
+NEO4J_DATA_IMAGE_FROM_AWS_TAG: build
 
 ###################
 # Loader settings #
@@ -75,7 +75,7 @@ GITHUB_QC_BRANCH: "master"
 #####################################
 # Set the following value to true in order to download a pre-compiled image of Java Software from AWS.
 # This includes the Indexer, Cacher, and API.
-DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS: false
+DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS: true
 # If the above is true, please specify the tag for the Java Software image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_java_software?region=us-east-1
@@ -96,7 +96,7 @@ CACHER_SPECIFIC_FLAGS: ""
 INFINISPAN_ENV_IMAGE_FROM_AWS_TAG: build
 
 # Set the following value to true in order to download a pre-populated image of Infinispan from AWS.
-DOWNLOAD_INFINISPAN_DATA_IMAGE_FROM_AWS: false
+DOWNLOAD_INFINISPAN_DATA_IMAGE_FROM_AWS: true
 
 # If DOWNLOAD_INFINISPAN_DATA_IMAGE_FROM_AWS is true, a pre-populated Infinispan image will be downloaded from AWS ECR.
 # Please specify the tag to use for this Infinispan data image.
@@ -121,7 +121,7 @@ KIBANA_IMAGE_FROM_AWS_TAG: build
 # UI settings #
 ###############
 # Set the following value to true in order to download a pre-compiled image of the QC software from AWS.
-DOWNLOAD_UI_IMAGE_FROM_AWS: false
+DOWNLOAD_UI_IMAGE_FROM_AWS: true
 # If the above is true, please specify the tag for the QC image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_ui_server?region=us-east-1
