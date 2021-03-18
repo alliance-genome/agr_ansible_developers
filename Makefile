@@ -1,6 +1,6 @@
 REG := 100225593120.dkr.ecr.us-east-1.amazonaws.com
 TAG := latest
-CONTAINER := agr_ansible_run_unlocked
+CONTAINER := agr_ansible_run
 
 # Change this value to match the folder name you created in environments.
 ENV=chris
