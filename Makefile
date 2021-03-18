@@ -14,7 +14,7 @@ endif
 	${DOCKER_LOGIN_CMD}
 endif
 
-build: registry-docker-login pull-base
+build:
 	docker build -t agrlocal/agr_ansible_run_unlocked:${TAG} --build-arg REG=${REG} --build-arg ALLIANCE_RELEASE=${TAG} .
 
 pull:
