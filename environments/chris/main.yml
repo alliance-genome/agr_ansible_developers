@@ -36,7 +36,7 @@ DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true
 # Please specify the tag to use for this Neo4J data image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_neo4j_data_image?region=us-east-1
-NEO4J_DATA_IMAGE_FROM_AWS_TAG: build
+NEO4J_DATA_IMAGE_FROM_AWS_TAG: stage
 
 ###################
 # Loader settings #
