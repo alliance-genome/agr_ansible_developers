@@ -14,6 +14,11 @@
   vars:
     on_demand: false
 
+  #Note: Define the on_demand variable as true to request on-demand instances
+  #Default launch behaviour: spot instances
+  vars:
+    on_demand: false
+
   tasks:
     - name: Fetch on-demand pricing
       shell: >-

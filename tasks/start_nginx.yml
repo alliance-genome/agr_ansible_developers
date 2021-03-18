@@ -20,6 +20,9 @@
       - "443:443"
     networks:
       - name: "{{ NET }}"
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
     env:
       API_URL: "http://{{ API_SERVER_NAME }}:8080"
     volumes:

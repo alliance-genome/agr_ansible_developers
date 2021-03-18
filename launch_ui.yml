@@ -15,7 +15,7 @@
     - name: Build UI, Run UI
       block:
         - include_tasks: tasks/build_ui.yml
-        - include_tasks: tasks/run_ui.yml
+        - include_tasks: tasks/start_ui.yml
         - set_fact:
             failed_flag: "passed"
       rescue:
