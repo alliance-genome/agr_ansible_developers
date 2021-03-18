@@ -2,7 +2,7 @@
 localhost
 
 [remote]
-18.223.237.239
+3.133.113.135
 
 [remote:vars]
 ansible_python_interpreter=/home/core/pypy/bin/pypy
