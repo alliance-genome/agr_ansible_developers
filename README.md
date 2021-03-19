@@ -5,9 +5,10 @@
     - Obtain access to EC2 servers running on us-east-2.
     - Obtain access to AWS ECR for our Docker images.
     - Obtain a copy of the Ansible vault password file to store in the repository on your local computer. **NEVER commit this file to the repository.**
-- Install AWS command line interface >= version 2 (AWS CLI v2). 
 - Test whether you can login to AWS ECR via Docker by running the following command:
-    - `aws ecr get-login-password | docker login -u AWS --password-stdin https://100225593120.dkr.ecr.us-east-1.amazonaws.com`
+    ```bash
+    docker run --rm -it -v ~/.aws:/root/.aws amazon/aws-cli ecr get-login-password | docker login -u AWS --password-stdin https://100225593120.dkr.ecr.us-east-1.amazonaws.com
+    ```
 ### Clone the repository.
 - Clone `agr_ansible_developers` to your local machine.
 
