@@ -27,38 +27,38 @@ bash:
 launch: build
 	docker run -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_aws.yml --vault-password-file=.password
 
-startdb:
+startdb: build
 	docker run -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_neo.yml --vault-password-file=.password
 
-stopdb:
+stopdb: build
 	docker run -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts stop_neo.yml --vault-password-file=.password
 
-restartdb:
+restartdb: build
 	docker run -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts restart_neo.yml --vault-password-file=.password
 
-run_loader:
+run_loader: build
 	docker run -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_loader.yml --vault-password-file=.password
 
-run_loader_tests:
+run_loader_tests: build
 	docker run -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_loader_tests.yml --vault-password-file=.password
 
-start_infinispan:
+start_infinispan: build
 	docker run -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_infinispan.yml --vault-password-file=.password
 
-run_indexer:
+run_indexer: build
 	docker run -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_indexer.yml --vault-password-file=.password
 
-run_cacher:
+run_cacher: build
 	docker run -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_cacher.yml --vault-password-file=.password
 
-start_api:
+start_api: build
 	docker run -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_api.yml --vault-password-file=.password
 
-start_ui:
+start_ui: build
 	docker run -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_ui.yml --vault-password-file=.password
 
-start_nginx:
+start_nginx: build
 	docker run -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_nginx.yml --vault-password-file=.password
 
-terminate:
+terminate: build
 	docker run -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts playbook_terminate_instance.yml --vault-password-file=.password
