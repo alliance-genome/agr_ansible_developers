@@ -15,10 +15,10 @@ endif
 	${DOCKER_LOGIN_CMD}
 endif
 
-build: pull
+build: pull registry-docker-login
 	docker build -t ${LOCAL_RUN_CONTAINER}:${TAG} .
 
-pull:
+pull: registry-docker-login
 	docker pull ${REG}/agr_base_linux_env:${TAG}
 
 bash:
