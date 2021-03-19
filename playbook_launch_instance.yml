@@ -63,6 +63,13 @@
       with_items: "{{ ec2.instances }}"
       register: launched
 
+    - name: Update hosts file with IP address
+      replace:
+        path: /usr/src/ansible/hosts
+        regexp: '\[remote\]\n[^\n\[\]]*'
+        replace: "[remote]\n{{ item.public_ip }}"
+      with_items: "{{ ec2.instances }}"
+
     - name: Retrieve all volumes for a queried instance
       ec2_vol:
         instance: '{{ item }}'
