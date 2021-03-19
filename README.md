@@ -5,10 +5,7 @@
     - Obtain access to EC2 servers running on us-east-2.
     - Obtain access to AWS ECR for our Docker images.
     - Obtain a copy of the Ansible vault password file to store in the repository on your local computer. **NEVER commit this file to the repository.**
-- Test whether you can login to AWS ECR via Docker by running the following command:
-    ```bash
-    docker run --rm -it -v ~/.aws:/root/.aws amazon/aws-cli ecr get-login-password | docker login -u AWS --password-stdin https://100225593120.dkr.ecr.us-east-1.amazonaws.com
-    ```
+
 ### Clone the repository.
 - Clone `agr_ansible_developers` to your local machine.
 
@@ -34,30 +31,20 @@
 - Before running Ansible, edit the Makefile variable `ENV` at the top of the file to match the name of the folder you've created in `environments`.
 
 ### Launch the AWS EC2 instance.
-- Login to the AWS ECR repo via Docker by running the command `make registry-login-docker`.
-    - This command may fail for Python 3 virtual environments.
-    - In this case, please run the command manually: `aws ecr get-login-password | docker login -u AWS --password-stdin https://100225593120.dkr.ecr.us-east-1.amazonaws.com`.
-        - The command `aws` may need to be written as `awsv2` for certain Python installations. If `aws` fails, try using `awsv2`.
 - Run the command `make launch` from the root directory to launch your AWS instance.
 - Check the Slack `#aws` channel for your server IP address and URL.
 - Logs are viewable online: 
     - `http://{YOUR_NET_VALUE}-dev.alliancegenome.org:5601/app/logtrail`
     - Click the `All Systems` button at the bottom of the LogTrail screen to view output from different Docker containers on your server.
     - After launching new services, the browser window may need to be refreshed before the output appears in the `All Systems` dropdown.
-  
-### Edit the hosts file after running.
-#### hosts
-- After the instance is online, obtain the IP address from either the `#aws` Slack channel or the Ansible console on your local machine. The IP will be printed in the console after the server is launched.
-- Open the `hosts` file in the `agr_ansible_developers` directory and change the IP address under `[remote]` to the newly obtained IP address.
-
+    
 ### Launch additional software on your AWS EC2 instance.
-- After editing the `hosts` file, other software can be launched on your AWS EC2 instance.
 - The following commands are available (use `make` before each command):
 
 | Make Command | Description |
 |---|---|
 |`launch`| Launch the AWS EC2 instance.|
-|`terminate`| Terminate the AWS EC2 instance. Requires an updated `hosts` file with the current instance's IP address.|
+|`terminate`| Terminate the AWS EC2 instance.
 |`startdb`| Start the Neo4J database. Required before most other steps.|
 |`stopdb`| Stop the Neo4J database. **This also removes the container.**|
 |`restartdb` | Restart the Neo4J database **This removes and creates a new container.**|
@@ -84,7 +71,7 @@
 - This process will need to be repeated _each time_ the indexer is run. We are currently working to automate this process and will update this README with any changes in the near future.  
 
 ### Terminate the AWS EC2 instance.
-- When you are finished working with your instance, be sure to shut it down with the command `make terminate` run from the `agr_ansible_developers` directory. The `hosts` file _must include_ your server's IP address under the `[remote]` section, as described earlier.
+- When you are finished working with your instance, be sure to shut it down with the command `make terminate` run from the `agr_ansible_developers` directory.
 
 ## Example use cases
 
@@ -100,7 +87,6 @@
 - Run the following command to bring your server online:
     - `make launch`
 - Logs can be viewed from the web address: `http://{YOUR_NET_VALUE}-dev.alliancegenome.org:5601/app/logtrail`
-- Add the IP address of the server to the `[remote]` section of your `hosts` file.
 - Start Neo4J as an empty database:
     - `make startdb`
 - Run the loader:
@@ -125,7 +111,6 @@
 - Run the following command to bring your server online:
     - `make launch`
 - Logs can be viewed from the web address: `http://{YOUR_NET_VALUE}-dev.alliancegenome.org:5601/app/logtrail`
-- Add the IP address of the server to the `[remote]` section of your `hosts` file.
 - Start Neo4J as a prepopulated database:
     - `make startdb`
 - Run the indexer with your custom branch:
@@ -157,7 +142,6 @@
 - Run the following command to bring your server online:
     - `make launch`
 - Logs can be viewed from the web address: `http://{YOUR_NET_VALUE}-dev.alliancegenome.org:5601/app/logtrail`
-- Add the IP address of the server to the `[remote]` section of your `hosts` file.
 - Start Neo4J as a prepopulated database:
     - `make startdb`
 - Run the indexer:
