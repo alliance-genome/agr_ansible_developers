@@ -1,5 +1,9 @@
 # Ansible for Developers
 
+This repository will allow you to run any of the major stages of the Alliance data pipeline on an AWS instance using Docker images from AWS ECR, code from GitHub branches, or a combination of both.
+
+Upon launching an AWS instance, a publicly-accessible URL is also created for demonstration and testing purposes (_e.g._ running a test version of the Alliance website for curator testing).
+
 ### Additional requirements before using this repository.
 - Contact someone from the DevOps team in order to:
     - Obtain access to EC2 servers running on us-east-2.
