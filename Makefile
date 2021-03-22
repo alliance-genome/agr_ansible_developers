@@ -1,7 +1,7 @@
 REG := 100225593120.dkr.ecr.us-east-1.amazonaws.com
 LOCAL_RUN_CONTAINER := agrlocal/agr_ansible_run_unlocked
 TAG := latest
-REGION := us-east-1
+AWS_REGION := us-east-1
 
 # Change this value to match the folder name you created in environments.
 ENV=chris
@@ -12,7 +12,7 @@ ifneq ($(shell echo ${REG} | egrep "ecr\..+\.amazonaws\.com"),)
 ifneq (${AWS_PROFILE},)
 	@$(eval DOCKER_LOGIN_CMD=${DOCKER_LOGIN_CMD} --profile ${AWS_PROFILE})
 endif
-	@$(eval DOCKER_LOGIN_CMD=${DOCKER_LOGIN_CMD} ecr get-login-password --region=${REGION} | docker login -u AWS --password-stdin https://${REG})
+	@$(eval DOCKER_LOGIN_CMD=${DOCKER_LOGIN_CMD} ecr get-login-password --region=${AWS_REGION} | docker login -u AWS --password-stdin https://${REG})
 	${DOCKER_LOGIN_CMD}
 endif
 
