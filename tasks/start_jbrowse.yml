@@ -1,0 +1,15 @@
+---
+
+- name: Pulling JBrowse Server Image {{ JBROWSE_SERVER_IMAGE }}
+  docker_image:
+    name: "{{ JBROWSE_SERVER_IMAGE }}"
+
+- name: Running JBrowse Server
+  docker_container:
+    name: "{{ JBROWSE_SERVER_NAME }}"
+    image: "{{ JBROWSE_SERVER_IMAGE }}"
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
+    networks:
+      - name: "{{ NET }}"

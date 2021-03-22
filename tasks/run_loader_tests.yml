@@ -1,13 +1,42 @@
 ---
+- name: Pulling Loader Image {{ LOADER_IMAGE_NAME }} from AWS ECR
+  docker_image:
+    name: "{{ LOADER_IMAGE_NAME }}"
+  when: DOWNLOAD_LOADER_IMAGE_FROM_AWS
 
-- name: Run Loader
+- name: Recursively removing directory agr_loader
+  ignore_errors: yes # If the directory is missing, ignore the error.
+  file:
+    path: agr_loader
+    state: absent
+  when: not DOWNLOAD_LOADER_IMAGE_FROM_AWS
+
+- name: Creating directory agr_loader
+  file:
+    path: agr_loader
+    state: directory
+  when: not DOWNLOAD_LOADER_IMAGE_FROM_AWS
+
+- git:
+    repo: 'https://github.com/alliance-genome/agr_loader.git'
+    version: "{{ GITHUB_LOADER_BRANCH }}"
+    dest: "agr_loader"
+  when: not DOWNLOAD_LOADER_IMAGE_FROM_AWS
+
+- name: Building the loader docker image using the branch {{ GITHUB_LOADER_BRANCH }} from GitHub
+  command: docker build --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ LOADER_IMAGE_NAME }}" agr_loader
+  when: not DOWNLOAD_LOADER_IMAGE_FROM_AWS
+
+- name: Running Loader tests against Neo4J
   docker_container:
     name: "{{ LOADER_RUN_NAME }}"
-    image: "{{ LOADER_TEST_RUN_IMAGE_NAME }}"
+    image: "{{ LOADER_IMAGE_NAME }}"
+    command: pytest --verbose
     detach: no
+    recreate: yes
     log_driver: "gelf"
     log_options:
-      gelf-address: "udp://{{ GELF_LOG_SERVER_NAME }}:12201"
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
     volumes:
       - "{{ NEO_VOLUME_NAME }}:/usr/src/app/tmp"
     networks:

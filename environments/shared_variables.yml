@@ -1,102 +1,91 @@
 ---
 
+# Ansible Specific Vars
 ansible_ssh_user: core
-ansible_python_interpreter: /home/core/pypy/bin/pypy
-
-ALLIANCE_RELEASE: "{{ lookup('env','ALLIANCE_RELEASE') }}"
 REGISTRY: 100225593120.dkr.ecr.us-east-1.amazonaws.com
+stdout_callback: debug
 
-# Env Images
-NEO_ENV_NAME: agr_neo4j_env
-ES_ENV_NAME: agr_elasticsearch_env
-KIBANA_ENV_NAME: agr_kibana_env
-INFINISPAN_ENV_NAME: agr_infinispan_env
-
-# Data Images
-NEO_DATA_IMAGE_NAME: agr_neo4j_data_image
-INFINISPAN_DATA_IMAGE_NAME: agr_infinispan_data_image
-
-# Runable images
-QC_IMAGE_NAME: agr_qc_run
-LOADER_IMAGE_NAME: agr_loader_run
-LOADER_TEST_IMAGE_NAME: agr_loader_test_run
-PREPROCESS_IMAGE_NAME: agr_preprocess_run
-JAVA_SOFTWARE_IMAGE_NAME: agr_java_software
-FILEGENER_IMAGE_NAME: agr_file_generator_run
-JBROWSE_IMAGE_NAME: agr_jbrowse_run
-APOLLO_IMAGE_NAME: agr_jbrowse_run
-
-# Server Images
-UI_IMAGE_NAME: agr_ui_server
-
-# Server Names
-UI_SERVER_NAME: "agr.{{ env }}.ui.server"
-JBROWSE_SERVER_NAME: "agr.{{ env }}.jbrowse.server"
-APOLLO_SERVER_NAME: "agr.{{ env }}.apollo.server"
-API_SERVER_NAME: "agr.{{ env }}.api.server"
+# Neo4j Variables
 NEO_SERVER_NAME: "agr.{{ env }}.neo4j.server"
-INFINISPAN_SERVER_NAME: "agr.{{ env }}.infinispan.server"
+NEO_DATA_IMAGE: "{{ REGISTRY }}/agr_neo4j_data_image:{{ NEO4J_DATA_IMAGE_FROM_AWS_TAG }}"
+NEO_ENV_IMAGE_NAME: "{{ REGISTRY }}/agr_neo4j_env:{{ NEO_ENV_IMAGE_FROM_AWS_TAG }}"
 
-#Elk Servers
-ES_SERVER_NAME: "elasticsearch" # Must be set to elasticsearch in order for log and kibana to work
-LOG_SERVER_NAME: "agr.{{ env }}.log.server" # Gelf runs outside the docker network
-GELF_LOG_SERVER_NAME: "localhost" # Gelf runs outside the docker network
-KIBANA_SERVER_NAME: "agr.{{ env }}.kibana.server"
-
-# Testing Vars
-API_TESTING_SERVER_NAME: "build.alliancegenome.internal"
-NEO_TESTING_SERVER_NAME: "build.alliancegenome.internal"
-ES_TESTING_SERVER_NAME: "build.alliancegenome.internal"
-CACHE_TESTING_SERVER_NAME: "build.alliancegenome.internal"
-
-# Running Names
-QC_RUN_NAME: "agr.{{ env }}.qc"
-API_TEST_NAME: "agr.{{ env }}.api.test"
+# Loader Variables
 LOADER_RUN_NAME: "agr.{{ env }}.loader"
-CACHER_RUN_NAME: "agr.{{ env }}.cacher"
+LOADER_TEST_RUN_NAME: "agr.{{ env }}.loader.test"
+LOADER_IMAGE_NAME: "{{ REGISTRY }}/agr_loader_run:{{ LOADER_IMAGE_FROM_AWS_TAG }}"
+LOADER_TEST_IMAGE_NAME: "{{ REGISTRY }}/agr_loader_test_run: {{ LOADER_IMAGE_FROM_AWS_TAG }}"
+
+# QC Variables
+QC_RUN_NAME: "agr.{{ env }}.qc"
+QC_IMAGE_NAME: "{{ REGISTRY }}/agr_qc_run:{{ QC_IMAGE_FROM_AWS_TAG }}"
+
+# Infinispan Variables
+INFINISPAN_SERVER_NAME: "agr.{{ env }}.infinispan.server"
+INFINISPAN_ENV_IMAGE_NAME: "{{ REGISTRY }}/agr_infinispan_env:{{ INFINISPAN_ENV_IMAGE_FROM_AWS_TAG }}"
+INFINISPAN_DATA_IMAGE: "{{ REGISTRY }}/agr_infinispan_data_image:{{ INFINISPAN_DATA_IMAGE_FROM_AWS_TAG }}"
+
+# Java Software Variables (used for Indexer, Cacher, and API)
+JAVA_SOFTWARE_RUN_IMAGE_NAME: "{{ REGISTRY }}/agr_java_software:{{ JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG }}"
+
+# Indexer Variables
 INDEXER_RUN_NAME: "agr.{{ env }}.indexer"
-LOADER_TEST_NAME: "agr.{{ env }}.loader.test"
-INDEXER_TEST_NAME: "agr.{{ env }}.indexer.test"
-FILE_GENER_RUN_NAME: "agr.{{ env }}.filegenerator"
+# Unsure of Indexer "test" implementation. TODO ask Olin.
+# INDEXER_TEST_NAME: "agr.{{ env }}.indexer.test"
+# INDEXER_TEST_IMAGE_NAME: "{{ REGISTRY }}/agr_java_software:{{ env }}_indexer"
 
-# Server Env DockerHub Paths
-ES_ENV_IMAGE_NAME: "{{ REGISTRY }}/{{ ES_ENV_NAME }}"
+# Cacher Variables
+CACHER_RUN_NAME: "agr.{{ env }}.cacher"
+
+# API Variables
+API_SERVER_NAME: "agr.{{ env }}.api.server"
+
+# Elasticsearch, Kibana, & Logstash
+LOG_SERVER_NAME: "agr.{{ env }}.log.server" # Gelf runs outside the docker network
+KIBANA_SERVER_NAME: "agr.{{ env }}.kibana.server"
+ES_SERVER_NAME: "elasticsearch" # Must be set to elasticsearch in order for Logstash and Kibana to work
+GELF_LOG_SERVER_NAME: "localhost" # Gelf runs outside the docker network
+
+ES_ENV_IMAGE_NAME: "{{ REGISTRY }}/agr_elasticsearch_env:{{ ES_IMAGE_FROM_AWS_TAG }}"
+KIBANA_IMAGE_NAME: "{{ REGISTRY }}/agr_kibana_env:{{ KIBANA_IMAGE_FROM_AWS_TAG }}"
 LOG_IMAGE_NAME: "docker.elastic.co/logstash/logstash:7.7.0"
-KIBANA_IMAGE_NAME: "{{ REGISTRY }}/{{ KIBANA_ENV_NAME }}"
-NEO_ENV_IMAGE_NAME: "{{ REGISTRY }}/{{ NEO_ENV_NAME }}"
-INFINISPAN_ENV_IMAGE_NAME: "{{ REGISTRY }}/{{ INFINISPAN_ENV_NAME }}"
 
-# Release Image names
-QC_RUN_IMAGE_NAME: "{{ REGISTRY }}/{{ QC_IMAGE_NAME }}:{{ ALLIANCE_RELEASE }}"
-LOADER_RUN_IMAGE_NAME: "{{ REGISTRY }}/{{ LOADER_IMAGE_NAME }}:{{ ALLIANCE_RELEASE }}"
-PREPROCESS_RUN_IMAGE_NAME: "{{ REGISTRY }}/{{ PREPROCESS_IMAGE_NAME }}:{{ ALLIANCE_RELEASE }}"
-NEO_RELEASE_IMAGE_NAME: "{{ REGISTRY }}/{{ NEO_DATA_IMAGE_NAME }}:{{ ALLIANCE_RELEASE }}"
-CACHER_RELEASE_IMAGE_NAME: "{{ REGISTRY }}/{{ INFINISPAN_DATA_IMAGE_NAME }}:{{ ALLIANCE_RELEASE }}"
-FILE_GENER_RUN_IMAGE_NAME: "{{ REGISTRY }}/{{ FILEGENER_IMAGE_NAME }}:{{ ALLIANCE_RELEASE }}"
-JAVA_SOFTWARE_RUN_IMAGE_NAME: "{{ REGISTRY }}/{{ JAVA_SOFTWARE_IMAGE_NAME }}:{{ ALLIANCE_RELEASE }}"
+# UI
+UI_RUN_NAME: "agr.{{ env }}.ui.server"
+UI_IMAGE_NAME: "{{ REGISTRY }}/agr_ui_server:{{ UI_IMAGE_FROM_AWS_TAG }}"
 
-LOADER_TEST_RUN_IMAGE_NAME: "{{ REGISTRY }}/{{ LOADER_IMAGE_NAME }}:{{ env }}_loader"
-API_TEST_IMAGE_NAME: "{{ REGISTRY }}/{{ JAVA_SOFTWARE_IMAGE_NAME }}:{{ env }}_api"
-INDEXER_TEST_IMAGE_NAME: "{{ REGISTRY }}/{{ JAVA_SOFTWARE_IMAGE_NAME }}:{{ env }}_indexer"
-FILE_GENER_TEST_RUN_IMAGE_NAME: "{{ REGISTRY }}/{{ FILEGENER_IMAGE_NAME }}:{{ env }}_filegen"
+# Nginx
+NGINX_RUN_NAME: "agr.{{ NET }}.nginx.server"
+NGINX_IMAGE_NAME: "{{ REGISTRY }}/agr_nginx:{{ NGINX_IMAGE_FROM_AWS_TAG }}"
 
-#Server Images
-UI_SERVER_IMAGE_NAME: "{{ REGISTRY }}/{{ UI_IMAGE_NAME }}:{{ ALLIANCE_RELEASE }}"
-JBROWSE_SERVER_IMAGE_NAME: "{{ REGISTRY }}/{{ JBROWSE_IMAGE_NAME }}:{{ ALLIANCE_RELEASE }}"
-APOLLO_SERVER_IMAGE_NAME: "{{ REGISTRY }}/{{ APOLLO_IMAGE_NAME }}:{{ ALLIANCE_RELEASE }}"
-
-# Convinience names
-CACHER_RUN_IMAGE_NAME: "{{ JAVA_SOFTWARE_RUN_IMAGE_NAME }}"
-INDEXER_RUN_IMAGE_NAME: "{{ JAVA_SOFTWARE_RUN_IMAGE_NAME }}"
-
-# Network names for pulling by simple name
-NEO_NETWORK_IMAGE_NAME: "{{ REGISTRY }}/{{ NEO_DATA_IMAGE_NAME }}:{{ NET }}"
-CACHER_NETWORK_IMAGE_NAME: "{{ REGISTRY }}/{{ INFINISPAN_DATA_IMAGE_NAME }}:{{ NET }}"
-
-# Config Options
+# Misc Config Options
+LOG_SERVER_ADDRESS: "udp://localhost:12201"
 NEO_VOLUME_NAME: agr_shared
 INFINISPAN_MEMORY: "32g"
 INDEXER_MEMORY: "32g"
 NEO_PAGE_CACHE: "48g"
 NEO_MAX_HEAP: "48g"
 CACHER_MEMORY: "80g"
+
+# Currently unused variables start here, most will be added in the future for developers.
+PREPROCESS_RUN_IMAGE_NAME: "{{ REGISTRY }}/{{ PREPROCESS_IMAGE_NAME }}:{{ ALLIANCE_RELEASE }}"
+FILE_GENER_TEST_RUN_IMAGE_NAME: "{{ REGISTRY }}/{{ FILEGENER_IMAGE_NAME }}:{{ env }}_filegen"
+FILE_GENER_RUN_IMAGE_NAME: "{{ REGISTRY }}/{{ FILEGENER_IMAGE_NAME }}:{{ ALLIANCE_RELEASE }}"
+QC_TEST_IMAGE_NAME: "{{ REGISTRY }}/{{ QC_IMAGE_NAME }}:{{ env }}_qc"
+API_TEST_IMAGE_NAME: "{{ REGISTRY }}/{{ JAVA_SOFTWARE_IMAGE_NAME }}:{{ env }}_api"
+PREPROCESS_IMAGE_NAME: agr_preprocess_run
+FILEGENER_IMAGE_NAME: agr_file_generator_run
+JBROWSE_IMAGE_NAME: agr_jbrowse_run
+APOLLO_IMAGE_NAME: agr_jbrowse_run
+
+# Server Names (currently unused)
+JBROWSE_SERVER_NAME: "agr.{{ env }}.jbrowse.server"
+APOLLO_SERVER_NAME: "agr.{{ env }}.apollo.server"
+
+# Running Names (currently unused)
+API_TEST_NAME: "agr.{{ env }}.api.test"
+FILE_GENER_RUN_NAME: "agr.{{ env }}.filegenerator"
+
+# Server Images (currently unused)
+JBROWSE_SERVER_IMAGE_NAME: "{{ REGISTRY }}/{{ JBROWSE_IMAGE_NAME }}:{{ ALLIANCE_RELEASE }}"
+APOLLO_SERVER_IMAGE_NAME: "{{ REGISTRY }}/{{ APOLLO_IMAGE_NAME }}:{{ ALLIANCE_RELEASE }}"

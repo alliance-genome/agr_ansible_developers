@@ -1,5 +1,4 @@
 ---
-
 - import_playbook: playbook_launch_pre_tasks.yml
 
 - name: Run Loader
@@ -27,6 +26,18 @@
             msg: "Error Detected Failing Build"
         - set_fact:
             failed_flag: "failed"
+
+    - name: Run Loader Tests
+      block:
+        - include_tasks: tasks/run_loader_tests.yml
+        - set_fact:
+            failed_flag: "passed"
+      rescue:
+        - debug:
+            msg: "Error Detected Failing Build"
+        - set_fact:
+            failed_flag: "failed"
+      when: RUN_LOADER_TESTS
 
 
 - name: Check Failures

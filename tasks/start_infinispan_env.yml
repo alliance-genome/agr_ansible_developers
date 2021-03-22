@@ -1,0 +1,17 @@
+- name: Pulling Infinispan env Image {{ INFINISPAN_ENV_IMAGE_NAME }}
+  docker_image:
+    name: "{{ INFINISPAN_ENV_IMAGE_NAME }}"
+
+- name: Running Infinispan
+  docker_container:
+    name: "{{ INFINISPAN_SERVER_NAME }}"
+    image: "{{ INFINISPAN_ENV_IMAGE_NAME }}"
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
+    networks:
+      - name: "{{ NET }}"
+    env:
+      MEM_OPTS: "-Xms{{ INFINISPAN_MEMORY }} -Xmx{{ INFINISPAN_MEMORY }}"
+      JAVA_OPTIONS: "-Xms{{ INFINISPAN_MEMORY }} -Xmx{{ INFINISPAN_MEMORY }}"
+      JAVA_OPTS: "-Xms{{ INFINISPAN_MEMORY }} -Xmx{{ INFINISPAN_MEMORY }}"

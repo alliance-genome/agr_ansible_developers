@@ -1,0 +1,28 @@
+---
+- name: Pulling Loader Image {{ UI_IMAGE_NAME }} from AWS ECR
+  docker_image:
+    name: "{{ UI_IMAGE_NAME }}"
+  when: DOWNLOAD_UI_IMAGE_FROM_AWS
+
+- name: Recursively removing directory agr_ui
+  ignore_errors: yes # If the directory is missing, ignore the error.
+  file:
+    path: agr_ui
+    state: absent
+  when: not DOWNLOAD_UI_IMAGE_FROM_AWS
+
+- name: Creating directory agr_ui
+  file:
+    path: agr_ui
+    state: directory
+  when: not DOWNLOAD_UI_IMAGE_FROM_AWS
+
+- git:
+    repo: 'git@github.com:alliance-genome/agr_ui.git'
+    version: "{{ GITHUB_UI_BRANCH }}"
+    dest: "agr_ui"
+  when: not DOWNLOAD_UI_IMAGE_FROM_AWS
+
+- name: Building the loader docker image using the branch {{ GITHUB_UI_BRANCH }} from GitHub
+  command: docker build --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ UI_IMAGE_NAME }}" agr_ui
+  when: not DOWNLOAD_UI_IMAGE_FROM_AWS

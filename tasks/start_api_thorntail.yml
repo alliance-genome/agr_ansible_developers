@@ -1,0 +1,18 @@
+---
+
+- name: Starting API
+  docker_container:
+    name: "{{ API_SERVER_NAME }}"
+    image: "{{ JAVA_SOFTWARE_RUN_IMAGE_NAME }}"
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
+    ports:
+      - "8080:8080"
+    networks:
+      - name: "{{ NET }}"
+    command: java -jar agr_api/target/agr_api-thorntail.jar
+    env:
+      NEO4J_HOST: "{{ NEO_SERVER_NAME }}"
+      CACHE_HOST: "{{ INFINISPAN_SERVER_NAME }}"
+      ES_HOST: "{{ ES_SERVER_NAME }}"

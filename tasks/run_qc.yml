@@ -1,0 +1,25 @@
+---
+
+- name: Running QC
+  docker_container:
+    name: "{{ QC_RUN_NAME }}"
+    image: "{{ QC_TEST_IMAGE_NAME }}"
+    detach: no
+    recreate: yes
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
+    volumes:
+      - "{{ NEO_VOLUME_NAME }}:/usr/src/app/tmp"
+    networks:
+      - name: "{{ NET }}"
+    env:
+      DEBUG: "False"
+      DOWNLOAD_HOST: "{{ DOWNLOAD_HOST }}"
+      ALLIANCE_RELEASE: "{{ ALLIANCE_RELEASE }}"
+      FMS_API_URL: "{{ FMS_API_URL }}"
+      AWS_ACCESS_KEY: "{{ AWS_ACCESS_KEY }}"
+      AWS_SECRET_KEY: "{{ AWS_SECRET_KEY }}"
+      GENERATE_REPORTS: "{{ GENERATE_REPORTS }}"
+      NEO4J_HOST: "{{ NEO_SERVER_NAME }}"
+

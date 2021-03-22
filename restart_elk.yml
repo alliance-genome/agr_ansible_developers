@@ -3,8 +3,8 @@
 - import_playbook: playbook_pre_tasks.yml
 
 - name: Restart ELK Stack
-  hosts: remote
-  user: core
+  hosts: test
+  user: launched
   gather_facts: False
 
   vars_files:

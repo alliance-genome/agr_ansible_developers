@@ -1,0 +1,4 @@
+---
+- name: Pulling Loader Image {{ NGINX_IMAGE_NAME }} from AWS ECR
+  docker_image:
+    name: "{{ NGINX_IMAGE_NAME }}"

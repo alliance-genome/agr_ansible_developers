@@ -1,0 +1,18 @@
+---
+
+- name: Running Cacher
+  docker_container:
+    name: "{{ CACHER_RUN_NAME }}"
+    image: "{{ JAVA_SOFTWARE_RUN_IMAGE_NAME }}"
+    detach: no
+    recreate: yes
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
+    networks:
+      - name: "{{ NET }}"
+    env:
+      CACHE_HOST: "{{ INFINISPAN_SERVER_NAME }}"
+      NEO4J_HOST: "{{ NEO_SERVER_NAME }}"
+    command: java -Xms{{ CACHER_MEMORY }} -Xmx{{ CACHER_MEMORY }} -DTHREADED={{ THREADED }} -jar agr_cacher/target/agr_cacher-jar-with-dependencies.jar {{ CACHER_SPECIFIC_FLAGS}}
+

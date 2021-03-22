@@ -1,0 +1,31 @@
+---
+- name: Creating Nginx config directory
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "/home/core/nginx_config"
+
+- name: Copying Nginx config
+  template:
+    src: webserver.conf.j2
+    dest: "/home/core/nginx_config/default.conf"
+
+- name: Running Nginx
+  docker_container:
+    name: "{{ NGINX_RUN_NAME }}"
+    image: "{{ NGINX_IMAGE_NAME }}"
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - name: "{{ NET }}"
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
+    env:
+      API_URL: "http://{{ API_SERVER_NAME }}:8080"
+    volumes:
+      - /home/core/.htpasswd:/etc/nginx/.htpasswd
+      - /home/core/ssl:/etc/ssl/certs
+      - /home/core/nginx_config:/etc/nginx/conf.d/

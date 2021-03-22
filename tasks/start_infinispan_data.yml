@@ -1,0 +1,21 @@
+- name: Pulling Infinispan data Image {{ INFINISPAN_DATA_IMAGE }}
+  docker_image:
+    name: "{{ INFINISPAN_DATA_IMAGE }}"
+
+- name: Running Infinispan
+  docker_container:
+    name: "{{ INFINISPAN_SERVER_NAME }}"
+    image: "{{ INFINISPAN_DATA_IMAGE }}"
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
+    networks:
+      - name: "{{ NET }}"
+    env:
+      MEM_OPTS: "-Xms{{ INFINISPAN_MEMORY }} -Xmx{{ INFINISPAN_MEMORY }}"
+      JAVA_OPTIONS: "-Xms{{ INFINISPAN_MEMORY }} -Xmx{{ INFINISPAN_MEMORY }}"
+      JAVA_OPTS: "-Xms{{ INFINISPAN_MEMORY }} -Xmx{{ INFINISPAN_MEMORY }}"
+
+- name: Pausing for 2 minutes while Infinispan starts
+  pause:
+    minutes: 2

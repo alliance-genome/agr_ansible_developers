@@ -1,0 +1,100 @@
+server {
+	listen 443 ssl;
+	server_name {{ NET }}-dev.alliancegenome.org;
+
+	ssl_certificate          /etc/ssl/certs/agr.crt;
+	ssl_certificate_key      /etc/ssl/certs/agr.key;
+	ssl_stapling on;
+	ssl_stapling_verify on;
+	ssl_trusted_certificate  /etc/ssl/certs/ca-certs.pem;
+
+	gzip on;
+	client_max_body_size 10G;
+
+	proxy_connect_timeout 10m;
+	proxy_send_timeout 10m;
+	proxy_read_timeout 20m;
+	send_timeout 10m;
+
+	underscores_in_headers on;
+
+	add_header X-Robots-Tag: noindex;
+
+	location /api/index.html {
+		proxy_pass_request_headers      on;
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_pass http://agr.{{ env }}.api.server:8080/index.html;
+	}
+	location /api/swagger-ui/ {
+		proxy_pass_request_headers      on;
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_pass http://agr.{{ env }}.api.server:8080/swagger-ui/;
+	}
+	location /api/graphql-ui/ {
+		proxy_pass_request_headers      on;
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_pass http://agr.{{ env }}.api.server:8080/graphql-ui/;
+	}
+	location /api/ {
+		proxy_pass_request_headers      on;
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_pass http://agr.{{ env }}.api.server:8080$request_uri;
+	}
+	location /openapi {
+		proxy_pass_request_headers      on;
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_pass http://agr.{{ env }}.api.server:8080/openapi;
+	}
+#	location /jbrowse {
+#		proxy_pass_request_headers      on;
+#		proxy_set_header Host $host;
+#		proxy_set_header X-Real-IP $remote_addr;
+#		proxy_pass http://agr.{{ env }}.jbrowse.server:80/jbrowse;
+#	}
+#	location /apollo {
+#		proxy_pass_request_headers   on;
+#		proxy_set_header Host $host;
+#		proxy_set_header X-Real-IP $remote_addr;
+#		proxy_pass http://agr.{{ env }}.apollo.server:8080/apollo;
+#	}
+#	location /alliancemine/cdn/ {
+#		proxy_pass_request_headers   on;
+#		proxy_set_header Host $host;
+#		proxy_set_header X-Real-IP $remote_addr;
+#		proxy_pass http://agr.{{ env }}.intermine.cdn.server:80/;
+#	}
+#	location /alliancemine {
+#		proxy_pass_request_headers   on;
+#		proxy_set_header Host $host;
+#		proxy_set_header X-Real-IP $remote_addr;
+#		proxy_pass http://agr.{{ env }}.intermine.tomcat.server:8080/alliancemine;
+#	}
+	location = /robots.txt {
+		add_header Content-Type text/plain;
+		return 200 "User-agent: *\nDisallow: /\nNoindex: /\n";
+	}
+#	location /status {
+#		proxy_pass_request_headers      on;
+#		proxy_set_header Host $host;
+#		proxy_set_header X-Real-IP $remote_addr;
+#		proxy_pass http://agr.{{ env }}.status.nginx.server:80/;
+#	}
+	location / {
+		proxy_pass_request_headers      on;
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_pass http://agr.{{ env }}.ui.server:2992;
+	}
+
+}
+
+server {
+	listen			80;
+	server_name		{{ NET }}-dev.alliancegenome.org;
+	return			301	https://$server_name$request_uri;
+}

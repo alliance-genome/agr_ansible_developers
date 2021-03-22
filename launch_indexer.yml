@@ -1,14 +1,10 @@
 ---
-
 - import_playbook: playbook_launch_pre_tasks.yml
 
-- name: Run Loader
+- name: Run Indexer
   hosts: remote
   user: core
   gather_facts: False
-
-  vars:
-    API_ACCESS_TOKEN: "{{ LOADER_BUILD_API_ACCESS_TOKEN }}"
 
   vars_files:
     - "environments/{{ env }}/main.yml" # ENV must always be loaded first
@@ -16,9 +12,10 @@
     - "environments/shared_variables.yml"
 
   tasks:
-    - name: Build Loader, Run Loader
+    - name: Build Indexer, Run Indexer
       block:
-        - include_tasks: tasks/docker_login.yml
+        - include_tasks: tasks/build_java_software.yml
+        - include_tasks: tasks/run_indexer.yml
         - set_fact:
             failed_flag: "passed"
       rescue:

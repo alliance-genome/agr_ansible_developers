@@ -1,0 +1,27 @@
+---
+- name: Pulling Loader Image {{ QC_IMAGE_NAME }} from AWS ECR
+  docker_image:
+    name: "{{ QC_IMAGE_NAME }}"
+  when: DOWNLOAD_QC_IMAGE_FROM_AWS
+
+- name: Recursively removing directory agr_qc
+  ignore_errors: yes # If the directory is missing, ignore the error.
+  file:
+    path: agr_qc
+    state: absent
+  when: not DOWNLOAD_QC_IMAGE_FROM_AWS
+
+- name: Creating directory agr_qc
+  file:
+    path: agr_qc
+    state: directory
+  when: not DOWNLOAD_QC_IMAGE_FROM_AWS
+
+- git:
+    repo: 'git@github.com:alliance-genome/agr_qc.git'
+    version: "{{ GITHUB_QC_BRANCH }}"
+    dest: "agr_qc"
+
+- name: Building the loader docker image using the branch {{ GITHUB_QC_BRANCH }} from GitHub
+  command: docker build --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ QC_IMAGE_NAME }}" agr_qc
+  when: not DOWNLOAD_QC_IMAGE_FROM_AWS

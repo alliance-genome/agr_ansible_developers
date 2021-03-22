@@ -4,6 +4,8 @@
   file:
     path: /home/core/.docker
     state: directory
+    owner: core
+    group: core
     mode: 0755
 
 - name: Copy DockerHub config file
@@ -17,26 +19,6 @@
     path: "/home/core/.docker/config.json"
     owner: core
     group: core
-
-- name: Docker pull cli image
-  docker_image:
-    name: amazon/aws-cli:latest
-
-- name: AWS Create ECR Token (Good only for 12 hours)
-  raw: docker run -it --rm amazon/aws-cli ecr --region us-east-1 get-login-password
-  register: docker_output
-
-#- name: Docker Token
-#  debug:
-#    var: docker_output.stdout_lines[0]
-
-- name: Docker Login
-  docker_login:
-    registry_url: "{{ REGISTRY }}"
-    username: "AWS"
-    password: "{{ docker_output.stdout_lines[0] }}"
-  become: true
-  become_user: core
 
 - name: Make ssl directory
   file:
@@ -81,11 +63,24 @@
     state: present
     reload: yes
   become: true
-  become_user: root
 
 - name: Turn off locksmithd
   service:
     name: locksmithd
     state: stopped
   become: true
-  become_user: root
+
+- name: Install Docker pruning service file
+  template: src=docker-prune.service.j2 dest=/etc/systemd/system/docker-prune.service
+  become: true
+
+- name: Install Docker pruning timer file
+  template: src=docker-prune.timer.j2 dest=/etc/systemd/system/docker-prune.timer
+  become: true
+
+- name: Enable the timer for Docker image pruning
+  systemd:
+    name: docker-prune.timer
+    state: started
+    enabled: True
+  become: true
