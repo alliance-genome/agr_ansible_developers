@@ -42,7 +42,7 @@ NEO4J_DATA_IMAGE_FROM_AWS_TAG: stage
 # Loader settings #
 ###################
 # Set the following value to true in order to download a pre-compiled image of the loader from AWS.
-DOWNLOAD_LOADER_IMAGE_FROM_AWS: true
+DOWNLOAD_LOADER_IMAGE_FROM_AWS: false
 # If the above is true, please specify the tag for the Loader image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_loader_run?region=us-east-1
@@ -50,7 +50,7 @@ LOADER_IMAGE_FROM_AWS_TAG: build
 
 # If DOWNLOAD_LOADER_IMAGE_FROM_AWS is false, the loader will be built from GitHub.
 # Please specify the GitHub branch to use in order to build the loader.
-GITHUB_LOADER_BRANCH: "AGR-2618"
+GITHUB_LOADER_BRANCH: "master"
 
 # If running the loader test set (a subset of data), set the following to true.
 # TODO This is not yet implemented.
@@ -121,7 +121,7 @@ KIBANA_IMAGE_FROM_AWS_TAG: build
 # UI settings #
 ###############
 # Set the following value to true in order to download a pre-compiled image of the QC software from AWS.
-DOWNLOAD_UI_IMAGE_FROM_AWS: true
+DOWNLOAD_UI_IMAGE_FROM_AWS: false
 # If the above is true, please specify the tag for the QC image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_ui_server?region=us-east-1
