@@ -57,7 +57,7 @@ Upon launching an AWS instance, a publicly-accessible URL is also created for de
 |`run_indexer`| Run the indexer.|
 |`start_infinispan`| Start infinispan.|
 |`run_cacher`| Run the cacher. Requires starting infinispan first.|
-|`run_api`| Start the API.|
+|`start_api`| Start the API.|
 |`start_ui`| Start the UI.|
 |`start_nginx`| Start Nginx.|
 |`run_jbrowse`| TODO ~~Run a JBrowse instance~~.|
