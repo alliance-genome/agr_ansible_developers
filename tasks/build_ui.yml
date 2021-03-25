@@ -18,7 +18,7 @@
   when: not DOWNLOAD_UI_IMAGE_FROM_AWS
 
 - git:
-    repo: 'git@github.com:alliance-genome/agr_ui.git'
+    repo: 'https://github.com/alliance-genome/agr_ui.git'
     version: "{{ GITHUB_UI_BRANCH }}"
     dest: "agr_ui"
   when: not DOWNLOAD_UI_IMAGE_FROM_AWS

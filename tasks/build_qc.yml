@@ -18,7 +18,7 @@
   when: not DOWNLOAD_QC_IMAGE_FROM_AWS
 
 - git:
-    repo: 'git@github.com:alliance-genome/agr_qc.git'
+    repo: 'https://github.com/alliance-genome/agr_qc.git'
     version: "{{ GITHUB_QC_BRANCH }}"
     dest: "agr_qc"
 
