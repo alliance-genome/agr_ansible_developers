@@ -2,7 +2,7 @@
 - name: Terminate Instance
   hosts: local
   connection: local
-  gather_facts: True
+  gather_facts: false
 
   vars_files:
     - "environments/{{ env }}/main.yml" # ENV must always be loaded first
