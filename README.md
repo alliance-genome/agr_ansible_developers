@@ -150,7 +150,7 @@ Upon launching an AWS instance, a publicly-accessible URL is also created for de
     - `make startdb`
 - Run the indexer:
     - `make run_indexer`
-    - After the indexer is finished, be sure to update the `site_index` as described above in the section above, "Important Note regarding the Indexer and generating indexes."
+    - After the indexer is finished, be sure to update the `site_index` as described above in the section above, ["Important Note regarding the Indexer and generating indexes."](https://github.com/alliance-genome/agr_ansible_developers#important-note-regarding-the-indexer-and-generating-indexes)
 - Start Infinispan with prepopulated data:
     - `make start_infinispan`
 - Start the API:
