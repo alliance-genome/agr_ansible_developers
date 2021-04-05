@@ -9,7 +9,7 @@ Upon launching an AWS instance, a publicly-accessible URL is also created for de
     - Obtain access to EC2 servers running on us-east-2.
     - Obtain access to AWS ECR for our Docker images.
     - Obtain a copy of the Ansible vault password file to store in the repository on your local computer. **NEVER commit this file to the repository.**
-    - Message devops with your IP address so you can be added to the security group for us-east-2.
+    - Message DevOps with your IP address so you can be added to the security group for us-east-2.
 
 ### Clone the repository.
 - Clone `agr_ansible_developers` to your local machine.
