@@ -1,9 +1,7 @@
----
-
 - name: Running Variant Indexer
   docker_container:
-    name: "agr.{{ env }}.variant_indexer"
-    image: "{{ REGISTRY }}/agr_variant_indexer:3.1.0"
+    name: "{{ VARIANT_INDEXER_RUN_NAME }}"
+    image: "{{ JAVA_SOFTWARE_RUN_IMAGE_NAME}}"
     detach: no
     recreate: yes
     log_driver: "gelf"
@@ -13,8 +11,10 @@
       - "agr_variant_data:/workdir/agr_java_software/data"
     networks:
       - name: "{{ NET }}"
-    command: java -jar agr_variant_indexer/target/agr_variant_indexer-jar-with-dependencies.jar
     env:
-      ES_HOST: "es01,es02,es03,es04,es05,es06,es07,es08"
-      VARIANT_DOCUMENT_CREATOR_THREADS: 12
-      VARIANT_ES_INDEX_NUMBER_OF_SHARDS: 32
+      ES_INDEX_SUFFIX: "{{ NET }}"
+      ES_HOST: "{{ ES_SERVER_NAME }}"
+      NEO4J_HOST: "{{ NEO_SERVER_NAME }}"
+      BOLT_LOG_LEVEL: INFO
+      DEFAULT_LOG_LEVEL: INFO
+    command: java -Xms{{ INDEXER_MEMORY }} -Xmx{{ INDEXER_MEMORY }} -DTHREADED={{ THREADED }} -jar agr_variant_indexer/target/agr_variant_indexer-jar-with-dependencies.jar
