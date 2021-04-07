@@ -16,7 +16,10 @@ endif
 	${DOCKER_LOGIN_CMD}
 endif
 
-build: pull registry-docker-login
+password:
+	./password-client.sh > .password
+
+build: pull registry-docker-login password
 	docker build -t ${LOCAL_RUN_CONTAINER}:${TAG} .
 
 pull: registry-docker-login

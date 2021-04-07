@@ -11,4 +11,3 @@ RUN mkdir /root/.ssh
 RUN mkdir /root/.docker
 
 ADD . .
-
