@@ -6,9 +6,9 @@ Upon launching an AWS instance, a publicly-accessible URL is also created for de
 
 ### Additional requirements before using this repository.
 - Contact someone from the DevOps team in order to:
-    - Obtain access to EC2 servers running on us-east-2.
+    - Obtain access to EC2 servers running on us-east-2 (requires your IP address).
     - Obtain access to AWS ECR for our Docker images.
-    - Obtain a copy of the Ansible vault password file to store in the repository on your local computer. **NEVER commit this file to the repository.**
+    - Obtain access to the AnsibleDevelopers AWS secret for the Ansible vault.
 
 ### Clone the repository.
 - Clone `agr_ansible_developers` to your local machine.
