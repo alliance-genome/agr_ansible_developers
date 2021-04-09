@@ -17,6 +17,7 @@ endif
 endif
 
 password:
+	install -m 600 /dev/null .password
 	./password-client.sh > .password
 
 build: pull registry-docker-login password
