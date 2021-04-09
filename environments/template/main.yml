@@ -110,6 +110,10 @@ CACHER_SPECIFIC_FLAGS: ""
 ##############################################
 # Elasticsearch, Kibana, & Logstash settings #
 ##############################################
+# IMPORTANT!
+# Elasticsearch, Kibana, & Logstash are all loaded when the instance is first launched.
+# In order for any of these variables to be updated, the instance will need to be terminated and re-launched.
+
 # The Elasticsearch build environment to pull from AWS ECR.
 # Possible tags are here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_elasticsearch_env?region=us-east-1
