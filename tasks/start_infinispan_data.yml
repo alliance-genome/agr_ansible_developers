@@ -9,6 +9,8 @@
     log_driver: "gelf"
     log_options:
       gelf-address: "{{ LOG_SERVER_ADDRESS }}"
+    ports:
+      - "11222:11222"
     networks:
       - name: "{{ NET }}"
     env:

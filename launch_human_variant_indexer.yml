@@ -1,7 +1,7 @@
 ---
 - import_playbook: playbook_launch_pre_tasks.yml
 
-- name: Run Variant Indexer
+- name: Human Run Variant Indexer
   hosts: remote
   user: core
   gather_facts: False
@@ -12,10 +12,10 @@
     - "environments/shared_variables.yml"
 
   tasks:
-    - name: Build Variant Indexer, Run Variant Indexer
+    - name: Build Human Variant Indexer, Run Human Variant Indexer
       block:
         - include_tasks: tasks/build_java_software.yml
-        - include_tasks: tasks/run_variant_indexer.yml
+        - include_tasks: tasks/run_human_variant_indexer.yml
         - set_fact:
             failed_flag: "passed"
       rescue:

@@ -30,8 +30,11 @@ JAVA_SOFTWARE_RUN_IMAGE_NAME: "{{ REGISTRY }}/agr_java_software:{{ JAVA_SOFTWARE
 
 # Indexer Variables
 INDEXER_RUN_NAME: "agr.{{ env }}.indexer"
-VARIANT_INDEXER_RUN_NAME: "agr.{{ env }}.variant.indexer"
+MOD_VARIANT_INDEXER_RUN_NAME: "agr.{{ env }}.mod_variant.indexer"
+HUMAN_VARIANT_INDEXER_RUN_NAME: "agr.{{ env }}.human_variant.indexer"
+
 # Unsure of Indexer "test" implementation. TODO ask Olin.
+# Ya probally not needed (char via config file :-))
 # INDEXER_TEST_NAME: "agr.{{ env }}.indexer.test"
 # INDEXER_TEST_IMAGE_NAME: "{{ REGISTRY }}/agr_java_software:{{ env }}_indexer"
 
