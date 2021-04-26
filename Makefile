@@ -4,7 +4,7 @@ TAG := latest
 AWS_DEFAULT_REGION := us-east-1
 
 # Change this value to match the folder name you created in environments.
-ENV=gil
+ENV=chris
 
 registry-docker-login:
 ifneq ($(shell echo ${REG} | egrep "ecr\..+\.amazonaws\.com"),)
