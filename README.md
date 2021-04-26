@@ -55,7 +55,8 @@ Upon launching an AWS instance, a publicly-accessible URL is also created for de
 |`run_loader`| Run the loader.|
 |`run_loader_tests`| Runs the loader's integrated tests. This requires a populated Neo4J server.|
 |`run_indexer`| Run the indexer.|
-|`run_variant_indexer`| Run the variant indexer.|
+|`run_mod_variant_indexer`| Run the MOD variant indexer.|
+|`run_human_variant_indexer`| Run the human variant indexer.|
 |`start_infinispan`| Start infinispan.|
 |`run_cacher`| Run the cacher. Requires starting infinispan first.|
 |`start_api`| Start the API.|

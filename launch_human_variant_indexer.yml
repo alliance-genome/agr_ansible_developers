@@ -1,14 +1,10 @@
 ---
+- import_playbook: playbook_launch_pre_tasks.yml
 
-- import_playbook: playbook_pre_tasks.yml
-
-- name: Run Variant Indexer
+- name: Human Run Variant Indexer
   hosts: remote
   user: core
   gather_facts: False
-
-  vars:
-    API_ACCESS_TOKEN: "{{ LOADER_BUILD_API_ACCESS_TOKEN }}"
 
   vars_files:
     - "environments/{{ env }}/main.yml" # ENV must always be loaded first
@@ -16,10 +12,10 @@
     - "environments/shared_variables.yml"
 
   tasks:
-    - name: Start ES Cluster, Run Indexer
+    - name: Build Human Variant Indexer, Run Human Variant Indexer
       block:
-        #- include_tasks: tasks/start_es_cluster.yml
-        - include_tasks: tasks/run_variant_indexer.yml
+        - include_tasks: tasks/build_java_software.yml
+        - include_tasks: tasks/run_human_variant_indexer.yml
         - set_fact:
             failed_flag: "passed"
       rescue:

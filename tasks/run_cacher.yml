@@ -14,5 +14,5 @@
     env:
       CACHE_HOST: "{{ INFINISPAN_SERVER_NAME }}"
       NEO4J_HOST: "{{ NEO_SERVER_NAME }}"
-    command: java -Xms{{ CACHER_MEMORY }} -Xmx{{ CACHER_MEMORY }} -DTHREADED={{ THREADED }} -jar agr_cacher/target/agr_cacher-jar-with-dependencies.jar {{ CACHER_SPECIFIC_FLAGS}}
+    command: java -Xms{{ CACHER_MEMORY }} -Xmx{{ CACHER_MEMORY }} -DTHREADED={{ THREADED }} -jar agr_cacher/target/agr_cacher-jar-with-dependencies.jar {{ CACHER_SPECIFIC_FLAGS }}
 
