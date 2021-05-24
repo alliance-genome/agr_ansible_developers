@@ -5,6 +5,7 @@ This repository will allow you to run any of the major stages of the Alliance da
 Upon launching an AWS instance, a publicly-accessible URL is also created for demonstration and testing purposes (_e.g._ running a test version of the Alliance website for curator review).
 
 ### Additional requirements before using this repository.
+- Please use version <= 20 for Docker. We've had issues with Docker version 21. Hopefully this is resolved in the near future.
 - Contact someone from the DevOps team in order to:
     - Obtain access to EC2 servers running on us-east-2 (requires your IP address).
     - Obtain access to AWS ECR for our Docker images.
