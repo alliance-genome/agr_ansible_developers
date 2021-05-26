@@ -12,8 +12,6 @@
     networks:
       - name: "{{ NET }}"
     env:
-      AWS_ACCESS_KEY: "{{ AWS_ACCESS_KEY }}"
-      AWS_SECRET_KEY: "{{ AWS_SECRET_KEY }}"
       ES_INDEX_SUFFIX: "{{ NET }}"
       BOLT_LOG_LEVEL: INFO
       DEFAULT_LOG_LEVEL: INFO
