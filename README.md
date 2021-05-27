@@ -7,7 +7,7 @@ Upon launching an AWS instance, a publicly-accessible URL is also created for de
 ### Additional requirements before using this repository.
 - Please use version <= 20 for Docker. We've had issues with Docker version 21. Hopefully this will be resolved in the near future.
 - Contact someone from the DevOps team in order to:
-    - Obtain access to EC2 servers running on us-east-2 (requires your IP address).
+    - Obtain access to EC2 servers running on us-east-1 (requires your IP address).
     - Obtain access to AWS ECR for our Docker images.
     - Obtain access to the AnsibleDevelopers AWS secret for the Ansible vault.
 

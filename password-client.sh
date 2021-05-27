@@ -5,7 +5,7 @@ if [ ! -z ${AWS_PROFILE} ]; then
 	GET_SECRET_CMD="${GET_SECRET_CMD} --profile ${AWS_PROFILE}"
 fi
 
-${GET_SECRET_CMD} secretsmanager get-secret-value --region us-east-2 --secret-id AnsibleDevelopers --query SecretString --output text \
+${GET_SECRET_CMD} secretsmanager get-secret-value --region us-east-1 --secret-id AnsibleDevelopers --query SecretString --output text \
   | grep -o '"[^"]\+"' | sed 's/"//g'
 
 if [ $? -ne 0 ]; then
