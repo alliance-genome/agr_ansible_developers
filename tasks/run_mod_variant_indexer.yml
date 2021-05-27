@@ -12,7 +12,7 @@
     networks:
       - name: "{{ NET }}"
     env:
-      ES_HOST: "{{ ES_SERVER_NAME }}"
+      ES_HOST: "es01,es02,es03,es04,es05,es06,es07,es08"
       NEO4J_HOST: "{{ NEO_SERVER_NAME }}"
       BOLT_LOG_LEVEL: INFO
       DEFAULT_LOG_LEVEL: INFO
