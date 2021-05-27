@@ -17,11 +17,11 @@
       API_KEY: "{{ API_ACCESS_TOKEN }}"
       DEBUG: "False"
       DOWNLOAD_HOST: "{{ DOWNLOAD_HOST }}"
-      TEST_SET: "{{ LOADER_TEST_SET }}"
+      TEST_SET: "{{ LOADER_TEST_SET | string }}"
       ALLIANCE_RELEASE: "{{ ALLIANCE_RELEASE }}"
       FMS_API_URL: "{{ FMS_API_URL }}"
       AWS_ACCESS_KEY: "{{ AWS_ACCESS_KEY }}"
       AWS_SECRET_KEY: "{{ AWS_SECRET_KEY }}"
-      GENERATE_REPORTS: "{{ GENERATE_REPORTS }}"
+      GENERATE_REPORTS: "{{ GENERATE_REPORTS | string }}"
       NEO4J_HOST: "{{ NEO_SERVER_NAME }}"
 
