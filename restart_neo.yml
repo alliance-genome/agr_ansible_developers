@@ -34,19 +34,19 @@
             msg: "Error Detected Failing Build"
         - set_fact:
             failed_flag: "failed"
-    when: not DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS
+      when: not DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS
 
     - name: Start Neo Data
-    block:
-      - include_tasks: tasks/start_neo_data.yml
-      - set_fact:
-          failed_flag: "passed"
-    rescue:
-      - debug:
-          msg: "Error Detected Failing Build"
-      - set_fact:
-          failed_flag: "failed"
-    when: DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS
+      block:
+        - include_tasks: tasks/start_neo_data.yml
+        - set_fact:
+            failed_flag: "passed"
+      rescue:
+        - debug:
+            msg: "Error Detected Failing Build"
+        - set_fact:
+            failed_flag: "failed"
+      when: DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS
 
 - name: Check Failures
   hosts: remote
