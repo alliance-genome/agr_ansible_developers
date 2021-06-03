@@ -1,5 +1,24 @@
 ---
 
+- set_fact:
+    NEO4J_TRANSACTOR_THREADS_VALUE: 1
+  when: LOADER_TEST_SET
+
+- set_fact:
+    NEO4J_TRANSACTOR_THREADS_VALUE: 7
+  when: not LOADER_TEST_SET
+
+- name: Removing existing loader temporary file storage
+  docker_volume:
+    name: "{{ LOADER_TMP_STORAGE }}"
+    state: absent
+  when: REDOWNLOAD_FILES_FROM_FMS
+
+- name: Recreating loader temporary file storage
+  docker_volume:
+    name: "{{ LOADER_TMP_STORAGE }}"
+  when: REDOWNLOAD_FILES_FROM_FMS
+
 - name: Running Loader with Alliance Release set to {{ ALLIANCE_RELEASE }}
   docker_container:
     name: "{{ LOADER_RUN_NAME }}"
@@ -10,7 +29,7 @@
     log_options:
       gelf-address: "{{ LOG_SERVER_ADDRESS }}"
     volumes:
-      - "{{ NEO_VOLUME_NAME }}:/usr/src/app/tmp"
+      - "{{ LOADER_TMP_STORAGE }}:/usr/src/app/tmp"
     networks:
       - name: "{{ NET }}"
     env:
@@ -24,4 +43,4 @@
       AWS_SECRET_KEY: "{{ AWS_SECRET_KEY }}"
       GENERATE_REPORTS: "{{ GENERATE_REPORTS | string }}"
       NEO4J_HOST: "{{ NEO_SERVER_NAME }}"
-
+      NEO4J_TRANSACTOR_THREADS: "{{ NEO4J_TRANSACTOR_THREADS_VALUE | string }}"

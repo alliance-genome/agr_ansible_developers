@@ -26,17 +26,17 @@ GENERATE_REPORTS: false
 # If building Neo4j from "scratch" by running the Loader, please specify the tag to be used for the Neo4j ENV image.
 # A list of available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_neo4j_env?region=us-east-1
-NEO_ENV_IMAGE_FROM_AWS_TAG: stage
+NEO_ENV_IMAGE_FROM_AWS_TAG: build
 
 # Flagging the following variable as true to download a pre-populated Neo4J data image from AWS ECR.
 # This assumes that you **do not** wish to run the Loader / QC and instead proceed starting with the Indexer.
-DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true
+DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: false
 
 # If DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS is true, a pre-populated Neo4J database will be downloaded from AWS ECR.
 # Please specify the tag to use for this Neo4J data image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_neo4j_data_image?region=us-east-1
-NEO4J_DATA_IMAGE_FROM_AWS_TAG: stage
+NEO4J_DATA_IMAGE_FROM_AWS_TAG: build
 
 ###################
 # Loader settings #
@@ -50,10 +50,16 @@ LOADER_IMAGE_FROM_AWS_TAG: build
 
 # If DOWNLOAD_LOADER_IMAGE_FROM_AWS is false, the loader will be built from GitHub.
 # Please specify the GitHub branch to use in order to build the loader.
-GITHUB_LOADER_BRANCH: "master"
+GITHUB_LOADER_BRANCH: "pass_threads"
 
-# If running the loader with a test set (a subset of data), set the following to true.
-LOADER_TEST_SET: false
+# If running the loader with a test set (a subset of data), set the following to true. Otherwise set to false.
+LOADER_TEST_SET: true
+
+# The loader downloads many large files from the File Management System with each run.
+# To re-download these files **each time the loader is run**, set this to true.
+# If set to false, the loader will not attempt to re-download the files if the file already exists locally.
+# This is useful if the FMS is being updated as you are working and/or you are testing new data files.
+REDOWNLOAD_FILES_FROM_FMS: true
 
 ###############
 # QC settings #

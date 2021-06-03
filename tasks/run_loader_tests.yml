@@ -5,7 +5,7 @@
     source: pull
   when: DOWNLOAD_LOADER_IMAGE_FROM_AWS
 
-- name: 
+- name:
   docker_container:
     name: "{{ LOADER_RUN_NAME }}"
     image: "{{ LOADER_IMAGE_NAME }}"
@@ -16,7 +16,7 @@
     log_options:
       gelf-address: "{{ LOG_SERVER_ADDRESS }}"
     volumes:
-      - "{{ NEO_VOLUME_NAME }}:/usr/src/app/tmp"
+      - "{{ LOADER_TMP_STORAGE }}:/usr/src/app/tmp"
     networks:
       - name: "{{ NET }}"
     env:
@@ -30,4 +30,3 @@
       AWS_SECRET_KEY: "{{ AWS_SECRET_KEY }}"
       GENERATE_REPORTS: "{{ GENERATE_REPORTS | string }}"
       NEO4J_HOST: "{{ NEO_SERVER_NAME }}"
-

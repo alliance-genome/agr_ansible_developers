@@ -4,6 +4,10 @@
     source: pull
   when: DOWNLOAD_LOADER_IMAGE_FROM_AWS
 
+- name: Creating loader temporary file storage Docker volume (if it doesn't already exist)
+  docker_volume:
+    name: "{{ LOADER_TMP_STORAGE }}"
+
 - name: Recursively removing directory agr_loader
   ignore_errors: yes # If the directory is missing, ignore the error.
   file:
