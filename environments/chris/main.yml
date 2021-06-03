@@ -52,8 +52,7 @@ LOADER_IMAGE_FROM_AWS_TAG: build
 # Please specify the GitHub branch to use in order to build the loader.
 GITHUB_LOADER_BRANCH: "master"
 
-# If running the loader test set (a subset of data), set the following to true.
-# TODO This is not yet implemented.
+# If running the loader with a test set (a subset of data), set the following to true.
 LOADER_TEST_SET: false
 
 ###############

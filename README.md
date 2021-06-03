@@ -54,7 +54,7 @@ Upon launching an AWS instance, a publicly-accessible URL is also created for de
 |`stopdb`| Stop the Neo4J database. **This also removes the container.**|
 |`restartdb` | Restart the Neo4J database **This removes and creates a new container.**|
 |`run_loader`| Run the loader.|
-|`run_loader_tests`| Runs the loader's integrated tests. This requires a populated Neo4J server.|
+|`run_loader_tests`| Runs the loader's integrated tests. This requires a populated Neo4J database.|
 |`run_indexer`| Run the indexer.|
 |`run_mod_variant_indexer`| Run the MOD variant indexer.|
 |`run_human_variant_indexer`| Run the human variant indexer.|
