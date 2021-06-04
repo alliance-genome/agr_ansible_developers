@@ -1,23 +1,23 @@
 ---
-
-- set_fact:
-    NEO4J_TRANSACTOR_THREADS_VALUE: 1
+- name: Setting NEO4J_TRANSACTOR_THREADS to 3 for the loader test set
+  set_fact:
+    NEO4J_TRANSACTOR_THREADS_VALUE: 20
   when: LOADER_TEST_SET
 
-- set_fact:
+- name: Setting NEO4J_TRANSACTOR_THREADS to 7 for full loader run (default)
+  set_fact:
     NEO4J_TRANSACTOR_THREADS_VALUE: 7
   when: not LOADER_TEST_SET
 
-- name: Removing existing loader temporary file storage
-  docker_volume:
-    name: "{{ LOADER_TMP_STORAGE }}"
-    state: absent
+- name: Setting REDOWNLOAD_FROM_FMS to True in the loader
+  set_fact:
+    REDOWNLOAD_FROM_FMS_VALUE: true
   when: REDOWNLOAD_FILES_FROM_FMS
 
-- name: Recreating loader temporary file storage
-  docker_volume:
-    name: "{{ LOADER_TMP_STORAGE }}"
-  when: REDOWNLOAD_FILES_FROM_FMS
+- name: Setting REDOWNLOAD_FROM_FMS to False in the loader (default)
+  set_fact:
+    REDOWNLOAD_FROM_FMS_VALUE: false
+  when: not REDOWNLOAD_FILES_FROM_FMS
 
 - name: Running Loader with Alliance Release set to {{ ALLIANCE_RELEASE }}
   docker_container:
@@ -29,7 +29,7 @@
     log_options:
       gelf-address: "{{ LOG_SERVER_ADDRESS }}"
     volumes:
-      - "{{ LOADER_TMP_STORAGE }}:/usr/src/app/tmp"
+      - "{{ NEO_VOLUME_NAME }}:/usr/src/app/tmp"
     networks:
       - name: "{{ NET }}"
     env:
@@ -44,3 +44,4 @@
       GENERATE_REPORTS: "{{ GENERATE_REPORTS | string }}"
       NEO4J_HOST: "{{ NEO_SERVER_NAME }}"
       NEO4J_TRANSACTOR_THREADS: "{{ NEO4J_TRANSACTOR_THREADS_VALUE | string }}"
+      REDOWNLOAD_FROM_FMS: "{{ REDOWNLOAD_FROM_FMS_VALUE | string }}"

@@ -16,7 +16,7 @@
     log_options:
       gelf-address: "{{ LOG_SERVER_ADDRESS }}"
     volumes:
-      - "{{ LOADER_TMP_STORAGE }}:/usr/src/app/tmp"
+      - "{{ NEO_VOLUME_NAME }}:/usr/src/app/tmp"
     networks:
       - name: "{{ NET }}"
     env:
