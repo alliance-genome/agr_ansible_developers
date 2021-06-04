@@ -60,12 +60,12 @@ NGINX_IMAGE_NAME: "{{ REGISTRY }}/agr_nginx:{{ NGINX_IMAGE_FROM_AWS_TAG }}"
 # Misc Config Options
 LOG_SERVER_ADDRESS: "udp://localhost:12201"
 NEO_VOLUME_NAME: agr_shared
-LOADER_TMP_STORAGE: loader_temp # Name for the loader Docker volume to store temp files.
 INFINISPAN_MEMORY: "32g"
 INDEXER_MEMORY: "32g"
 NEO_PAGE_CACHE: "48g"
 NEO_MAX_HEAP: "48g"
 CACHER_MEMORY: "80g"
+NEO4J_TRANSACTOR_THREADS_VALUE: 7 # Number of processes to spawn when loading data into Neo4j from the Loader.
 
 # Currently unused variables start here, most will be added in the future for developers.
 PREPROCESS_RUN_IMAGE_NAME: "{{ REGISTRY }}/{{ PREPROCESS_IMAGE_NAME }}:{{ ALLIANCE_RELEASE }}"
