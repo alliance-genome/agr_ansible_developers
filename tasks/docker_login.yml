@@ -1,6 +1,7 @@
 - name: Pulling AWS CLI image amazon/aws-cli:latest
   docker_image:
     name: amazon/aws-cli:latest
+    source: pull
 
 - name: Creating AWS ECR Token (Good only for 12 hours)
   raw: docker run -it --rm amazon/aws-cli ecr get-login-password --region us-east-1

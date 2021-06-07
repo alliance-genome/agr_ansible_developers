@@ -3,6 +3,7 @@
 - name: Pulling JBrowse Server Image {{ JBROWSE_SERVER_IMAGE }}
   docker_image:
     name: "{{ JBROWSE_SERVER_IMAGE }}"
+    source: pull
 
 - name: Running JBrowse Server
   docker_container:

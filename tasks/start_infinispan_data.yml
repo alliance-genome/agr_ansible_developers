@@ -1,6 +1,7 @@
 - name: Pulling Infinispan data Image {{ INFINISPAN_DATA_IMAGE }}
   docker_image:
     name: "{{ INFINISPAN_DATA_IMAGE }}"
+    source: pull
 
 - name: Running Infinispan
   docker_container:

@@ -3,6 +3,7 @@
 - name: Pull ES Env Image
   docker_image:
     name: "{{ ES_ENV_IMAGE_NAME }}"
+    source: pull
 
 - name: Run ES Cluster Node 01
   docker_container:

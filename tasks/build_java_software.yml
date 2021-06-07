@@ -2,6 +2,7 @@
 - name: Pulling Java Software Image {{ JAVA_SOFTWARE_RUN_IMAGE_NAME }} from AWS ECR
   docker_image:
     name: "{{ JAVA_SOFTWARE_RUN_IMAGE_NAME }}"
+    source: pull
   when: DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS
 
 - name: Recursively removing directory agr_java_software

@@ -2,6 +2,7 @@
 - name: Pulling Loader Image {{ UI_IMAGE_NAME }} from AWS ECR
   docker_image:
     name: "{{ UI_IMAGE_NAME }}"
+    source: pull
   when: DOWNLOAD_UI_IMAGE_FROM_AWS
 
 - name: Recursively removing directory agr_ui

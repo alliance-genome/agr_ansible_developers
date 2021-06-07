@@ -1,6 +1,7 @@
 - name: Pulling Neo4j Data Image {{ NEO_DATA_IMAGE }}
   docker_image:
     name: "{{ NEO_DATA_IMAGE }}"
+    source: pull
 
 - name: Creating Neo4j Shared Volume
   docker_volume:

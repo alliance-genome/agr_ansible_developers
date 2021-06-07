@@ -1,6 +1,7 @@
 - name: Pulling Loader Image {{ LOADER_IMAGE_NAME }} from AWS ECR
   docker_image:
     name: "{{ LOADER_IMAGE_NAME }}"
+    source: pull
   when: DOWNLOAD_LOADER_IMAGE_FROM_AWS
 
 - name: Recursively removing directory agr_loader

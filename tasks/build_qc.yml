@@ -2,6 +2,7 @@
 - name: Pulling Loader Image {{ QC_IMAGE_NAME }} from AWS ECR
   docker_image:
     name: "{{ QC_IMAGE_NAME }}"
+    source: pull
   when: DOWNLOAD_QC_IMAGE_FROM_AWS
 
 - name: Recursively removing directory agr_qc

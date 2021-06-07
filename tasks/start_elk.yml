@@ -1,10 +1,12 @@
 - name: Pulling ES Env Image {{ ES_ENV_IMAGE_NAME }}
   docker_image:
     name: "{{ ES_ENV_IMAGE_NAME }}"
+    source: pull
 
 - name: Pulling Cerebro Image
   docker_image:
     name: "yannart/cerebro:latest"
+    source: pull
 
 - name: Starting Elasticsearch
   docker_container:
@@ -33,6 +35,7 @@
 - name: Pulling Logstash Image {{ LOG_IMAGE_NAME }}
   docker_image:
     name: "{{ LOG_IMAGE_NAME }}"
+    source: pull
 
 - name: Starting Logstash Server
   docker_container:
@@ -50,6 +53,7 @@
 - name: Pulling Kibana Image {{ KIBANA_IMAGE_NAME }}
   docker_image:
     name: "{{ KIBANA_IMAGE_NAME }}"
+    source: pull
 
 - name: Starting Kibana
   docker_container:
