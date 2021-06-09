@@ -4,6 +4,7 @@
   docker_image:
     name: "{{ JBROWSE_SERVER_IMAGE }}"
     source: pull
+    force_source: "{{ PULL_UPDATES }}"
 
 - name: Running JBrowse Server
   docker_container:

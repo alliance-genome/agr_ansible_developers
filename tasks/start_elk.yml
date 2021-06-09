@@ -2,11 +2,13 @@
   docker_image:
     name: "{{ ES_ENV_IMAGE_NAME }}"
     source: pull
+    force_source: "{{ PULL_UPDATES }}"
 
 - name: Pulling Cerebro Image
   docker_image:
     name: "yannart/cerebro:latest"
     source: pull
+    force_source: "{{ PULL_UPDATES }}"
 
 - name: Starting Elasticsearch
   docker_container:
@@ -36,6 +38,7 @@
   docker_image:
     name: "{{ LOG_IMAGE_NAME }}"
     source: pull
+    force_source: "{{ PULL_UPDATES }}"
 
 - name: Starting Logstash Server
   docker_container:
@@ -54,6 +57,7 @@
   docker_image:
     name: "{{ KIBANA_IMAGE_NAME }}"
     source: pull
+    force_source: "{{ PULL_UPDATES }}"
 
 - name: Starting Kibana
   docker_container:

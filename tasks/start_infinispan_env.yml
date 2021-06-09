@@ -2,6 +2,7 @@
   docker_image:
     name: "{{ INFINISPAN_ENV_IMAGE_NAME }}"
     source: pull
+    force_source: "{{ PULL_UPDATES }}"
 
 - name: Running Infinispan
   docker_container:
