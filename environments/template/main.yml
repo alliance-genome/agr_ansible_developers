@@ -10,7 +10,7 @@ NET: "main"
 
 ALLIANCE_RELEASE: 4.0.0
 
-# Set to false to keep using the local images once downloaded.
+# Set to false to keep using the local images, on your instance, once downloaded.
 # Default behavior (when true) is to pull in new images, when they are available,
 # which is necessary to update components on a running system
 # (eg. update the API using the latest image made available after the initial setup).
