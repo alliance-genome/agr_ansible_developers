@@ -3,6 +3,7 @@
   docker_image:
     name: "{{ JAVA_SOFTWARE_RUN_IMAGE_NAME }}"
     source: pull
+    force_source: "{{ PULL_UPDATES }}"
   when: DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS
 
 - name: Recursively removing directory agr_java_software

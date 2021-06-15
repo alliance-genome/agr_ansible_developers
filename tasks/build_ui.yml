@@ -3,6 +3,7 @@
   docker_image:
     name: "{{ UI_IMAGE_NAME }}"
     source: pull
+    force_source: "{{ PULL_UPDATES }}"
   when: DOWNLOAD_UI_IMAGE_FROM_AWS
 
 - name: Recursively removing directory agr_ui

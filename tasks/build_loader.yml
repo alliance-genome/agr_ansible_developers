@@ -2,6 +2,7 @@
   docker_image:
     name: "{{ LOADER_IMAGE_NAME }}"
     source: pull
+    force_source: "{{ PULL_UPDATES }}"
   when: DOWNLOAD_LOADER_IMAGE_FROM_AWS
 
 - name: Recursively removing directory agr_loader
