@@ -3,6 +3,7 @@
   docker_image:
     name: "{{ QC_IMAGE_NAME }}"
     source: pull
+    force_source: "{{ PULL_UPDATES }}"
   when: DOWNLOAD_QC_IMAGE_FROM_AWS
 
 - name: Recursively removing directory agr_qc

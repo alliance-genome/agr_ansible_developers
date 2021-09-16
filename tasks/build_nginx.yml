@@ -3,3 +3,4 @@
   docker_image:
     name: "{{ NGINX_IMAGE_NAME }}"
     source: pull
+    force_source: "{{ PULL_UPDATES }}"

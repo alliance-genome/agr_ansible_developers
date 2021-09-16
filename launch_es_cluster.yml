@@ -12,6 +12,16 @@
     - "environments/shared_variables.yml"
 
   tasks:
+    - name: Login to Docker
+      block:
+        - include_tasks: tasks/docker_login.yml
+        - set_fact:
+            failed_flag: "passed"
+      rescue:
+        - debug:
+            msg: "Failed execute docker login."
+        - set_fact:
+            failed_flag: "failed"
     - name: Start ES Cluster
       block:
         - include_tasks: tasks/start_es_cluster.yml
