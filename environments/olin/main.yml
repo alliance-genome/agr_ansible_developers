@@ -8,7 +8,7 @@
 # Do not leave this variable as "main".
 NET: "olin"
 
-ALLIANCE_RELEASE: 4.0.0
+ALLIANCE_RELEASE: 4.1.0
 
 # These values do not need to be altered often.
 PLAYBOOK_NAME: "{{ lookup('env','PLAYBOOK_NAME') or 'Olin Test Server' }}"
@@ -19,6 +19,7 @@ COMPUTE_INSTANCE_TYPE: r5d.8xlarge
 
 # TODO Generating reports is not yet supported.
 GENERATE_REPORTS: false
+RUN_LOADER_TESTS: false
 
 ##################
 # Neo4J settings #
@@ -30,7 +31,7 @@ NEO_ENV_IMAGE_FROM_AWS_TAG: build
 
 # Flagging the following variable as true to download a pre-populated Neo4J data image from AWS ECR.
 # This assumes that you **do not** wish to run the Loader / QC and instead proceed starting with the Indexer.
-DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true
+DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: false
 
 # If DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS is true, a pre-populated Neo4J database will be downloaded from AWS ECR.
 # Please specify the tag to use for this Neo4J data image.
@@ -100,7 +101,7 @@ JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG: build
 
 # If DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS is false, Java Software will be built from GitHub.
 # Please specify the GitHub branch to use in order to build Java Software.
-GITHUB_JAVA_SOFTWARE_BRANCH: "variant_optimize"
+GITHUB_JAVA_SOFTWARE_BRANCH: "olin_human_variant_fix"
 
 # To run specific classes of data with the cacher, please specify the names below.
 # Multiple class names can be used if separated by spaces.

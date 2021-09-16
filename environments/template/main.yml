@@ -58,9 +58,14 @@ LOADER_IMAGE_FROM_AWS_TAG: build
 # Please specify the GitHub branch to use in order to build the loader.
 GITHUB_LOADER_BRANCH: "master"
 
-# If running the loader test set (a subset of data), set the following to true.
-# TODO This is not yet implemented.
+# If running the loader with a test set (a subset of data), set the following to true. Otherwise set to false.
 LOADER_TEST_SET: false
+
+# The loader downloads many large files from the File Management System with each run.
+# To re-download these files **each time the loader is run**, set this to true.
+# If set to false, the loader will not attempt to re-download the files if the files already exists locally.
+# This is useful if the FMS is being updated as you are working and/or you are testing new data files.
+REDOWNLOAD_FILES_FROM_FMS: false
 
 ###############
 # QC settings #

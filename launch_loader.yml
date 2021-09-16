@@ -25,6 +25,7 @@
             msg: "Failed execute docker login."
         - set_fact:
             failed_flag: "failed"
+
     - name: Build Loader, Run Loader
       block:
         - include_tasks: tasks/build_loader.yml
@@ -36,7 +37,6 @@
             msg: "Error Detected Failing Build"
         - set_fact:
             failed_flag: "failed"
-
 
 - name: Check Failures
   hosts: remote
