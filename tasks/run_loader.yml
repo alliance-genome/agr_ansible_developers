@@ -1,5 +1,15 @@
 ---
 
+- name: Setting REDOWNLOAD_FROM_FMS to True in the loader
+  set_fact:
+    REDOWNLOAD_FROM_FMS_VALUE: true
+  when: REDOWNLOAD_FILES_FROM_FMS
+
+- name: Setting REDOWNLOAD_FROM_FMS to False in the loader (default)
+  set_fact:
+    REDOWNLOAD_FROM_FMS_VALUE: false
+  when: not REDOWNLOAD_FILES_FROM_FMS
+
 - name: Running Loader with Alliance Release set to {{ ALLIANCE_RELEASE }}
   docker_container:
     name: "{{ LOADER_RUN_NAME }}"
@@ -24,4 +34,5 @@
       AWS_SECRET_KEY: "{{ AWS_SECRET_KEY }}"
       GENERATE_REPORTS: "{{ GENERATE_REPORTS | string }}"
       NEO4J_HOST: "{{ NEO_SERVER_NAME }}"
-
+      NEO4J_TRANSACTOR_THREADS: "{{ NEO4J_TRANSACTOR_THREADS_VALUE | string }}"
+      REDOWNLOAD_FROM_FMS: "{{ REDOWNLOAD_FROM_FMS_VALUE | string }}"

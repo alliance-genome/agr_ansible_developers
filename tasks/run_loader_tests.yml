@@ -6,30 +6,7 @@
     force_source: "{{ PULL_UPDATES }}"
   when: DOWNLOAD_LOADER_IMAGE_FROM_AWS
 
-- name: Recursively removing directory agr_loader
-  ignore_errors: yes # If the directory is missing, ignore the error.
-  file:
-    path: agr_loader
-    state: absent
-  when: not DOWNLOAD_LOADER_IMAGE_FROM_AWS
-
-- name: Creating directory agr_loader
-  file:
-    path: agr_loader
-    state: directory
-  when: not DOWNLOAD_LOADER_IMAGE_FROM_AWS
-
-- git:
-    repo: 'https://github.com/alliance-genome/agr_loader.git'
-    version: "{{ GITHUB_LOADER_BRANCH }}"
-    dest: "agr_loader"
-  when: not DOWNLOAD_LOADER_IMAGE_FROM_AWS
-
-- name: Building the loader docker image using the branch {{ GITHUB_LOADER_BRANCH }} from GitHub
-  command: docker build --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ LOADER_IMAGE_NAME }}" agr_loader
-  when: not DOWNLOAD_LOADER_IMAGE_FROM_AWS
-
-- name: Running Loader tests against Neo4J
+- name:
   docker_container:
     name: "{{ LOADER_RUN_NAME }}"
     image: "{{ LOADER_IMAGE_NAME }}"
@@ -54,4 +31,3 @@
       AWS_SECRET_KEY: "{{ AWS_SECRET_KEY }}"
       GENERATE_REPORTS: "{{ GENERATE_REPORTS | string }}"
       NEO4J_HOST: "{{ NEO_SERVER_NAME }}"
-
