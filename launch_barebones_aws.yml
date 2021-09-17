@@ -1,0 +1,56 @@
+---
+- import_playbook: playbook_launch_pre_tasks.yml
+- import_playbook: playbook_launch_instance.yml
+
+- name: Configure AWS Instance
+  hosts: launched
+  user: core
+  gather_facts: false
+
+  vars:
+    API_ACCESS_TOKEN: "{{ LOADER_BUILD_API_ACCESS_TOKEN }}"
+
+  vars_files:
+    - "environments/{{ env }}/main.yml" # ENV must always be loaded first
+    - "environments/shared_secrets.yml"
+    - "environments/shared_variables.yml"
+
+  roles:
+    - role: install_python
+      become: true
+#    - role: setup_nvme_drives
+#      become: true
+    - role: setup_docker
+      become: true
+    - role: setup_swap
+      become: true
+
+  tasks:
+    - name: Login to Docker
+      block:
+        - include_tasks: tasks/docker_login.yml
+        - set_fact:
+            failed_flag: "passed"
+      rescue:
+        - debug:
+            msg: "Error Detected Failing Build"
+        - set_fact:
+            failed_flag: "failed"
+    - name: Process ZGIN GFF
+      block:
+        - include_tasks: tasks/run_jbrowse_process_gff.yml
+        - set_fact:
+           failed_flag: "passed"
+      rescue:
+        - debug:
+            msg: "Error Detected Failed GFF Processing Run"
+        - set_fact:
+            failed_flag: "failed"
+
+- name: Check Failures
+  hosts: launched
+  gather_facts: False
+  tasks:
+    - fail:
+        msg: "The execution has failed because of errors."
+      when: failed_flag == "failed"

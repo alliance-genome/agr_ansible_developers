@@ -1,0 +1,18 @@
+---
+
+- name: Running nightly zfin GFF JBrowse processing
+  docker_container:
+    name: "{{ JBROWSE_ZFIN_GFF_PROCESS_RUN_NAME }}"
+    image: "{{ JBROWSE_ZFIN_GFF_PROCESS_IMAGE_NAME }}"
+    detach: no
+    recreate: yes
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
+    volumes:
+      - "{{ NEO_VOLUME_NAME }}:/usr/src/app/tmp"
+    networks:
+      - name: "{{ NET }}"
+    env:
+      AWS_ACCESS_KEY: "{{ AWS_ACCESS_KEY }}"
+      AWS_SECRET_KEY: "{{ AWS_SECRET_KEY }}"

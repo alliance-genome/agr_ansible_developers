@@ -57,6 +57,10 @@ UI_IMAGE_NAME: "{{ REGISTRY }}/agr_ui_server:{{ UI_IMAGE_FROM_AWS_TAG }}"
 NGINX_RUN_NAME: "agr.{{ NET }}.nginx.server"
 NGINX_IMAGE_NAME: "{{ REGISTRY }}/agr_nginx:{{ NGINX_IMAGE_FROM_AWS_TAG }}"
 
+# JBrowse GFF processing 
+JBROWSE_ZFIN_GFF_PROCESS_RUN_NAME: "agr.{{ env }}.zfingffprocess"
+JBROWSE_ZFIN_GFF_PROCESS_IMAGE_NAME: "{{ REGISTRY }}/agr_jbrowse_process_zfin_gff_run:latest"
+
 # Misc Config Options
 LOG_SERVER_ADDRESS: "udp://localhost:12201"
 NEO_VOLUME_NAME: agr_shared
