@@ -27,6 +27,7 @@
       # Please change filter value in playbook_terminate_instance.yml if changed here.
       Name: "Ansible Generated - {{ NET }}-dev Server"
       dns_name: "{{ NET }}"
+    instance_initiated_shutdown_behavior: terminate
   when: not launch_success
   register: ec2_result_internal
   ignore_errors: yes #Single-config launch failures are ignored (and retried with different config)
