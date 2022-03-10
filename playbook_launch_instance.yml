@@ -10,9 +10,9 @@
     - "environments/shared_variables.yml"
 
   #Note: Define the on_demand variable as true to request on-demand instances
-  #Default launch behaviour: spot instances
+  #Default launch behaviour: on demand instances
   vars:
-    on_demand: false
+    on_demand: true
     launch_success: false
     ec2_result:
 
