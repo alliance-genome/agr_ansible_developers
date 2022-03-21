@@ -19,6 +19,10 @@
     - role: install_python
       become: true
     - role: setup_nvme_drives
+      when: not SKIP_NVME_DRIVES and not SETUP_NVME_DRIVE
+      become: true
+    - role: setup_nvme_drive
+      when: SETUP_NVME_DRIVE and SKIP_NVME_DRIVES
       become: true
     - role: setup_docker
       become: true

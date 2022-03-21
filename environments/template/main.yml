@@ -156,3 +156,10 @@ GITHUB_UI_BRANCH: "master"
 # Possible tags are here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_nginx?region=us-east-1
 NGINX_IMAGE_FROM_AWS_TAG: build
+
+# NVM Drive Setup
+# If starting an instance with 2 NVME Drives set these to False, False (Default)
+# If starting an instance with 1 NVME Drive set these to True, True
+# Otherwise the will not configure the NVM drives
+SKIP_NVME_DRIVES: False
+SETUP_NVME_DRIVE: False
