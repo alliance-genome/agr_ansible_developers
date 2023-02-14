@@ -1,28 +1,26 @@
 - name: Launch instance in {{ item.name }}
-  ec2:
+  ec2_instance:
     key_name: AGR-ssl2
-    group: ["default", "ES Transport", "SSH", "HTTP/HTTPS"]
+    security_groups: ["default", "ES Transport", "SSH", "HTTP/HTTPS"]
     instance_type: "{{ COMPUTE_INSTANCE_TYPE }}"
-    spot_price: "{{ item.on_demand | ternary(omit, ec2_instance_price.stdout) }}"
-    spot_type: "{{ item.on_demand | ternary(omit, 'one-time') }}"
-    spot_wait_timeout: "{{ item.on_demand | ternary(omit, 300) }}"
-    image: ami-059f996f16c2906d6
+    image_id: ami-05668c1bb69ebd078
     region: us-east-1
-    vpc_subnet_id: "{{ item.subnet }}"
-    zone: "{{ item.AZ }}"
-    assign_public_ip: yes
-    instance_profile_name: S3DataAccess
+    availability_zone: "{{ item.AZ }}"
+    iam_instance_profile: S3DataAccess
     aws_access_key: "{{ AWS_ACCESS_KEY }}"
     aws_secret_key: "{{ AWS_SECRET_KEY }}"
+    network:
+      assign_public_ip: true
     volumes:
       - device_name: /dev/xvda
-        volume_type: gp3
-        volume_size: 750
-        iops: 3000
-        delete_on_termination: yes
+        ebs:
+          volume_type: gp3
+          volume_size: 750
+          iops: 3000
+          delete_on_termination: yes
     wait: yes
     user_data: "" # Otherwise get weird error on start up
-    instance_tags:
+    tags:
       # Termination is filtered by Name tag, take care if modifying.
       # Please change filter value in playbook_terminate_instance.yml if changed here.
       Name: "Ansible Generated - {{ NET }}-dev Server"

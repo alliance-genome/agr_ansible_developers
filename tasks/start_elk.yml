@@ -24,6 +24,7 @@
       gelf-address: "{{ LOG_SERVER_ADDRESS }}"
     env:
       discovery.type: single-node
+      xpack.security.enabled: "false"
 
 - name: Starting Cerebro
   docker_container:
