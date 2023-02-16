@@ -11,7 +11,7 @@
 
   tasks:
     - name: Obtaining EC2 Instance Info
-      ec2_instance_facts:
+      ec2_instance_info:
         aws_access_key: "{{ AWS_ACCESS_KEY }}"
         aws_secret_key: "{{ AWS_SECRET_KEY }}"
         region: "us-east-1"
@@ -21,7 +21,7 @@
       register: ec2info
 
     - name: Terminating EC2 Instance {{ ec2info.instances[0].instance_id }}
-      ec2:
+      ec2_instance:
         aws_access_key: "{{ AWS_ACCESS_KEY }}"
         aws_secret_key: "{{ AWS_SECRET_KEY }}"
         region: "us-east-1"
