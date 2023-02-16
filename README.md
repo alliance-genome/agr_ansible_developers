@@ -52,10 +52,13 @@ Upon launching an AWS instance, a publicly-accessible URL is also created for de
 |`terminate`| Terminate the AWS EC2 instance.
 |`startdb`| Start the Neo4J database. Required before most other steps.|
 |`stopdb`| Stop the Neo4J database. **This also removes the container.**|
-|`restartdb` | Restart the Neo4J database **This removes and creates a new container.**|
+|`restartdb`| Restart the Neo4J database **This removes and creates a new container.**|
+|`startcurationdb`| Start the curation database. This database **must** be started before running the indexer.|
+|`stopcurationdb`| Stop the curation database.|
+|`restartcurationdb`| Restart the curation database.|
 |`run_loader`| Run the loader.|
 |`run_loader_tests`| Runs the loader's integrated tests. This requires a populated Neo4J database.|
-|`run_indexer`| Run the indexer.|
+|`run_indexer`| Run the indexer. Requires both Neo4J (`startdb`) and the curation database (`startcurationdb`).|
 |`run_mod_variant_indexer`| Run the MOD variant indexer.|
 |`run_human_variant_indexer`| Run the human variant indexer.|
 |`start_infinispan`| Start infinispan.|
@@ -63,6 +66,7 @@ Upon launching an AWS instance, a publicly-accessible URL is also created for de
 |`start_api`| Start the API.|
 |`start_ui`| Start the UI.|
 |`start_nginx`| Start Nginx. Should always be run last after all other services have started.|
+|`restartelk`| Restart the ELK stack (ElasticSearch / Cerebro / Logstash / Kibana).|
 |`run_jbrowse`| TODO ~~Run a JBrowse instance~~.|
 
 ### Important Note regarding the Indexer and generating indexes.
@@ -82,11 +86,11 @@ Upon launching an AWS instance, a publicly-accessible URL is also created for de
 
 ## Example use cases
 
-### Running the loader using a GitHub branch in the `build` environment.
+### Running the loader using a GitHub branch in the `stage` environment.
 - Be sure to follow all the preliminary steps above at the top of this readme.
 - Ensure the following variables are set in your `main.yml` file:
     - Neo4J
-        - `NEO_ENV_IMAGE_FROM_AWS_TAG: build`
+        - `NEO_ENV_IMAGE_FROM_AWS_TAG: stage`
         - `DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: false`
     - Loader
         - `DOWNLOAD_LOADER_IMAGE_FROM_AWS: True`
@@ -110,6 +114,9 @@ Upon launching an AWS instance, a publicly-accessible URL is also created for de
     - Neo4J
         - `DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true`
         - `NEO4J_DATA_IMAGE_FROM_AWS_TAG: stage`
+    - Curation Database
+        - `CURATION_IMAGE_FROM_AWS_TAG: stage`
+        - `CURATION_RELEASE_VERSION: v0.15.0`
     - Indexer, Cacher, and API settings
         - `DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS: false`
         - `GITHUB_JAVA_SOFTWARE_BRANCH: "AGR-1234"` (Set `AGR-1234` to your GitHub branch.)
@@ -120,6 +127,8 @@ Upon launching an AWS instance, a publicly-accessible URL is also created for de
 - Logs can be viewed from the web address: `http://{YOUR_NET_VALUE}-dev.alliancegenome.org:5601/app/logtrail`
 - Start Neo4J as a prepopulated database:
     - `make startdb`
+- Start the curation database as a prepopulated database:
+    - `make startcurationdb`
 - Run the indexer with your custom branch:
     - `make run_indexer`
 - If you've pushed changes to your GitHub branch and need to re-run the indexer, simply run the same command again:
@@ -127,30 +136,35 @@ Upon launching an AWS instance, a publicly-accessible URL is also created for de
 - When finished, terminate your server:
     - `make terminate`
   
-### Launch a website using a GitHub branch for the UI with prepopulated data from `build`.
+### Launch a website using a GitHub branch for the UI with prepopulated data from `stage`.
 - Be sure to follow all the preliminary steps above at the top of this readme.
 - Ensure the following variables are set in your `main.yml` file:
     - Neo4J
         - `DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true`
-        - `NEO4J_DATA_IMAGE_FROM_AWS_TAG: build`
+        - `NEO4J_DATA_IMAGE_FROM_AWS_TAG: stage`
+    - Curation Database
+        - `CURATION_IMAGE_FROM_AWS_TAG: stage`
+        - `CURATION_RELEASE_VERSION: v0.15.0`
     - Indexer, Cacher, and API settings
         - `DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS: true`
-        - `JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG: build`
+        - `JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG: stage`
     - Elasticsearch, Kibana, & Logstash settings
-        - `ES_IMAGE_FROM_AWS_TAG: build`
+        - `ES_IMAGE_FROM_AWS_TAG: stage`
     - Infinispan settings
         - `DOWNLOAD_INFINISPAN_DATA_IMAGE_FROM_AWS: true`
-        - `INFINISPAN_DATA_IMAGE_FROM_AWS_TAG: build`
+        - `INFINISPAN_DATA_IMAGE_FROM_AWS_TAG: stage`
     - UI settings
         - `DOWNLOAD_UI_IMAGE_FROM_AWS: false`
         - `GITHUB_UI_BRANCH: "AGR-1234"` (Set `AGR-1234` to your GitHub branch.)
     - Nginx settings
-        - `NGINX_IMAGE_FROM_AWS_TAG: build`
+        - `NGINX_IMAGE_FROM_AWS_TAG: stage`
 - Run the following command to bring your server online:
     - `make launch`
 - Logs can be viewed from the web address: `http://{YOUR_NET_VALUE}-dev.alliancegenome.org:5601/app/logtrail`
 - Start Neo4J as a prepopulated database:
     - `make startdb`
+- Start the curation database as a prepopulated database:
+    - `make startcurationdb`   
 - Run the indexer:
     - `make run_indexer`
     - After the indexer is finished, be sure to update the `site_index` as described above in the section above, ["Important Note regarding the Indexer and generating indexes."](#important-note-regarding-the-indexer-and-generating-indexes)
