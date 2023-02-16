@@ -19,7 +19,5 @@
       DEFAULT_LOG_LEVEL: INFO
       ES_HOST: "{{ ES_SERVER_NAME }}"
       NEO4J_HOST: "{{ NEO_SERVER_NAME }}"
-    volumes:
-      - "/data:/data"
     command: java -jar agr_indexer/target/agr_indexer-jar-with-dependencies.jar
 
