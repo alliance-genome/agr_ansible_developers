@@ -40,6 +40,19 @@ DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_neo4j_data_image?region=us-east-1
 NEO4J_DATA_IMAGE_FROM_AWS_TAG: stage
 
+##############################
+# Curation Database settings #
+##############################
+# Please specify the tag to use for the Curation Database data image.
+# Available tags can be found here:
+# https://us-east-1.console.aws.amazon.com/ecr/repositories/private/100225593120/agr_curation_data_env?region=us-east-1
+CURATION_IMAGE_FROM_AWS_TAG: stage
+
+# Please specify the tag to use for the Curation software release image.
+# Available tags can be found here:
+# https://us-east-1.console.aws.amazon.com/ecr/repositories/private/100225593120/agr_curation?region=us-east-1
+CURATION_RELEASE_VERSION: v0.15.0
+
 ###################
 # Loader settings #
 ###################
@@ -150,5 +163,3 @@ NGINX_IMAGE_FROM_AWS_TAG: build
 
 SKIP_NVME_DRIVES: True
 SETUP_NVME_DRIVE: True
-CURATION_IMAGE_FROM_AWS_TAG: stage
-CURATION_RELEASE_VERSION: v0.15.0
