@@ -1,0 +1,14 @@
+- name: Stopping and Removing the Curation API container
+  docker_container:
+    name: "{{ CURATION_API_SERVER_NAME }}"
+    state: absent
+
+- name: Stopping and Removing the Curation OS container
+  docker_container:
+    name: "{{ CURATION_OPENSEARCH_SERVER_NAME }}"
+    state: absent
+
+- name: Stopping and Removing the Curation DB container
+  docker_container:
+    name: "{{ CURATION_POSTGRES_SERVER_NAME }}"
+    state: absent

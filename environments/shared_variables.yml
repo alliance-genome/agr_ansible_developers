@@ -33,6 +33,21 @@ INDEXER_RUN_NAME: "agr.{{ env }}.indexer"
 MOD_VARIANT_INDEXER_RUN_NAME: "agr.{{ env }}.mod_variant.indexer"
 HUMAN_VARIANT_INDEXER_RUN_NAME: "agr.{{ env }}.human_variant.indexer"
 
+
+# Curation Variables
+CURATION_POSTGRES_SERVER_NAME: "agr.{{ env }}.curation.postgres.server"
+CURATION_OPENSEARCH_SERVER_NAME: "agr.{{ env }}.curation.opensearch.server"
+CURATION_API_SERVER_NAME: "agr.{{ env }}.curation.api.server"
+
+CURATION_DATA_IMAGE_NAME: agr_curation_data_env
+CURATION_DATA_IMAGE:          "{{ REGISTRY }}/{{ CURATION_DATA_IMAGE_NAME }}:{{ CURATION_IMAGE_FROM_AWS_TAG }}"
+CURATION_DATA_BUILD_IMAGE:    "{{ REGISTRY }}/{{ CURATION_DATA_IMAGE_NAME }}:{{ CURATION_IMAGE_FROM_AWS_TAG }}"
+
+CURATION_API_IMAGE_NAME: agr_curation
+CURATION_API_IMAGE:          "{{ REGISTRY }}/{{ CURATION_API_IMAGE_NAME }}:{{ CURATION_RELEASE_VERSION }}"
+
+OPENSEARCH_IMAGE_NAME: "opensearchproject/opensearch:1.2.4"
+
 # Cacher Variables
 CACHER_RUN_NAME: "agr.{{ env }}.cacher"
 

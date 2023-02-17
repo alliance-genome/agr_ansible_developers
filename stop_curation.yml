@@ -1,8 +1,7 @@
 ---
-
 - import_playbook: playbook_launch_pre_tasks.yml
 
-- name: Restart ELK Stack
+- name: Stop Curation Database
   hosts: remote
   user: core
   gather_facts: False
@@ -13,20 +12,9 @@
     - "environments/shared_variables.yml"
 
   tasks:
-    - name: Login to Docker
+    - name: Stop Curation
       block:
-        - include_tasks: tasks/docker_login.yml
-        - set_fact:
-            failed_flag: "passed"
-      rescue:
-        - debug:
-            msg: "Failed execute docker login."
-        - set_fact:
-            failed_flag: "failed"
-    - name: Restart ELK Stack
-      block:
-        - include_tasks: tasks/stop_elk.yml
-        - include_tasks: tasks/start_elk.yml
+        - include_tasks: tasks/stop_curation.yml
         - set_fact:
             failed_flag: "passed"
       rescue:

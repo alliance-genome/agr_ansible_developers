@@ -60,9 +60,10 @@
         msg: "EC2 instance launch attempts have failed in all AZ with all tried options."
       when: not launch_success
 
-    - name: Add all instance public IPs to host group
+
+    - name: Add all instance private IPs to host group
       add_host:
-        hostname: "{{ item.public_ip }}"
+        hostname: '{{ item.private_ip_address }}'
         groupname: launched
       with_items: "{{ ec2_result.instances }}"
       register: launched
@@ -71,17 +72,17 @@
       replace:
         path: /usr/src/ansible/hosts
         regexp: '\[remote\]\n[^\n\[\]]*'
-        replace: "[remote]\n{{ item.public_ip }}"
+        replace: "[remote]\n{{ item.private_ip_address }}"
       with_items: "{{ ec2_result.instances }}"
 
     - name: Retrieve all volumes for a queried instance
-      ec2_vol:
-        instance: '{{ item }}'
+      ec2_vol_info:
         region: us-east-1
-        state: list
         aws_access_key: "{{ AWS_ACCESS_KEY }}"
         aws_secret_key: "{{ AWS_SECRET_KEY }}"
-      with_items: "{{ ec2_result.instance_ids }}"
+        filters:
+          attachment.instance-id: '{{ item.instance_id }}'
+      with_items: "{{ ec2_result.instances }}"
       register: ec2_volumes
 
     - name: Ensure all volumes are tagged

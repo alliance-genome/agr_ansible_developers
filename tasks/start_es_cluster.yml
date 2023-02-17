@@ -10,6 +10,9 @@
   docker_container:
     name: "es01"
     image: "{{ ES_ENV_IMAGE_NAME }}"
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
     networks:
       - name: "{{ NET }}"
     ports:
@@ -25,6 +28,10 @@
   docker_container:
     name: "es02"
     image: "{{ ES_ENV_IMAGE_NAME }}"
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
+
     networks:
       - name: "{{ NET }}"
     ports:
@@ -40,6 +47,10 @@
   docker_container:
     name: "es03"
     image: "{{ ES_ENV_IMAGE_NAME }}"
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
+
     networks:
       - name: "{{ NET }}"
     ports:
@@ -55,6 +66,10 @@
   docker_container:
     name: "es04"
     image: "{{ ES_ENV_IMAGE_NAME }}"
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
+
     networks:
       - name: "{{ NET }}"
     ports:
@@ -70,6 +85,10 @@
   docker_container:
     name: "es05"
     image: "{{ ES_ENV_IMAGE_NAME }}"
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
+
     networks:
       - name: "{{ NET }}"
     ports:
@@ -85,6 +104,10 @@
   docker_container:
     name: "es06"
     image: "{{ ES_ENV_IMAGE_NAME }}"
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
+
     networks:
       - name: "{{ NET }}"
     ports:
@@ -100,6 +123,10 @@
   docker_container:
     name: "es07"
     image: "{{ ES_ENV_IMAGE_NAME }}"
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
+
     networks:
       - name: "{{ NET }}"
     ports:
@@ -115,6 +142,10 @@
   docker_container:
     name: "es08"
     image: "{{ ES_ENV_IMAGE_NAME }}"
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
+
     networks:
       - name: "{{ NET }}"
     ports:
