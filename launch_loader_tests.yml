@@ -27,6 +27,7 @@
             failed_flag: "failed"
     - name: Run Loader Tests
       block:
+        - include_tasks: tasks/build_loader.yml
         - include_tasks: tasks/run_loader_tests.yml
         - set_fact:
             failed_flag: "passed"
