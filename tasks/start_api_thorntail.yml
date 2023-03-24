@@ -4,6 +4,7 @@
   docker_container:
     name: "{{ API_SERVER_NAME }}"
     image: "{{ JAVA_SOFTWARE_RUN_IMAGE_NAME }}"
+    timeout: 180
     log_driver: "gelf"
     log_options:
       gelf-address: "{{ LOG_SERVER_ADDRESS }}"

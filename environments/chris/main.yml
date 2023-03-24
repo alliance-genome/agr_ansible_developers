@@ -28,11 +28,11 @@ PULL_UPDATES: true
 # If building Neo4j from "scratch" by running the Loader, please specify the tag to be used for the Neo4j ENV image.
 # A list of available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_neo4j_env?region=us-east-1
-NEO_ENV_IMAGE_FROM_AWS_TAG: stage
+NEO_ENV_IMAGE_FROM_AWS_TAG: 5.5.0-enterprise
 
 # Flagging the following variable as true to download a pre-populated Neo4J data image from AWS ECR.
 # This assumes that you **do not** wish to run the Loader / QC and instead proceed starting with the Indexer.
-DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true
+DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: False
 
 # If DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS is true, a pre-populated Neo4J database will be downloaded from AWS ECR.
 # Please specify the tag to use for this Neo4J data image.
@@ -57,7 +57,7 @@ CURATION_RELEASE_VERSION: v0.15.0
 # Loader settings #
 ###################
 # Set the following value to true in order to download a pre-compiled image of the loader from AWS.
-DOWNLOAD_LOADER_IMAGE_FROM_AWS: True
+DOWNLOAD_LOADER_IMAGE_FROM_AWS: False
 # If the above is true, please specify the tag for the Loader image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_loader_run?region=us-east-1
@@ -65,7 +65,7 @@ LOADER_IMAGE_FROM_AWS_TAG: stage
 
 # If DOWNLOAD_LOADER_IMAGE_FROM_AWS is false, the loader will be built from GitHub.
 # Please specify the GitHub branch to use in order to build the loader.
-GITHUB_LOADER_BRANCH: "master"
+GITHUB_LOADER_BRANCH: "neo4j-version-5.5.0"
 
 # If running the loader test set (a subset of data), set the following to true.
 # TODO This is not yet implemented.
@@ -94,7 +94,7 @@ GITHUB_QC_BRANCH: "master"
 INFINISPAN_ENV_IMAGE_FROM_AWS_TAG: stage
 
 # Set the following value to true in order to download a pre-populated image of Infinispan from AWS.
-DOWNLOAD_INFINISPAN_DATA_IMAGE_FROM_AWS: false
+DOWNLOAD_INFINISPAN_DATA_IMAGE_FROM_AWS: False
 
 # If DOWNLOAD_INFINISPAN_DATA_IMAGE_FROM_AWS is true, a pre-populated Infinispan image will be downloaded from AWS ECR.
 # Please specify the tag to use for this Infinispan data image.
@@ -107,7 +107,7 @@ INFINISPAN_DATA_IMAGE_FROM_AWS_TAG: stage
 ######################################
 # Set the following value to true in order to download a pre-compiled image of Java Software from AWS.
 # This includes the Indexers, Cacher, and API.
-DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS: false
+DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS: True
 # If the above is true, please specify the tag for the Java Software image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_java_software?region=us-east-1
@@ -115,7 +115,7 @@ JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG: stage
 
 # If DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS is false, Java Software will be built from GitHub.
 # Please specify the GitHub branch to use in order to build Java Software.
-GITHUB_JAVA_SOFTWARE_BRANCH: "SCRUM-2551"
+GITHUB_JAVA_SOFTWARE_BRANCH: "KANBAN-294"
 
 # To run specific classes of data with the cacher, please specify the names below.
 # Multiple class names can be used if separated by spaces.
@@ -132,6 +132,7 @@ CACHER_SPECIFIC_FLAGS: ""
 # The Elasticsearch build environment to pull from AWS ECR.
 # Possible tags are here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_elasticsearch_env?region=us-east-1
+# ES_IMAGE_FROM_AWS_TAG: size_test
 ES_IMAGE_FROM_AWS_TAG: stage
 
 # The Kibana build environment to pull from AWS ECR.

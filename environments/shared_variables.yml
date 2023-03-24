@@ -15,6 +15,7 @@ LOADER_RUN_NAME: "agr.{{ env }}.loader"
 LOADER_TEST_RUN_NAME: "agr.{{ env }}.loader.test"
 LOADER_IMAGE_NAME: "{{ REGISTRY }}/agr_loader_run:{{ LOADER_IMAGE_FROM_AWS_TAG }}"
 LOADER_TEST_IMAGE_NAME: "{{ REGISTRY }}/agr_loader_test_run: {{ LOADER_IMAGE_FROM_AWS_TAG }}"
+REDOWNLOAD_FILES_FROM_FMS: False
 
 # QC Variables
 QC_RUN_NAME: "agr.{{ env }}.qc"
