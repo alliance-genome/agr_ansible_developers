@@ -6,9 +6,9 @@
 # Name used for AWS URL.
 # Please replace with your name, e.g. "olin".
 # Do not leave this variable as "main".
-NET: "chris"
+NET: "christian"
 
-ALLIANCE_RELEASE: 5.4.0
+ALLIANCE_RELEASE: 6.0.0
 
 # These values do not need to be altered often.
 PLAYBOOK_NAME: "{{ lookup('env','PLAYBOOK_NAME') or 'Olin Test Server' }}"
@@ -65,7 +65,7 @@ LOADER_IMAGE_FROM_AWS_TAG: stage
 
 # If DOWNLOAD_LOADER_IMAGE_FROM_AWS is false, the loader will be built from GitHub.
 # Please specify the GitHub branch to use in order to build the loader.
-GITHUB_LOADER_BRANCH: "neo4j-version-5.5.0"
+GITHUB_LOADER_BRANCH: stage
 
 # If running the loader test set (a subset of data), set the following to true.
 # TODO This is not yet implemented.
@@ -83,7 +83,7 @@ QC_IMAGE_FROM_AWS_TAG: stage
 
 # If DOWNLOAD_QC_IMAGE_FROM_AWS is false, the QC software will be built from GitHub.
 # Please specify the GitHub branch to use in order to build the QC software.
-GITHUB_QC_BRANCH: "master"
+GITHUB_QC_BRANCH: master
 
 #######################
 # Infinispan settings #
@@ -115,7 +115,7 @@ JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG: stage
 
 # If DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS is false, Java Software will be built from GitHub.
 # Please specify the GitHub branch to use in order to build Java Software.
-GITHUB_JAVA_SOFTWARE_BRANCH: "KANBAN-294"
+GITHUB_JAVA_SOFTWARE_BRANCH: stage
 
 # To run specific classes of data with the cacher, please specify the names below.
 # Multiple class names can be used if separated by spaces.

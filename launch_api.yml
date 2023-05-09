@@ -25,7 +25,7 @@
     - name: Build API, Run API
       block:
         - include_tasks: tasks/build_java_software.yml
-        - include_tasks: tasks/start_api_thorntail.yml
+        - include_tasks: tasks/start_api_quarkus.yml
         - set_fact:
             failed_flag: "passed"
       rescue:
