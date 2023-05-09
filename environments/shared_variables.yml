@@ -34,7 +34,6 @@ INDEXER_RUN_NAME: "agr.{{ env }}.indexer"
 MOD_VARIANT_INDEXER_RUN_NAME: "agr.{{ env }}.mod_variant.indexer"
 HUMAN_VARIANT_INDEXER_RUN_NAME: "agr.{{ env }}.human_variant.indexer"
 
-
 # Curation Variables
 CURATION_POSTGRES_SERVER_NAME: "agr.{{ env }}.curation.postgres.server"
 CURATION_OPENSEARCH_SERVER_NAME: "agr.{{ env }}.curation.opensearch.server"
@@ -78,9 +77,14 @@ LOG_SERVER_ADDRESS: "udp://localhost:12201"
 NEO_VOLUME_NAME: agr_shared
 INFINISPAN_MEMORY: "32g"
 INDEXER_MEMORY: "32g"
-NEO_PAGE_CACHE: "48g"
-NEO_MAX_HEAP: "48g"
 CACHER_MEMORY: "80g"
+
+# Neo4j Config
+NEO_ON_OFF_HEAP: "OFF_HEAP"
+NEO_MAX_HEAP: "31GB"
+NEO_PAGE_CACHE: "148GB"
+NEO_OFF_HEAP_MAX: "0GB"
+NEO_TRANSACTION: "0"
 NEO4J_TRANSACTOR_THREADS_VALUE: 7 # Number of processes to spawn when loading data into Neo4j from the Loader.
 
 # Currently unused variables start here, most will be added in the future for developers.
