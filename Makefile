@@ -59,6 +59,12 @@ run_loader:
 run_loader_tests:
 	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_loader_tests.yml --vault-password-file=.password
 
+run_file_generator:
+	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_file_generator.yml --vault-password-file=.password
+
+run_file_generator_no_upload:
+	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_file_generator_no_upload.yml --vault-password-file=.password
+
 start_infinispan:
 	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_infinispan.yml --vault-password-file=.password
 

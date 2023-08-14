@@ -8,7 +8,7 @@
 # Do not leave this variable as "main".
 NET: "chris"
 
-ALLIANCE_RELEASE: 5.4.0
+ALLIANCE_RELEASE: 6.0.0
 
 # These values do not need to be altered often.
 PLAYBOOK_NAME: "{{ lookup('env','PLAYBOOK_NAME') or 'Olin Test Server' }}"
@@ -38,7 +38,7 @@ DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true
 # Please specify the tag to use for this Neo4J data image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_neo4j_data_image?region=us-east-1
-NEO4J_DATA_IMAGE_FROM_AWS_TAG: stage
+NEO4J_DATA_IMAGE_FROM_AWS_TAG: stage_test
 
 ##############################
 # Curation Database settings #
@@ -51,13 +51,13 @@ CURATION_IMAGE_FROM_AWS_TAG: stage
 # Please specify the tag to use for the Curation software release image.
 # Available tags can be found here:
 # https://us-east-1.console.aws.amazon.com/ecr/repositories/private/100225593120/agr_curation?region=us-east-1
-CURATION_RELEASE_VERSION: v0.15.0
+CURATION_RELEASE_VERSION: v0.19.1
 
 ###################
 # Loader settings #
 ###################
 # Set the following value to true in order to download a pre-compiled image of the loader from AWS.
-DOWNLOAD_LOADER_IMAGE_FROM_AWS: False
+DOWNLOAD_LOADER_IMAGE_FROM_AWS: True
 # If the above is true, please specify the tag for the Loader image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_loader_run?region=us-east-1
@@ -65,11 +65,25 @@ LOADER_IMAGE_FROM_AWS_TAG: stage
 
 # If DOWNLOAD_LOADER_IMAGE_FROM_AWS is false, the loader will be built from GitHub.
 # Please specify the GitHub branch to use in order to build the loader.
-GITHUB_LOADER_BRANCH: "neo4j-version-5.5.0"
+GITHUB_LOADER_BRANCH: "KANBAN-309"
 
 # If running the loader test set (a subset of data), set the following to true.
 # TODO This is not yet implemented.
 LOADER_TEST_SET: false
+
+###########################
+# File Generator Settings #
+###########################
+# Set the following value to true in order to download a pre-compiled image of the file generator from AWS.
+DOWNLOAD_FILE_GENERATOR_IMAGE_FROM_AWS: False
+# If the above is true, please specify the tag for the File Generator image.
+# Available tags can be found here:
+# https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_file_generator_run?region=us-east-1
+FILE_GENERATOR_IMAGE_FROM_AWS_TAG: stage
+
+# If DOWNLOAD_FILE_GENERATOR_IMAGE_FROM_AWS is false, the file generator will be built from GitHub.
+# Please specify the GitHub branch to use in order to build the file generator.
+GITHUB_FILE_GENERATOR_BRANCH: "KANBAN-364"
 
 ###############
 # QC settings #
