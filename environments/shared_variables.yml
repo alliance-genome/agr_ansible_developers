@@ -17,6 +17,10 @@ LOADER_IMAGE_NAME: "{{ REGISTRY }}/agr_loader_run:{{ LOADER_IMAGE_FROM_AWS_TAG }
 LOADER_TEST_IMAGE_NAME: "{{ REGISTRY }}/agr_loader_test_run: {{ LOADER_IMAGE_FROM_AWS_TAG }}"
 REDOWNLOAD_FILES_FROM_FMS: False
 
+# File Generator Variables
+FILE_GENERATOR_RUN_NAME: "agr.{{ env }}.file.generator"
+FILE_GENERATOR_IMAGE_NAME: "{{ REGISTRY }}/agr_file_generator_run:{{ FILE_GENERATOR_IMAGE_FROM_AWS_TAG }}"
+
 # QC Variables
 QC_RUN_NAME: "agr.{{ env }}.qc"
 QC_IMAGE_NAME: "{{ REGISTRY }}/agr_qc_run:{{ QC_IMAGE_FROM_AWS_TAG }}"
@@ -94,7 +98,6 @@ FILE_GENER_RUN_IMAGE_NAME: "{{ REGISTRY }}/{{ FILEGENER_IMAGE_NAME }}:{{ ALLIANC
 QC_TEST_IMAGE_NAME: "{{ REGISTRY }}/{{ QC_IMAGE_NAME }}:{{ env }}_qc"
 API_TEST_IMAGE_NAME: "{{ REGISTRY }}/{{ JAVA_SOFTWARE_IMAGE_NAME }}:{{ env }}_api"
 PREPROCESS_IMAGE_NAME: agr_preprocess_run
-FILEGENER_IMAGE_NAME: agr_file_generator_run
 JBROWSE_IMAGE_NAME: agr_jbrowse_run
 APOLLO_IMAGE_NAME: agr_jbrowse_run
 
@@ -104,7 +107,6 @@ APOLLO_SERVER_NAME: "agr.{{ env }}.apollo.server"
 
 # Running Names (currently unused)
 API_TEST_NAME: "agr.{{ env }}.api.test"
-FILE_GENER_RUN_NAME: "agr.{{ env }}.filegenerator"
 
 # Server Images (currently unused)
 JBROWSE_SERVER_IMAGE_NAME: "{{ REGISTRY }}/{{ JBROWSE_IMAGE_NAME }}:{{ ALLIANCE_RELEASE }}"

@@ -1,0 +1,29 @@
+- name: Pulling File Generator Image {{ FILE_GENERATOR_RUN_NAME }} from AWS ECR
+  docker_image:
+    name: "{{ FILE_GENERATOR_RUN_NAME }}"
+    source: pull
+    force_source: "{{ PULL_UPDATES }}"
+  when: DOWNLOAD_FILE_GENERATOR_IMAGE_FROM_AWS
+
+- name: Recursively removing directory agr_file_generator
+  ignore_errors: yes # If the directory is missing, ignore the error.
+  file:
+    path: agr_file_generator
+    state: absent
+  when: not DOWNLOAD_FILE_GENERATOR_IMAGE_FROM_AWS
+
+- name: Creating directory agr_file_generator
+  file:
+    path: agr_file_generator
+    state: directory
+  when: not DOWNLOAD_FILE_GENERATOR_IMAGE_FROM_AWS
+
+- git:
+    repo: 'https://github.com/alliance-genome/agr_file_generator.git'
+    version: "{{ GITHUB_FILE_GENERATOR_BRANCH }}"
+    dest: "agr_file_generator"
+  when: not DOWNLOAD_FILE_GENERATOR_IMAGE_FROM_AWS
+
+- name: Building the file generator docker image using the branch {{ GITHUB_FILE_GENERATOR_BRANCH }} from GitHub
+  command: docker build --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ FILE_GENERATOR_IMAGE_NAME }}" agr_file_generator
+  when: not DOWNLOAD_FILE_GENERATOR_IMAGE_FROM_AWS

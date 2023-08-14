@@ -71,6 +71,20 @@ GITHUB_LOADER_BRANCH: "master"
 # TODO This is not yet implemented.
 LOADER_TEST_SET: false
 
+###########################
+# File Generator Settings #
+###########################
+# Set the following value to true in order to download a pre-compiled image of the file generator from AWS.
+DOWNLOAD_FILE_GENERATOR_IMAGE_FROM_AWS: True
+# If the above is true, please specify the tag for the File Generator image.
+# Available tags can be found here:
+# https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_file_generator_run?region=us-east-1
+FILE_GENERATOR_IMAGE_FROM_AWS_TAG: stage
+
+# If DOWNLOAD_FILE_GENERATOR_IMAGE_FROM_AWS is false, the file generator will be built from GitHub.
+# Please specify the GitHub branch to use in order to build the file generator.
+GITHUB_FILE_GENERATOR_BRANCH: "master"
+
 ###############
 # QC settings #
 ###############

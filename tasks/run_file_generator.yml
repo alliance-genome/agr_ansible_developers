@@ -1,0 +1,25 @@
+---
+
+- name: Running File Generator with Alliance Release set to {{ ALLIANCE_RELEASE }}
+  docker_container:
+    name: "{{ FILE_GENERATOR_RUN_NAME }}"
+    image: "{{ FILE_GENERATOR_IMAGE_NAME }}"
+    detach: no
+    timeout: 25000
+    recreate: yes
+    log_driver: "gelf"
+    log_options:
+      gelf-address: "{{ LOG_SERVER_ADDRESS }}"
+    volumes:
+      - "{{ NEO_VOLUME_NAME }}:/usr/src/app/tmp"
+    networks:
+      - name: "{{ NET }}"
+    env:
+      API_KEY: "{{ API_ACCESS_TOKEN }}"
+      DEBUG: "False"
+      DOWNLOAD_HOST: "{{ DOWNLOAD_HOST }}"
+      ALLIANCE_RELEASE: "{{ ALLIANCE_RELEASE }}"
+      FMS_API_URL: "{{ FMS_API_URL }}"
+      AWS_ACCESS_KEY: "{{ AWS_ACCESS_KEY }}"
+      AWS_SECRET_KEY: "{{ AWS_SECRET_KEY }}"
+      NEO4J_HOST: "{{ NEO_SERVER_NAME }}"
