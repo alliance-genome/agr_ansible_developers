@@ -27,7 +27,8 @@ QC_IMAGE_NAME: "{{ REGISTRY }}/agr_qc_run:{{ QC_IMAGE_FROM_AWS_TAG }}"
 
 # Infinispan Variables
 INFINISPAN_SERVER_NAME: "agr.{{ env }}.infinispan.server"
-INFINISPAN_ENV_IMAGE_NAME: "{{ REGISTRY }}/agr_infinispan_env:{{ INFINISPAN_ENV_IMAGE_FROM_AWS_TAG }}"
+#INFINISPAN_ENV_IMAGE_NAME: "{{ REGISTRY }}/agr_infinispan_env:{{ INFINISPAN_ENV_IMAGE_FROM_AWS_TAG }}"
+INFINISPAN_ENV_IMAGE_NAME: "infinispan/server:13.0.18.Final"
 INFINISPAN_DATA_IMAGE: "{{ REGISTRY }}/agr_infinispan_data_image:{{ INFINISPAN_DATA_IMAGE_FROM_AWS_TAG }}"
 
 # Java Software Variables (used for Indexer, Cacher, and API)

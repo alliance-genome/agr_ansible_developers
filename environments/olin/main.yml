@@ -8,7 +8,7 @@
 # Do not leave this variable as "main".
 NET: "olin"
 
-ALLIANCE_RELEASE: 5.4.0
+ALLIANCE_RELEASE: 6.0.0
 
 # These values do not need to be altered often.
 PLAYBOOK_NAME: "{{ lookup('env','PLAYBOOK_NAME') or 'Olin Test Server' }}"
@@ -51,7 +51,7 @@ CURATION_IMAGE_FROM_AWS_TAG: stage
 # Please specify the tag to use for the Curation software release image.
 # Available tags can be found here:
 # https://us-east-1.console.aws.amazon.com/ecr/repositories/private/100225593120/agr_curation?region=us-east-1
-CURATION_RELEASE_VERSION: v0.15.0
+CURATION_RELEASE_VERSION: v0.22.0
 
 ###################
 # Loader settings #
@@ -65,7 +65,7 @@ LOADER_IMAGE_FROM_AWS_TAG: stage
 
 # If DOWNLOAD_LOADER_IMAGE_FROM_AWS is false, the loader will be built from GitHub.
 # Please specify the GitHub branch to use in order to build the loader.
-GITHUB_LOADER_BRANCH: "master"
+GITHUB_LOADER_BRANCH: "stage"
 
 # If running the loader test set (a subset of data), set the following to true.
 # TODO This is not yet implemented.
@@ -83,7 +83,7 @@ FILE_GENERATOR_IMAGE_FROM_AWS_TAG: stage
 
 # If DOWNLOAD_FILE_GENERATOR_IMAGE_FROM_AWS is false, the file generator will be built from GitHub.
 # Please specify the GitHub branch to use in order to build the file generator.
-GITHUB_FILE_GENERATOR_BRANCH: "master"
+GITHUB_FILE_GENERATOR_BRANCH: "stage"
 
 ###############
 # QC settings #
@@ -129,12 +129,12 @@ JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG: stage
 
 # If DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS is false, Java Software will be built from GitHub.
 # Please specify the GitHub branch to use in order to build Java Software.
-GITHUB_JAVA_SOFTWARE_BRANCH: "SCRUM-2551"
+GITHUB_JAVA_SOFTWARE_BRANCH: "test_cacher"
 
 # To run specific classes of data with the cacher, please specify the names below.
 # Multiple class names can be used if separated by spaces.
 # e.g. CACHER_SPECIFIC_FLAGS: "GenePhenotypeCacher DiseaseCacher"
-CACHER_SPECIFIC_FLAGS: ""
+CACHER_SPECIFIC_FLAGS: "DiseaseCacher"
 
 ##############################################
 # Elasticsearch, Kibana, & Logstash settings #
@@ -165,7 +165,7 @@ UI_IMAGE_FROM_AWS_TAG: stage
 
 # If DOWNLOAD_QC_IMAGE_FROM_AWS is false, the QC software will be built from GitHub.
 # Please specify the GitHub branch to use in order to build the QC software.
-GITHUB_UI_BRANCH: "release-5.4.0"
+GITHUB_UI_BRANCH: "stage"
 
 ##################
 # Nginx settings #
