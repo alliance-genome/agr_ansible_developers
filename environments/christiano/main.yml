@@ -6,7 +6,7 @@
 # Name used for AWS URL.
 # Please replace with your name, e.g. "olin".
 # Do not leave this variable as "main".
-NET: "christian"
+NET: "christian-old"
 
 ALLIANCE_RELEASE: 6.0.0
 
@@ -28,7 +28,7 @@ PULL_UPDATES: true
 # If building Neo4j from "scratch" by running the Loader, please specify the tag to be used for the Neo4j ENV image.
 # A list of available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_neo4j_env?region=us-east-1
-NEO_ENV_IMAGE_FROM_AWS_TAG: stage
+NEO_ENV_IMAGE_FROM_AWS_TAG: 5.4.0
 
 # Flagging the following variable as true to download a pre-populated Neo4J data image from AWS ECR.
 # This assumes that you **do not** wish to run the Loader / QC and instead proceed starting with the Indexer.
@@ -38,7 +38,7 @@ DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true
 # Please specify the tag to use for this Neo4J data image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_neo4j_data_image?region=us-east-1
-NEO4J_DATA_IMAGE_FROM_AWS_TAG: stage
+NEO4J_DATA_IMAGE_FROM_AWS_TAG: 5.4.0
 
 ##############################
 # Curation Database settings #
@@ -46,7 +46,7 @@ NEO4J_DATA_IMAGE_FROM_AWS_TAG: stage
 # Please specify the tag to use for the Curation Database data image.
 # Available tags can be found here:
 # https://us-east-1.console.aws.amazon.com/ecr/repositories/private/100225593120/agr_curation_data_env?region=us-east-1
-CURATION_IMAGE_FROM_AWS_TAG: stage
+CURATION_IMAGE_FROM_AWS_TAG: 5.4.0
 
 # Please specify the tag to use for the Curation software release image.
 # Available tags can be found here:
@@ -61,11 +61,11 @@ DOWNLOAD_LOADER_IMAGE_FROM_AWS: False
 # If the above is true, please specify the tag for the Loader image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_loader_run?region=us-east-1
-LOADER_IMAGE_FROM_AWS_TAG: stage
+LOADER_IMAGE_FROM_AWS_TAG: release-5.4.0
 
 # If DOWNLOAD_LOADER_IMAGE_FROM_AWS is false, the loader will be built from GitHub.
 # Please specify the GitHub branch to use in order to build the loader.
-GITHUB_LOADER_BRANCH: stage
+GITHUB_LOADER_BRANCH: release-5.4.0
 
 # If running the loader test set (a subset of data), set the following to true.
 # TODO This is not yet implemented.
@@ -93,7 +93,7 @@ DOWNLOAD_QC_IMAGE_FROM_AWS: false
 # If the above is true, please specify the tag for the QC image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_qc_run?region=us-east-1
-QC_IMAGE_FROM_AWS_TAG: stage
+QC_IMAGE_FROM_AWS_TAG: release-5.4.0
 
 # If DOWNLOAD_QC_IMAGE_FROM_AWS is false, the QC software will be built from GitHub.
 # Please specify the GitHub branch to use in order to build the QC software.
@@ -105,7 +105,7 @@ GITHUB_QC_BRANCH: master
 # If building Infinispan from "scratch" by running the Cacher, please specify the tag to be used for the ENV image.
 # A list of available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_infinispan_env?region=us-east-1
-INFINISPAN_ENV_IMAGE_FROM_AWS_TAG: stage
+INFINISPAN_ENV_IMAGE_FROM_AWS_TAG: release-5.4.0
 
 # Set the following value to true in order to download a pre-populated image of Infinispan from AWS.
 DOWNLOAD_INFINISPAN_DATA_IMAGE_FROM_AWS: False
@@ -114,7 +114,7 @@ DOWNLOAD_INFINISPAN_DATA_IMAGE_FROM_AWS: False
 # Please specify the tag to use for this Infinispan data image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_infinispan_data_image?region=us-east-1
-INFINISPAN_DATA_IMAGE_FROM_AWS_TAG: stage
+INFINISPAN_DATA_IMAGE_FROM_AWS_TAG: release-5.4.0
 
 ######################################
 # Indexers, Cacher, and API settings #
@@ -125,11 +125,11 @@ DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS: True
 # If the above is true, please specify the tag for the Java Software image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_java_software?region=us-east-1
-JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG: stage
+JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG: release-5.4.0
 
 # If DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS is false, Java Software will be built from GitHub.
 # Please specify the GitHub branch to use in order to build Java Software.
-GITHUB_JAVA_SOFTWARE_BRANCH: stage
+GITHUB_JAVA_SOFTWARE_BRANCH: release-5.4.0
 
 # To run specific classes of data with the cacher, please specify the names below.
 # Multiple class names can be used if separated by spaces.
