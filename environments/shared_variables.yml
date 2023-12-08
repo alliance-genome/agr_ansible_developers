@@ -44,7 +44,7 @@ CURATION_POSTGRES_SERVER_NAME: "agr.{{ env }}.curation.postgres.server"
 CURATION_OPENSEARCH_SERVER_NAME: "agr.{{ env }}.curation.opensearch.server"
 CURATION_API_SERVER_NAME: "agr.{{ env }}.curation.api.server"
 
-CURATION_DATA_IMAGE_NAME: agr_curation_data_env
+CURATION_DATA_IMAGE_NAME: agr_curation_data
 CURATION_DATA_IMAGE:          "{{ REGISTRY }}/{{ CURATION_DATA_IMAGE_NAME }}:{{ CURATION_IMAGE_FROM_AWS_TAG }}"
 CURATION_DATA_BUILD_IMAGE:    "{{ REGISTRY }}/{{ CURATION_DATA_IMAGE_NAME }}:{{ CURATION_IMAGE_FROM_AWS_TAG }}"
 

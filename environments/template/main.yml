@@ -51,7 +51,7 @@ CURATION_IMAGE_FROM_AWS_TAG: stage
 # Please specify the tag to use for the Curation software release image.
 # Available tags can be found here:
 # https://us-east-1.console.aws.amazon.com/ecr/repositories/private/100225593120/agr_curation?region=us-east-1
-CURATION_RELEASE_VERSION: v0.15.0
+CURATION_RELEASE_VERSION: production
 
 ###################
 # Loader settings #
