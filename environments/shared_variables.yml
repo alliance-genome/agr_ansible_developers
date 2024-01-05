@@ -42,7 +42,9 @@ HUMAN_VARIANT_INDEXER_RUN_NAME: "agr.{{ env }}.human_variant.indexer"
 # Curation Variables
 CURATION_POSTGRES_SERVER_NAME: "agr.{{ env }}.curation.postgres.server"
 CURATION_OPENSEARCH_SERVER_NAME: "agr.{{ env }}.curation.opensearch.server"
+
 CURATION_API_SERVER_NAME: "agr.{{ env }}.curation.api.server"
+CURATION_API_URL: "http://{{ CURATION_API_SERVER_NAME }}:8080/api"
 
 CURATION_DATA_IMAGE_NAME: agr_curation_data
 CURATION_DATA_IMAGE:          "{{ REGISTRY }}/{{ CURATION_DATA_IMAGE_NAME }}:{{ CURATION_IMAGE_FROM_AWS_TAG }}"
