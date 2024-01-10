@@ -7,9 +7,9 @@
   gather_facts: False
 
   vars_files:
-    - "environments/{{ env }}/main.yml" # ENV must always be loaded first
     - "environments/shared_secrets.yml"
     - "environments/shared_variables.yml"
+    - "environments/{{ env }}/main.yml" # ENV must always be loaded first
 
   tasks:
     - name: Login to Docker
