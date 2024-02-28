@@ -26,5 +26,5 @@
   when: not DOWNLOAD_UI_IMAGE_FROM_AWS
 
 - name: Building the loader docker image using the branch {{ GITHUB_UI_BRANCH }} from GitHub
-  command: docker build --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ UI_IMAGE_NAME }}" agr_ui
+  command: docker build --build-arg DOCKER_PULL_TAG=stage --build-arg REG={{ REGISTRY }} --build-arg ALLIANCE_RELEASE={{ ALLIANCE_RELEASE }} -t "{{ UI_IMAGE_NAME }}" agr_ui
   when: not DOWNLOAD_UI_IMAGE_FROM_AWS
