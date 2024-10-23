@@ -16,7 +16,7 @@ PLAYBOOK_NAME: "{{ lookup('env','PLAYBOOK_NAME') or 'Olin Test Server' }}"
 THREADED: "{{ lookup('env','THREADED') or 'true' }}"
 DOWNLOAD_HOST: "download.alliancegenome.org"
 FMS_API_URL: "https://fms.alliancegenome.org"
-COMPUTE_INSTANCE_TYPE: r5d.8xlarge
+COMPUTE_INSTANCE_TYPE: r5d.xlarge
 
 # TODO Generating reports is not yet supported.
 GENERATE_REPORTS: false
