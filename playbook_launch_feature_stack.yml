@@ -12,6 +12,8 @@
 # Optional variables:
 #   SERVER_ALREADY_ONLINE: true  - Skip instance launch, use existing server
 #   INDEXER_SPECIFIC_FLAGS: "GeneIndexer"  - Run specific indexers only
+#   USE_EXTERNAL_NEO4J: true  - Use external Neo4j (e.g., stage) instead of local copy
+#   EXTERNAL_NEO4J_HOST: "stage-neo4j.alliancegenome.org"  - External Neo4j hostname
 
 - import_playbook: playbook_launch_pre_tasks.yml
 - import_playbook: playbook_launch_instance.yml
@@ -70,6 +72,16 @@
         - set_fact:
             failed_flag: "failed"
 
+    - name: Configure External Neo4j
+      set_fact:
+        NEO_SERVER_NAME: "{{ EXTERNAL_NEO4J_HOST }}"
+      when: (USE_EXTERNAL_NEO4J | default(false))
+
+    - name: Log External Neo4j Configuration
+      debug:
+        msg: "Using external Neo4j at {{ NEO_SERVER_NAME }} - skipping local Neo4j startup"
+      when: (USE_EXTERNAL_NEO4J | default(false))
+
     - name: Start Neo4j Data Image
       block:
         - include_tasks: tasks/start_neo_data.yml
@@ -80,7 +92,7 @@
             msg: "Error starting Neo4j data image"
         - set_fact:
             failed_flag: "failed"
-      when: (DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS | default(true))
+      when: not (USE_EXTERNAL_NEO4J | default(false)) and (DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS | default(true))
 
     - name: Start Neo4j Environment (for fresh build)
       block:
@@ -92,7 +104,7 @@
             msg: "Error starting Neo4j environment"
         - set_fact:
             failed_flag: "failed"
-      when: not (DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS | default(true))
+      when: not (USE_EXTERNAL_NEO4J | default(false)) and not (DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS | default(true))
 
     - name: Start Curation Stack (PostgreSQL + OpenSearch + Curation API)
       block:

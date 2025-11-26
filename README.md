@@ -220,8 +220,15 @@ Open your `environments/{YOUR_FOLDER}/main.yml` file and set the following varia
 NET: "your-name"  # e.g. "christiano" - This becomes your URL: christiano-dev.alliancegenome.org
 ```
 
-**Neo4J settings (use prepopulated data from stage):**
+**Neo4J settings (RECOMMENDED: use external stage Neo4j):**
 ```yaml
+USE_EXTERNAL_NEO4J: true
+EXTERNAL_NEO4J_HOST: "stage-neo4j.alliancegenome.org"
+```
+
+Alternatively, to download a local copy of Neo4j:
+```yaml
+USE_EXTERNAL_NEO4J: false
 DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true
 NEO4J_DATA_IMAGE_FROM_AWS_TAG: stage
 ```

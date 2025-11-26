@@ -26,6 +26,12 @@ PULL_UPDATES: true
 ##################
 # Neo4J settings #
 ##################
+# Set to true to use an external Neo4j server (e.g., stage-neo4j) instead of launching a local copy.
+USE_EXTERNAL_NEO4J: true
+# If USE_EXTERNAL_NEO4J is true, specify the hostname of the external Neo4j server.
+EXTERNAL_NEO4J_HOST: "stage-neo4j.alliancegenome.org"
+
+# The following settings are only used if USE_EXTERNAL_NEO4J is false:
 # If building Neo4j from "scratch" by running the Loader, please specify the tag to be used for the Neo4j ENV image.
 # A list of available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_neo4j_env?region=us-east-1
