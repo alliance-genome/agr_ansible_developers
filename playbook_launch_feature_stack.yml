@@ -1,0 +1,204 @@
+---
+# Feature Instance Stack Playbook
+# This playbook launches a complete feature testing stack including:
+# 1. Curation API server (PostgreSQL + OpenSearch)
+# 2. Java API server
+# 3. Indexer instance + Elasticsearch
+# 4. UI instance
+# 5. Nginx for URL access ({{ NET }}-dev.alliancegenome.org)
+#
+# Usage: ansible-playbook playbook_launch_feature_stack.yml -e "env=christiano"
+#
+# Optional variables:
+#   SERVER_ALREADY_ONLINE: true  - Skip instance launch, use existing server
+#   INDEXER_SPECIFIC_FLAGS: "GeneIndexer"  - Run specific indexers only
+
+- import_playbook: playbook_launch_pre_tasks.yml
+- import_playbook: playbook_launch_instance.yml
+  when: not (SERVER_ALREADY_ONLINE | default(false))
+
+- name: Configure Feature Stack Instance
+  hosts: launched
+  user: core
+  gather_facts: false
+
+  vars:
+    API_ACCESS_TOKEN: "{{ LOADER_BUILD_API_ACCESS_TOKEN }}"
+
+  vars_files:
+    - "environments/{{ env }}/main.yml" # ENV must always be loaded first
+    - "environments/shared_secrets.yml"
+    - "environments/shared_variables.yml"
+
+  roles:
+    - role: install_python
+      become: true
+      when: not (SERVER_ALREADY_ONLINE | default(false))
+    - role: setup_nvme_drives
+      when: not SKIP_NVME_DRIVES and not SETUP_NVME_DRIVE and not (SERVER_ALREADY_ONLINE | default(false))
+      become: true
+    - role: setup_nvme_drive
+      when: SETUP_NVME_DRIVE and SKIP_NVME_DRIVES and not (SERVER_ALREADY_ONLINE | default(false))
+      become: true
+    - role: setup_docker
+      become: true
+      when: not (SERVER_ALREADY_ONLINE | default(false))
+    - role: setup_swap
+      become: true
+      when: not (SERVER_ALREADY_ONLINE | default(false))
+
+  tasks:
+    - name: Login to Docker
+      block:
+        - include_tasks: tasks/docker_login.yml
+        - set_fact:
+            failed_flag: "passed"
+      rescue:
+        - debug:
+            msg: "Failed to execute docker login."
+        - set_fact:
+            failed_flag: "failed"
+
+    - name: Start ELK Stack (Elasticsearch, Logstash, Kibana)
+      block:
+        - include_tasks: tasks/start_elk.yml
+        - set_fact:
+            failed_flag: "passed"
+      rescue:
+        - debug:
+            msg: "Error starting ELK stack"
+        - set_fact:
+            failed_flag: "failed"
+
+    - name: Start Neo4j Data Image
+      block:
+        - include_tasks: tasks/start_neo_data.yml
+        - set_fact:
+            failed_flag: "passed"
+      rescue:
+        - debug:
+            msg: "Error starting Neo4j data image"
+        - set_fact:
+            failed_flag: "failed"
+      when: (DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS | default(true))
+
+    - name: Start Neo4j Environment (for fresh build)
+      block:
+        - include_tasks: tasks/start_neo_env.yml
+        - set_fact:
+            failed_flag: "passed"
+      rescue:
+        - debug:
+            msg: "Error starting Neo4j environment"
+        - set_fact:
+            failed_flag: "failed"
+      when: not (DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS | default(true))
+
+    - name: Start Curation Stack (PostgreSQL + OpenSearch + Curation API)
+      block:
+        - include_tasks: tasks/start_curation.yml
+        - set_fact:
+            failed_flag: "passed"
+      rescue:
+        - debug:
+            msg: "Error starting Curation stack"
+        - set_fact:
+            failed_flag: "failed"
+
+    - name: Start Infinispan
+      block:
+        - include_tasks: tasks/start_infinispan_env.yml
+        - set_fact:
+            failed_flag: "passed"
+      rescue:
+        - debug:
+            msg: "Error starting Infinispan"
+        - set_fact:
+            failed_flag: "failed"
+      when: not (DOWNLOAD_INFINISPAN_DATA_IMAGE_FROM_AWS | default(false))
+
+    - name: Start Infinispan Data Image
+      block:
+        - include_tasks: tasks/start_infinispan_data.yml
+        - set_fact:
+            failed_flag: "passed"
+      rescue:
+        - debug:
+            msg: "Error starting Infinispan data image"
+        - set_fact:
+            failed_flag: "failed"
+      when: (DOWNLOAD_INFINISPAN_DATA_IMAGE_FROM_AWS | default(false))
+
+    - name: Wait for services to initialize
+      pause:
+        seconds: 30
+
+    - name: Build and Run Indexer
+      block:
+        - include_tasks: tasks/build_java_software.yml
+        - include_tasks: tasks/run_indexer.yml
+        - set_fact:
+            failed_flag: "passed"
+      rescue:
+        - debug:
+            msg: "Error building/running Indexer"
+        - set_fact:
+            failed_flag: "failed"
+
+    - name: Build and Run Cacher
+      block:
+        - include_tasks: tasks/build_java_software.yml
+        - include_tasks: tasks/run_cacher.yml
+        - set_fact:
+            failed_flag: "passed"
+      rescue:
+        - debug:
+            msg: "Error building/running Cacher"
+        - set_fact:
+            failed_flag: "failed"
+
+    - name: Start Java API Server
+      block:
+        - include_tasks: tasks/build_java_software.yml
+        - include_tasks: tasks/start_api_quarkus.yml
+        - set_fact:
+            failed_flag: "passed"
+      rescue:
+        - debug:
+            msg: "Error starting Java API server"
+        - set_fact:
+            failed_flag: "failed"
+
+    - name: Build and Start UI
+      block:
+        - include_tasks: tasks/build_ui.yml
+        - include_tasks: tasks/start_ui.yml
+        - set_fact:
+            failed_flag: "passed"
+      rescue:
+        - debug:
+            msg: "Error building/starting UI"
+        - set_fact:
+            failed_flag: "failed"
+
+    - name: Build and Start Nginx (URL Access)
+      block:
+        - include_tasks: tasks/build_nginx.yml
+        - include_tasks: tasks/start_nginx.yml
+        - set_fact:
+            failed_flag: "passed"
+      rescue:
+        - debug:
+            msg: "Error starting Nginx"
+        - set_fact:
+            failed_flag: "failed"
+
+- name: Check for Failures
+  hosts: launched
+  gather_facts: False
+  tasks:
+    - fail:
+        msg: "The feature stack deployment has failed. Check logs for details."
+      when: failed_flag == "failed"
+
+- import_playbook: playbook_launch_post_tasks.yml

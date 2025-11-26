@@ -136,6 +136,11 @@ GITHUB_JAVA_SOFTWARE_BRANCH: "SCRUM-2551"
 # e.g. CACHER_SPECIFIC_FLAGS: "GenePhenotypeCacher DiseaseCacher"
 CACHER_SPECIFIC_FLAGS: ""
 
+# To run specific indexers, please specify the indexer names below.
+# Multiple indexer names can be used if separated by spaces.
+# e.g. INDEXER_SPECIFIC_FLAGS: "GeneIndexer DiseaseIndexer"
+INDEXER_SPECIFIC_FLAGS: ""
+
 ##############################################
 # Elasticsearch, Kibana, & Logstash settings #
 ##############################################

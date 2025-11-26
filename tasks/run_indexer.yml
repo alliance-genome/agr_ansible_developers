@@ -28,5 +28,5 @@
       AWS_ACCESS_KEY: "{{ AWS_ACCESS_KEY }}"
       AWS_SECRET_KEY: "{{ AWS_SECRET_KEY }}"
       ALLIANCE_RELEASE: "{{ ALLIANCE_RELEASE }}"
-    command: java -Xms{{ INDEXER_MEMORY }} -Xmx{{ INDEXER_MEMORY }} -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:InitiatingHeapOccupancyPercent=45 -XX:G1ReservePercent=10 -XX:+ParallelRefProcEnabled -DTHREADED={{ THREADED }} -jar agr_indexer/target/agr_indexer-jar-with-dependencies.jar
+    command: java -Xms{{ INDEXER_MEMORY }} -Xmx{{ INDEXER_MEMORY }} -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:InitiatingHeapOccupancyPercent=45 -XX:G1ReservePercent=10 -XX:+ParallelRefProcEnabled -DTHREADED={{ THREADED }} -jar agr_indexer/target/agr_indexer-jar-with-dependencies.jar {{ INDEXER_SPECIFIC_FLAGS }}
 
