@@ -15,7 +15,7 @@ PLAYBOOK_NAME: "{{ lookup('env','PLAYBOOK_NAME') or 'Olin Test Server' }}"
 THREADED: "{{ lookup('env','THREADED') or 'true' }}"
 DOWNLOAD_HOST: "download.alliancegenome.org"
 FMS_API_URL: "https://fms.alliancegenome.org"
-COMPUTE_INSTANCE_TYPE: r5d.xlarge
+COMPUTE_INSTANCE_TYPE: r5d.8xlarge
 
 # TODO Generating reports is not yet supported.
 GENERATE_REPORTS: false
@@ -48,10 +48,16 @@ NEO4J_DATA_IMAGE_FROM_AWS_TAG: stage
 # https://us-east-1.console.aws.amazon.com/ecr/repositories/private/100225593120/agr_curation_data_env?region=us-east-1
 CURATION_IMAGE_FROM_AWS_TAG: stage
 
-# Please specify the tag to use for the Curation software release image.
+# Set the following value to true in order to download a pre-compiled image of the Curation API from AWS.
+DOWNLOAD_CURATION_API_IMAGE_FROM_AWS: True
+# If the above is true, please specify the tag for the Curation API image.
 # Available tags can be found here:
 # https://us-east-1.console.aws.amazon.com/ecr/repositories/private/100225593120/agr_curation?region=us-east-1
 CURATION_RELEASE_VERSION: v0.22.0
+
+# If DOWNLOAD_CURATION_API_IMAGE_FROM_AWS is false, the Curation API will be built from GitHub.
+# Please specify the GitHub branch to use in order to build the Curation API.
+GITHUB_CURATION_BRANCH: "main"
 
 ###################
 # Loader settings #

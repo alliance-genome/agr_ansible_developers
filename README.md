@@ -226,10 +226,24 @@ DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true
 NEO4J_DATA_IMAGE_FROM_AWS_TAG: stage
 ```
 
-**Curation Database settings:**
+**Curation Database settings (use prepopulated data from stage):**
 ```yaml
 CURATION_IMAGE_FROM_AWS_TAG: stage
+```
+
+**Curation API settings (build from your GitHub branch OR use ECR):**
+
+To use a pre-built image from AWS ECR:
+```yaml
+DOWNLOAD_CURATION_API_IMAGE_FROM_AWS: True
 CURATION_RELEASE_VERSION: v0.22.0  # Check ECR for latest version
+```
+
+To build from your GitHub branch:
+```yaml
+DOWNLOAD_CURATION_API_IMAGE_FROM_AWS: False
+GITHUB_CURATION_BRANCH: "YOUR-BRANCH-NAME"  # e.g. "SCRUM-1234" or "main"
+CURATION_RELEASE_VERSION: v0.22.0  # Used for version tagging
 ```
 
 **Indexer, Cacher, and API settings (build from your GitHub branch):**
