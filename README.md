@@ -69,6 +69,7 @@ Upon launching an AWS instance, a publicly-accessible URL is also created for de
 |`start_ui`| Start the UI.|
 |`start_nginx`| Start Nginx. Should always be run last after all other services have started.|
 |`restartelk`| Restart the ELK stack (ElasticSearch / Cerebro / Logstash / Kibana).|
+|`feature_stack`| Launch a complete feature testing stack (Curation API, Java API, Indexer, UI, Nginx) in one command.|
 |`run_jbrowse`| TODO ~~Run a JBrowse instance~~.|
 
 ### Important Note regarding the Indexer and generating indexes.
@@ -183,4 +184,46 @@ Upon launching an AWS instance, a publicly-accessible URL is also created for de
 - Your site should now be online at the following address:
     - `http://{YOUR_NET_VALUE}-dev.alliancegenome.org`
 - When finished, terminate your server:
-    - `make terminate`  
+    - `make terminate`
+
+### Launch a complete feature testing stack with one command.
+This option launches all components needed for a complete feature instance in a single command. Useful for testing features that span multiple components (Curation API, Java API, Indexer, UI).
+- Be sure to follow all the preliminary steps above at the top of this readme.
+- Ensure the following variables are set in your `main.yml` file:
+    - Neo4J
+        - `DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true`
+        - `NEO4J_DATA_IMAGE_FROM_AWS_TAG: stage`
+    - Curation Database
+        - `CURATION_IMAGE_FROM_AWS_TAG: stage`
+        - `CURATION_RELEASE_VERSION: production` (or your desired version)
+    - Indexer, Cacher, and API settings
+        - `DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS: false`
+        - `GITHUB_JAVA_SOFTWARE_BRANCH: "YOUR-BRANCH"` (Set to your GitHub branch.)
+        - `INDEXER_SPECIFIC_FLAGS: ""` (Optional: set to specific indexer names like `"GeneIndexer DiseaseIndexer"` to run only specific indexers)
+    - Elasticsearch, Kibana, & Logstash settings
+        - `ES_IMAGE_FROM_AWS_TAG: stage`
+    - UI settings
+        - `DOWNLOAD_UI_IMAGE_FROM_AWS: false`
+        - `GITHUB_UI_BRANCH: "YOUR-BRANCH"` (Set to your GitHub branch.)
+    - Nginx settings
+        - `NGINX_IMAGE_FROM_AWS_TAG: build`
+- Run the following command to launch the complete feature stack:
+    - `make feature_stack`
+- This single command will:
+    1. Launch an AWS EC2 instance
+    2. Start ELK stack (logging)
+    3. Start Neo4J with prepopulated data
+    4. Start Curation stack (PostgreSQL + OpenSearch + Curation API)
+    5. Start Infinispan
+    6. Build and run the Indexer
+    7. Build and run the Cacher
+    8. Start the Java API server
+    9. Build and start the UI
+    10. Start Nginx for URL access
+- After completion, be sure to update the `site_index` as described in ["Important Note regarding the Indexer and generating indexes."](#important-note-regarding-the-indexer-and-generating-indexes)
+- Your site should now be online at:
+    - `https://{YOUR_NET_VALUE}-dev.alliancegenome.org`
+- Logs can be viewed at:
+    - `http://{YOUR_NET_VALUE}-dev.alliancegenome.org:5601/app/logtrail`
+- When finished, terminate your server:
+    - `make terminate`
