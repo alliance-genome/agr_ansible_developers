@@ -69,6 +69,7 @@ Upon launching an AWS instance, a publicly-accessible URL is also created for de
 |`start_ui`| Start the UI.|
 |`start_nginx`| Start Nginx. Should always be run last after all other services have started.|
 |`restartelk`| Restart the ELK stack (ElasticSearch / Cerebro / Logstash / Kibana).|
+|`feature-stack`| Launch a complete feature testing stack (Curation API, Java API, Indexer, UI, Nginx) in one command.|
 |`run_jbrowse`| TODO ~~Run a JBrowse instance~~.|
 
 ### Important Note regarding the Indexer and generating indexes.
@@ -183,4 +184,153 @@ Upon launching an AWS instance, a publicly-accessible URL is also created for de
 - Your site should now be online at the following address:
     - `http://{YOUR_NET_VALUE}-dev.alliancegenome.org`
 - When finished, terminate your server:
-    - `make terminate`  
+    - `make terminate`
+
+### Launch a complete feature testing stack with one command.
+
+This option launches **all components** needed for a complete feature instance in a single command. This is useful when you need to test features that span multiple components (Curation API, Java API, Indexer, UI) without running each `make` command separately.
+
+#### What this command does
+
+Running `make feature-stack` will automatically:
+1. Launch an AWS EC2 instance
+2. Start the ELK stack (Elasticsearch, Logstash, Kibana for logging)
+3. Start Neo4J with prepopulated data from `stage`
+4. Start the Curation stack (PostgreSQL + OpenSearch + Curation API)
+5. Start Infinispan (caching layer)
+6. Build and run the Indexer (from your GitHub branch)
+7. Build and run the Cacher (from your GitHub branch)
+8. Start the Java API server (from your GitHub branch)
+9. Build and start the UI (from your GitHub branch)
+10. Start Nginx so you can access the site via URL
+
+#### Prerequisites
+
+Before running this command, make sure you have:
+1. Completed all the preliminary steps at the top of this README (AWS access, ECR access, vault access).
+2. Created your own folder in the `environments` directory with a `main.yml` file.
+3. Updated the `ENV` variable in the `Makefile` to match your folder name.
+
+#### Required configuration in your `main.yml` file
+
+Open your `environments/{YOUR_FOLDER}/main.yml` file and set the following variables:
+
+**Your server name (REQUIRED):**
+```yaml
+NET: "your-name"  # e.g. "christiano" - This becomes your URL: christiano-dev.alliancegenome.org
+```
+
+**Neo4J settings (use prepopulated data from stage):**
+```yaml
+DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true
+NEO4J_DATA_IMAGE_FROM_AWS_TAG: stage
+```
+
+**Curation Database settings (use prepopulated data from stage):**
+```yaml
+CURATION_IMAGE_FROM_AWS_TAG: stage
+```
+
+**Curation API settings (build from your GitHub branch OR use ECR):**
+
+To use a pre-built image from AWS ECR:
+```yaml
+DOWNLOAD_CURATION_API_IMAGE_FROM_AWS: True
+CURATION_RELEASE_VERSION: v0.22.0  # Check ECR for latest version
+```
+
+To build from your GitHub branch:
+```yaml
+DOWNLOAD_CURATION_API_IMAGE_FROM_AWS: False
+GITHUB_CURATION_BRANCH: "YOUR-BRANCH-NAME"  # e.g. "SCRUM-1234" or "main"
+CURATION_RELEASE_VERSION: v0.22.0  # Used for version tagging
+```
+
+**Indexer, Cacher, and API settings (build from your GitHub branch):**
+```yaml
+DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS: false
+GITHUB_JAVA_SOFTWARE_BRANCH: "YOUR-BRANCH-NAME"  # e.g. "SCRUM-1234" or "stage"
+```
+
+**Elasticsearch settings:**
+```yaml
+ES_IMAGE_FROM_AWS_TAG: stage
+```
+
+**UI settings (build from your GitHub branch):**
+```yaml
+DOWNLOAD_UI_IMAGE_FROM_AWS: false
+GITHUB_UI_BRANCH: "YOUR-BRANCH-NAME"  # e.g. "SCRUM-1234" or "stage"
+```
+
+**Nginx settings:**
+```yaml
+NGINX_IMAGE_FROM_AWS_TAG: build
+```
+
+#### Optional configuration
+
+**Running specific indexers only (OPTIONAL):**
+
+By default, all indexers will run. If you want to run only specific indexers to save time, you can set:
+```yaml
+INDEXER_SPECIFIC_FLAGS: "GeneIndexer DiseaseIndexer"  # Only runs these two indexers
+```
+
+**If you want ALL indexers to run (the default behavior), leave this as empty quotes:**
+```yaml
+INDEXER_SPECIFIC_FLAGS: ""  # Empty quotes = run ALL indexers (this is the default)
+```
+
+**Running specific cachers only (OPTIONAL):**
+
+Similarly, you can run specific cachers:
+```yaml
+CACHER_SPECIFIC_FLAGS: "GenePhenotypeCacher DiseaseCacher"  # Only runs these cachers
+```
+
+**If you want ALL cachers to run (the default behavior), leave this as empty quotes:**
+```yaml
+CACHER_SPECIFIC_FLAGS: ""  # Empty quotes = run ALL cachers (this is the default)
+```
+
+#### Running the feature stack
+
+Once your `main.yml` is configured:
+
+1. **Make sure the Makefile ENV matches your folder:**
+   ```
+   # In Makefile, set this to your folder name:
+   ENV=christiano
+   ```
+
+2. **Run the feature stack:**
+   ```bash
+   make feature-stack
+   ```
+
+3. **Wait for completion.** This will take some time as it builds and starts all components.
+
+4. **Update the site_index alias.** After the indexer finishes, you need to set the Elasticsearch alias:
+    - Visit `http://{YOUR_NET_VALUE}-dev.alliancegenome.org:9000/`
+    - Login with the node address `http://elasticsearch:9200`
+    - Click `more` at the top navigation bar and choose `aliases`
+    - Under `changes` on the right, type `site_index` in the alias box
+    - Select your newly created index from the `select index` dropdown (it will have a timestamp like `site_index_christiano_1615817944264`)
+    - Click the plus symbol to the far right
+    - Click the apply button
+
+5. **Access your site:**
+    - Website: `https://{YOUR_NET_VALUE}-dev.alliancegenome.org`
+    - Logs: `http://{YOUR_NET_VALUE}-dev.alliancegenome.org:5601/app/logtrail`
+
+6. **When finished, terminate your server:**
+   ```bash
+   make terminate
+   ```
+
+#### Troubleshooting
+
+- **Logs not appearing?** After launching services, refresh your browser window. New containers may take a moment to appear in the LogTrail dropdown.
+- **Site not loading?** Make sure you've set the `site_index` alias in Cerebro (step 4 above).
+- **Build failing?** Check that your GitHub branch names are correct and that the branches exist.

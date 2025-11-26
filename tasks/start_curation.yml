@@ -8,10 +8,8 @@
     name: "{{ OPENSEARCH_IMAGE_NAME }}"
     source: pull
 
-- name: Pull Curation API Image
-  docker_image:
-    name: "{{ CURATION_API_IMAGE }}"
-    source: pull
+- name: Build or Pull Curation API Image
+  include_tasks: build_curation.yml
 
 - name: Run Curation Data Setup
   docker_container:

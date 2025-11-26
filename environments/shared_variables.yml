@@ -2,7 +2,8 @@
 
 # Ansible Specific Vars
 ansible_ssh_user: core
-ansible_python_interpreter: /home/core/pypy/bin/pypy
+# NOTE: ansible_python_interpreter is set in the hosts file per group (local, remote, launched)
+# to avoid conflicts between localhost (container) and remote EC2 instances
 REGISTRY: 100225593120.dkr.ecr.us-east-1.amazonaws.com
 stdout_callback: debug
 
@@ -87,14 +88,14 @@ NGINX_IMAGE_NAME: "{{ REGISTRY }}/agr_nginx:{{ NGINX_IMAGE_FROM_AWS_TAG }}"
 # Misc Config Options
 LOG_SERVER_ADDRESS: "udp://localhost:12201"
 NEO_VOLUME_NAME: agr_shared
-INFINISPAN_MEMORY: "32g"
-INDEXER_MEMORY: "32g"
-CACHER_MEMORY: "80g"
+INFINISPAN_MEMORY: "31g"
+INDEXER_MEMORY: "128g"
+CACHER_MEMORY: "31g"
 
 # Neo4j Config
 NEO_ON_OFF_HEAP: "OFF_HEAP"
 NEO_MAX_HEAP: "31GB"
-NEO_PAGE_CACHE: "148GB"
+NEO_PAGE_CACHE: "64GB"
 NEO_OFF_HEAP_MAX: "0GB"
 NEO_TRANSACTION: "0"
 NEO4J_TRANSACTOR_THREADS_VALUE: 7 # Number of processes to spawn when loading data into Neo4j from the Loader.

@@ -1,0 +1,37 @@
+---
+- name: Pulling Curation API Image {{ CURATION_API_IMAGE }} from AWS ECR
+  docker_image:
+    name: "{{ CURATION_API_IMAGE }}"
+    source: pull
+    force_source: "{{ PULL_UPDATES }}"
+  when: DOWNLOAD_CURATION_API_IMAGE_FROM_AWS
+
+- name: Recursively removing directory agr_curation
+  ignore_errors: yes # If the directory is missing, ignore the error.
+  file:
+    path: agr_curation
+    state: absent
+  when: not DOWNLOAD_CURATION_API_IMAGE_FROM_AWS
+
+- name: Creating directory agr_curation
+  file:
+    path: agr_curation
+    state: directory
+  when: not DOWNLOAD_CURATION_API_IMAGE_FROM_AWS
+
+- git:
+    repo: 'https://github.com/alliance-genome/agr_curation.git'
+    version: "{{ GITHUB_CURATION_BRANCH }}"
+    dest: "agr_curation"
+  when: not DOWNLOAD_CURATION_API_IMAGE_FROM_AWS
+
+- name: Copy application.properties.defaults to application.properties
+  copy:
+    src: agr_curation/src/main/resources/application.properties.defaults
+    dest: agr_curation/src/main/resources/application.properties
+    remote_src: yes
+  when: not DOWNLOAD_CURATION_API_IMAGE_FROM_AWS
+
+- name: Building the Curation API docker image using the branch {{ GITHUB_CURATION_BRANCH }} from GitHub.
+  command: docker build --build-arg OVERWRITE_VERSION={{ CURATION_RELEASE_VERSION }} -t "{{ CURATION_API_IMAGE }}" agr_curation
+  when: not DOWNLOAD_CURATION_API_IMAGE_FROM_AWS

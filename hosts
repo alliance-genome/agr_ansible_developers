@@ -1,8 +1,11 @@
 [local]
 localhost
 
+[local:vars]
+ansible_python_interpreter=/root/venv/bin/python
+
 [remote]
-172.31.3.166
+172.31.9.111
 
 [remote:vars]
 ansible_python_interpreter=/home/core/pypy/bin/pypy
