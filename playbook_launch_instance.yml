@@ -102,7 +102,7 @@
 
     - name: Waiting for SSH to be up
       wait_for:
-        host: "{{ item.private_dns_name }}"
+        host: "{{ item.private_ip_address }}"
         port: 22
         delay: 5
         timeout: 300

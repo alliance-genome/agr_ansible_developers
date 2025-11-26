@@ -38,7 +38,7 @@ DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS: true
 # Please specify the tag to use for this Neo4J data image.
 # Available tags can be found here:
 # https://console.aws.amazon.com/ecr/repositories/private/100225593120/agr_neo4j_data_image?region=us-east-1
-NEO4J_DATA_IMAGE_FROM_AWS_TAG: stage_test
+NEO4J_DATA_IMAGE_FROM_AWS_TAG: stage
 
 ##############################
 # Curation Database settings #
@@ -51,7 +51,7 @@ CURATION_IMAGE_FROM_AWS_TAG: stage
 # Please specify the tag to use for the Curation software release image.
 # Available tags can be found here:
 # https://us-east-1.console.aws.amazon.com/ecr/repositories/private/100225593120/agr_curation?region=us-east-1
-CURATION_RELEASE_VERSION: v0.19.1
+CURATION_RELEASE_VERSION: v0.22.0
 
 ###################
 # Loader settings #
