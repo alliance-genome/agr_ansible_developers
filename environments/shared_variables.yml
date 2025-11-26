@@ -2,8 +2,13 @@
 
 # Ansible Specific Vars
 ansible_ssh_user: core
+ansible_python_interpreter: /home/core/pypy/bin/pypy
 REGISTRY: 100225593120.dkr.ecr.us-east-1.amazonaws.com
 stdout_callback: debug
+
+# AWS Tagging (for cost tracking)
+AWS_PRODUCT_TAG: "{{ lookup('env','AWS_PRODUCT_TAG') | default('developer-instance',True) }}"
+AWS_ENV_TAG: "{{ lookup('env','AWS_ENV_TAG') | default(env,True) }}"
 
 # Neo4j Variables
 NEO_SERVER_NAME: "agr.{{ env }}.neo4j.server"
@@ -28,7 +33,7 @@ QC_IMAGE_NAME: "{{ REGISTRY }}/agr_qc_run:{{ QC_IMAGE_FROM_AWS_TAG }}"
 # Infinispan Variables
 INFINISPAN_SERVER_NAME: "agr.{{ env }}.infinispan.server"
 #INFINISPAN_ENV_IMAGE_NAME: "{{ REGISTRY }}/agr_infinispan_env:{{ INFINISPAN_ENV_IMAGE_FROM_AWS_TAG }}"
-INFINISPAN_ENV_IMAGE_NAME: "infinispan/server:13.0.18.Final"
+INFINISPAN_ENV_IMAGE_NAME: "infinispan/server:15.2.1.Final"
 INFINISPAN_DATA_IMAGE: "{{ REGISTRY }}/agr_infinispan_data_image:{{ INFINISPAN_DATA_IMAGE_FROM_AWS_TAG }}"
 
 # Java Software Variables (used for Indexer, Cacher, and API)

@@ -1,0 +1,16 @@
+---
+
+# AWS Instance Variables for Developer Environments
+# These can be overridden in individual developer environment files
+
+# Compute Instance Configuration
+COMPUTE_INSTANCE_TYPE: "{{ lookup('env','COMPUTE_INSTANCE_TYPE') or 'r5d.xlarge' }}"
+COMPUTE_AMI_IMAGE: ami-05668c1bb69ebd078
+
+# NVME Drive Configuration
+# Both must be true for single NVME drive, both false for RAID0 mirrored (default)
+SKIP_NVME_DRIVES: "{{ lookup('env', 'SKIP_NVME_DRIVES') or false }}"
+SETUP_NVME_DRIVE: "{{ lookup('env', 'SETUP_NVME_DRIVE') or false }}"
+
+# Elasticsearch/OpenSearch Cluster Memory
+ES_CLUSTER_MEMORY: "8g"

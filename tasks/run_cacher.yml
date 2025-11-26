@@ -1,5 +1,10 @@
 ---
 
+- name: Pull Java Software Image for Cacher
+  docker_image:
+    name: "{{ JAVA_SOFTWARE_RUN_IMAGE_NAME }}"
+    source: pull
+
 - name: Running Cacher
   docker_container:
     name: "{{ CACHER_RUN_NAME }}"

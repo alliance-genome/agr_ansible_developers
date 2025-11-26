@@ -3,7 +3,7 @@
     key_name: AGR-ssl2
     security_groups: ["default", "HTTP/HTTPS"]
     instance_type: "{{ COMPUTE_INSTANCE_TYPE }}"
-    image_id: ami-05668c1bb69ebd078
+    image_id: "{{ COMPUTE_AMI_IMAGE }}"
     region: us-east-1
     availability_zone: "{{ item.AZ }}"
     iam_instance_profile: S3DataAccess
@@ -25,6 +25,8 @@
       # Please change filter value in playbook_terminate_instance.yml if changed here.
       Name: "Ansible Generated - {{ NET }}-dev Server"
       dns_name: "{{ NET }}"
+      Product: "{{ AWS_PRODUCT_TAG }}"
+      DeploymentEnvironment: "{{ AWS_ENV_TAG }}"
     instance_initiated_shutdown_behavior: terminate
   when: not launch_success
   register: ec2_result_internal
