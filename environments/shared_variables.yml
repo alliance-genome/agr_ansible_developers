@@ -2,7 +2,8 @@
 
 # Ansible Specific Vars
 ansible_ssh_user: core
-ansible_python_interpreter: /home/core/pypy/bin/pypy
+# NOTE: ansible_python_interpreter is set in the hosts file per group (local, remote, launched)
+# to avoid conflicts between localhost (container) and remote EC2 instances
 REGISTRY: 100225593120.dkr.ecr.us-east-1.amazonaws.com
 stdout_callback: debug
 
