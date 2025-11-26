@@ -69,7 +69,7 @@ Upon launching an AWS instance, a publicly-accessible URL is also created for de
 |`start_ui`| Start the UI.|
 |`start_nginx`| Start Nginx. Should always be run last after all other services have started.|
 |`restartelk`| Restart the ELK stack (ElasticSearch / Cerebro / Logstash / Kibana).|
-|`feature_stack`| Launch a complete feature testing stack (Curation API, Java API, Indexer, UI, Nginx) in one command.|
+|`feature-stack`| Launch a complete feature testing stack (Curation API, Java API, Indexer, UI, Nginx) in one command.|
 |`run_jbrowse`| TODO ~~Run a JBrowse instance~~.|
 
 ### Important Note regarding the Indexer and generating indexes.
@@ -192,7 +192,7 @@ This option launches **all components** needed for a complete feature instance i
 
 #### What this command does
 
-Running `make feature_stack` will automatically:
+Running `make feature-stack` will automatically:
 1. Launch an AWS EC2 instance
 2. Start the ELK stack (Elasticsearch, Logstash, Kibana for logging)
 3. Start Neo4J with prepopulated data from `stage`
@@ -292,7 +292,7 @@ Once your `main.yml` is configured:
 
 2. **Run the feature stack:**
    ```bash
-   make feature_stack
+   make feature-stack
    ```
 
 3. **Wait for completion.** This will take some time as it builds and starts all components.
