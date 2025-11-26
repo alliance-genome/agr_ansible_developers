@@ -1,5 +1,10 @@
 ---
 
+- name: Pull Loader Run Image
+  docker_image:
+    name: "{{ LOADER_IMAGE_NAME }}"
+    source: pull
+
 - name: Setting REDOWNLOAD_FROM_FMS to True in the loader
   set_fact:
     REDOWNLOAD_FROM_FMS_VALUE: true

@@ -5,7 +5,8 @@
   gather_facts: False
 
   vars_files:
-    - "environments/{{ env }}/main.yml" # ENV must always be loaded first
+    - "environments/shared_aws_instance_variables.yml" # Load AWS defaults first
+    - "environments/{{ env }}/main.yml" # ENV overrides defaults
     - "environments/shared_secrets.yml"
     - "environments/shared_variables.yml"
 
@@ -93,6 +94,8 @@
         aws_secret_key: "{{ AWS_SECRET_KEY }}"
         tags:
           Name: "Ansible Generated Volume - {{ PLAYBOOK_NAME }}"
+          Product: "{{ AWS_PRODUCT_TAG }}"
+          DeploymentEnvironment: "{{ AWS_ENV_TAG }}"
       with_subelements:
         - "{{ ec2_volumes.results }}"
         - volumes
