@@ -23,18 +23,6 @@
   become: true
   become_user: root
 
-- name: Copying SSL CRT file
-  copy:
-    content: "{{ AGR_WEB_CRT_FILE }}"
-    dest: "/home/core/ssl/agr.crt"
-    mode: 0644
-
-- name: Copying SSL KEY File
-  copy:
-    content: "{{ AGR_WEB_KEY_FILE }}"
-    dest: "/home/core/ssl/agr.key"
-    mode: 0644
-
 - name: Copying CA file
   copy:
     src: files/ca-certs.pem
