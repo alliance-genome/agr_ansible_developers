@@ -17,7 +17,6 @@
     image: "{{ NGINX_IMAGE_NAME }}"
     ports:
       - "80:80"
-      - "443:443"
     networks:
       - name: "{{ NET }}"
     log_driver: "gelf"
@@ -27,5 +26,4 @@
       API_URL: "http://{{ API_SERVER_NAME }}:8080"
     volumes:
       - /home/core/.htpasswd:/etc/nginx/.htpasswd
-      - /home/core/ssl:/etc/ssl/certs
       - /home/core/nginx_config:/etc/nginx/conf.d/
