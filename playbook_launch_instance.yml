@@ -18,6 +18,12 @@
     ec2_result:
 
   tasks:
+    - name: Clear stale IPs from hosts file
+      replace:
+        path: /usr/src/ansible/hosts
+        regexp: '(\[remote\]\n).*'
+        replace: '[remote]\n'
+
     - name: Fetch on-demand pricing
       shell: >-
         aws pricing get-products --service-code AmazonEC2 --region us-east-1
