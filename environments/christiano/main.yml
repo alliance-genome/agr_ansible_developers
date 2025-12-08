@@ -8,8 +8,8 @@
 # Do not leave this variable as "main".
 NET: "christiano"
 
-ALLIANCE_RELEASE: 6.0.0
-CURATION_API_URL: "https://alpha-curation.alliancegenome.org/api"
+ALLIANCE_RELEASE: 7.2.0
+CURATION_API_URL: "https://curation.alliancegenome.org/api"
 CURATION_API_TOKEN: "fb0d3a42-aac6-4470-8d66-da2777117598"
 # These values do not need to be altered often.
 PLAYBOOK_NAME: "{{ lookup('env','PLAYBOOK_NAME') or 'Olin Test Server' }}"
@@ -142,7 +142,7 @@ JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG: stage
 
 # If DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS is false, Java Software will be built from GitHub.
 # Please specify the GitHub branch to use in order to build Java Software.
-GITHUB_JAVA_SOFTWARE_BRANCH: SCRUM-2016
+GITHUB_JAVA_SOFTWARE_BRANCH: stage
 
 # To run specific classes of data with the cacher, please specify the names below.
 # Multiple class names can be used if separated by spaces.
@@ -184,7 +184,7 @@ UI_IMAGE_FROM_AWS_TAG: stage
 
 # If DOWNLOAD_QC_IMAGE_FROM_AWS is false, the QC software will be built from GitHub.
 # Please specify the GitHub branch to use in order to build the QC software.
-GITHUB_UI_BRANCH: "SCRUM-2016"
+GITHUB_UI_BRANCH: stage
 
 ##################
 # Nginx settings #
