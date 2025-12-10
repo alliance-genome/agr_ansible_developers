@@ -8,7 +8,7 @@ ENV=chris
 
 registry-docker-login:
 ifneq ($(shell echo ${REG} | egrep "ecr\..+\.amazonaws\.com"),)
-	@$(eval DOCKER_LOGIN_CMD=docker run --rm -it -v ~/.aws:/root/.aws amazon/aws-cli)
+	@$(eval DOCKER_LOGIN_CMD=docker run --rm -v ~/.aws:/root/.aws amazon/aws-cli)
 ifneq (${AWS_PROFILE},)
 	@$(eval DOCKER_LOGIN_CMD=${DOCKER_LOGIN_CMD} --profile ${AWS_PROFILE})
 endif
@@ -17,10 +17,46 @@ endif
 endif
 
 password:
-	install -m 600 /dev/null .password
-	./password-client.sh > .password
+	@echo "Fetching vault password from AWS Secrets Manager..."
+	@if [ -f .password ] && [ -s .password ]; then \
+		echo "Password file already exists and is not empty. Remove it first if you want to refresh."; \
+		exit 1; \
+	fi
+	@echo "Available AWS profiles:"
+	@grep '^\[' ~/.aws/config 2>/dev/null | sed 's/\[profile /  - /g' | sed 's/\[/  - /g' | sed 's/\]//g' || echo "  (no profiles found in ~/.aws/config)"
+	@echo ""
+	@if [ -z "$(PROFILE)" ]; then \
+		echo "ERROR: PROFILE not specified."; \
+		echo ""; \
+		echo "Usage: make password PROFILE=<your-aws-profile>"; \
+		echo ""; \
+		echo "Example:"; \
+		echo "  make password PROFILE=ctabone"; \
+		echo ""; \
+		echo "The profile must have access to Alliance AWS Secrets Manager."; \
+		exit 1; \
+	fi
+	@echo "Using AWS profile: $(PROFILE)"
+	@install -m 600 /dev/null .password
+	@AWS_PROFILE=$(PROFILE) ./password-client.sh > .password.tmp && mv .password.tmp .password || { rm -f .password.tmp; echo "Failed to fetch password - see error above"; exit 1; }
+	@echo "Password file created successfully"
 
-build: pull registry-docker-login password
+check-password:
+	@if [ ! -f .password ]; then \
+		echo "ERROR: .password file does not exist"; \
+		echo "Run 'make password PROFILE=<your-profile>' to fetch from AWS, or manually create it:"; \
+		echo "  echo -n 'YOUR_PASSWORD' > .password"; \
+		exit 1; \
+	fi
+	@if [ ! -s .password ]; then \
+		echo "ERROR: .password file is empty"; \
+		echo "Run 'make password PROFILE=<your-profile>' to fetch from AWS, or manually create it:"; \
+		echo "  echo -n 'YOUR_PASSWORD' > .password"; \
+		exit 1; \
+	fi
+	@echo "Password file check: OK"
+
+build: pull registry-docker-login check-password
 	docker build -t ${LOCAL_RUN_CONTAINER}:${TAG} .
 
 pull: registry-docker-login
@@ -30,70 +66,70 @@ bash:
 	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} bash
 
 launch: build
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_aws.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_aws.yml --vault-password-file=.password
 
 startdb:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_neo.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_neo.yml --vault-password-file=.password
 
 startcurationdb:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_curation.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_curation.yml --vault-password-file=.password
 
 stopdb:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts stop_neo.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts stop_neo.yml --vault-password-file=.password
 
 stopcurationdb:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts stop_curation.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts stop_curation.yml --vault-password-file=.password
 
 restartdb:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts restart_neo.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts restart_neo.yml --vault-password-file=.password
 
 restartcurationdb:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts restart_curation.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts restart_curation.yml --vault-password-file=.password
 
 restartelk:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts restart_elk.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts restart_elk.yml --vault-password-file=.password
 
 run_loader:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_loader.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_loader.yml --vault-password-file=.password
 
 run_loader_tests:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_loader_tests.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_loader_tests.yml --vault-password-file=.password
 
 run_file_generator:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_file_generator.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_file_generator.yml --vault-password-file=.password
 
 run_file_generator_no_upload:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_file_generator_no_upload.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_file_generator_no_upload.yml --vault-password-file=.password
 
 start_infinispan:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_infinispan.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_infinispan.yml --vault-password-file=.password
 
 run_indexer:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_indexer.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_indexer.yml --vault-password-file=.password
 
 run_mod_variant_indexer:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_mod_variant_indexer.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_mod_variant_indexer.yml --vault-password-file=.password
 
 run_human_variant_indexer:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_human_variant_indexer.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_human_variant_indexer.yml --vault-password-file=.password
 
 run_cacher:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_cacher.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_cacher.yml --vault-password-file=.password
 
 start_api:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_api.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_api.yml --vault-password-file=.password
 
 start_ui:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_ui.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_ui.yml --vault-password-file=.password
 
 start_es_cluster:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_es_cluster.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_es_cluster.yml --vault-password-file=.password
 
 start_nginx:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_nginx.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_nginx.yml --vault-password-file=.password
 
 feature-stack:
-	docker run --rm -it --network=host -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts playbook_launch_feature_stack.yml --vault-password-file=.password
+	docker run --rm --network=host -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts playbook_launch_feature_stack.yml --vault-password-file=.password
 
 terminate:
-	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts playbook_terminate_instance.yml --vault-password-file=.password
+	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts playbook_terminate_instance.yml --vault-password-file=.password

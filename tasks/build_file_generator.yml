@@ -1,8 +1,5 @@
 - name: Pulling File Generator Image {{ FILE_GENERATOR_RUN_NAME }} from AWS ECR
-  docker_image:
-    name: "{{ FILE_GENERATOR_RUN_NAME }}"
-    source: pull
-    force_source: "{{ PULL_UPDATES }}"
+  shell: docker pull {{ FILE_GENERATOR_RUN_NAME }} 2>&1
   when: DOWNLOAD_FILE_GENERATOR_IMAGE_FROM_AWS
 
 - name: Recursively removing directory agr_file_generator

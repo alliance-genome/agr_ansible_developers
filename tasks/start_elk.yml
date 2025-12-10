@@ -1,9 +1,5 @@
 - name: Pulling ES Env Image {{ ES_ENV_IMAGE_NAME }}
-  docker_image:
-    name: "{{ ES_ENV_IMAGE_NAME }}"
-    source: pull
-    force_source: "{{ PULL_UPDATES }}"
-
+  shell: docker pull {{ ES_ENV_IMAGE_NAME }} 2>&1
 - name: Pulling Cerebro Image
   docker_image:
     name: "yannart/cerebro:latest"
@@ -36,11 +32,7 @@
       - "9000:9000"
 
 - name: Pulling Logstash Image {{ LOG_IMAGE_NAME }}
-  docker_image:
-    name: "{{ LOG_IMAGE_NAME }}"
-    source: pull
-    force_source: "{{ PULL_UPDATES }}"
-
+  shell: docker pull {{ LOG_IMAGE_NAME }} 2>&1
 - name: Starting Logstash Server
   docker_container:
     name: "{{ LOG_SERVER_NAME }}"
@@ -55,11 +47,7 @@
     command: ./bin/logstash -e "input { gelf { type => docker } } output { elasticsearch { hosts => [\"{{ ES_SERVER_NAME }}\"] ilm_enabled => true ilm_policy => \"ilm-history-ilm-policy\" } }"
 
 - name: Pulling Kibana Image {{ KIBANA_IMAGE_NAME }}
-  docker_image:
-    name: "{{ KIBANA_IMAGE_NAME }}"
-    source: pull
-    force_source: "{{ PULL_UPDATES }}"
-
+  shell: docker pull {{ KIBANA_IMAGE_NAME }} 2>&1
 - name: Starting Kibana
   docker_container:
     name: "{{ KIBANA_SERVER_NAME }}"

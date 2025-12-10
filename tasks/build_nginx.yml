@@ -1,6 +1,3 @@
 ---
 - name: Pulling Loader Image {{ NGINX_IMAGE_NAME }} from AWS ECR
-  docker_image:
-    name: "{{ NGINX_IMAGE_NAME }}"
-    source: pull
-    force_source: "{{ PULL_UPDATES }}"
+  shell: docker pull {{ NGINX_IMAGE_NAME }} 2>&1

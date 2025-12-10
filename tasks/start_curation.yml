@@ -1,12 +1,8 @@
 - name: Pull Curation Data Image
-  docker_image:
-    name: "{{ CURATION_DATA_IMAGE }}"
-    source: pull
+  shell: docker pull {{ CURATION_DATA_IMAGE }} 2>&1
 
 - name: Pull Curation OpenSearch Image
-  docker_image:
-    name: "{{ OPENSEARCH_IMAGE_NAME }}"
-    source: pull
+  shell: docker pull {{ OPENSEARCH_IMAGE_NAME }} 2>&1
 
 - name: Build or Pull Curation API Image
   include_tasks: build_curation.yml

@@ -1,9 +1,6 @@
 ---
 - name: Pulling Curation API Image {{ CURATION_API_IMAGE }} from AWS ECR
-  docker_image:
-    name: "{{ CURATION_API_IMAGE }}"
-    source: pull
-    force_source: "{{ PULL_UPDATES }}"
+  shell: docker pull {{ CURATION_API_IMAGE }} 2>&1
   when: DOWNLOAD_CURATION_API_IMAGE_FROM_AWS
 
 - name: Recursively removing directory agr_curation
