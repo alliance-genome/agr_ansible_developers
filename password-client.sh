@@ -35,9 +35,16 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Extract the actual password from the JSON response
+# Extract the actual password from the response
+# The secret might be returned with or without quotes, so handle both cases
 PASSWORD=$(echo "${SECRET_OUTPUT}" | grep -o '"[^"]\+"' | sed 's/"//g')
 
+# If the grep didn't match (no quotes), assume the output is the plain password
+if [ -z "${PASSWORD}" ]; then
+    PASSWORD="${SECRET_OUTPUT}"
+fi
+
+# Validate we got something
 if [ -z "${PASSWORD}" ]; then
     echo "ERROR: Retrieved secret but password extraction failed" >&2
     echo "Secret output: ${SECRET_OUTPUT}" >&2
