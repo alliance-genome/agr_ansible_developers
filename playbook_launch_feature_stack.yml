@@ -33,18 +33,22 @@
     - "environments/shared_variables.yml"
 
   roles:
-    - role: install_python
-      become: true
-      when: not (SERVER_ALREADY_ONLINE | default(false))
+    # NVMe setup FIRST - before Docker does anything
     - role: setup_nvme_drives
       when: not SKIP_NVME_DRIVES and not SETUP_NVME_DRIVE and not (SERVER_ALREADY_ONLINE | default(false))
       become: true
     - role: setup_nvme_drive
       when: SETUP_NVME_DRIVE and SKIP_NVME_DRIVES and not (SERVER_ALREADY_ONLINE | default(false))
       become: true
+    # Then install Python
+    - role: install_python
+      become: true
+      when: not (SERVER_ALREADY_ONLINE | default(false))
+    # Then setup Docker
     - role: setup_docker
       become: true
       when: not (SERVER_ALREADY_ONLINE | default(false))
+    # Finally setup swap
     - role: setup_swap
       become: true
       when: not (SERVER_ALREADY_ONLINE | default(false))

@@ -1,10 +1,7 @@
 ---
 
 - name: Pull Java Software Image
-  docker_image:
-    name: "{{ JAVA_SOFTWARE_RUN_IMAGE_NAME }}"
-    source: pull
-
+  shell: docker pull {{ JAVA_SOFTWARE_RUN_IMAGE_NAME }} 2>&1
 - name: Running Indexer
   docker_container:
     name: "{{ INDEXER_RUN_NAME }}"
