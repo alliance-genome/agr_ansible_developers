@@ -63,8 +63,6 @@ Upon launching an AWS instance, a publicly-accessible URL is also created for de
 |`run_indexer`| Run the indexer. Requires both Neo4J (`startdb`) and the curation database (`startcurationdb`).|
 |`run_mod_variant_indexer`| Run the MOD variant indexer.|
 |`run_human_variant_indexer`| Run the human variant indexer.|
-|`start_infinispan`| Start infinispan.|
-|`run_cacher`| Run the cacher. Requires starting infinispan first.|
 |`start_api`| Start the API.|
 |`start_ui`| Start the UI.|
 |`start_nginx`| Start Nginx. Should always be run last after all other services have started.|
@@ -171,8 +169,6 @@ Upon launching an AWS instance, a publicly-accessible URL is also created for de
 - Run the indexer:
     - `make run_indexer`
     - After the indexer is finished, be sure to update the `site_index` as described above in the section above, ["Important Note regarding the Indexer and generating indexes."](#important-note-regarding-the-indexer-and-generating-indexes)
-- Start Infinispan with prepopulated data:
-    - `make start_infinispan`
 - Start the API:
     - `make start_api`
 - Start the UI with your custom branch:

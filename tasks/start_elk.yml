@@ -21,6 +21,7 @@
     env:
       discovery.type: single-node
       xpack.security.enabled: "false"
+      indices.memory.index_buffer_size: "50%"
 
 - name: Starting Cerebro
   docker_container:

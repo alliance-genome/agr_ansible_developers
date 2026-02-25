@@ -12,7 +12,7 @@ AWS_PRODUCT_TAG: "{{ lookup('env','AWS_PRODUCT_TAG') | default('developer-instan
 AWS_ENV_TAG: "{{ lookup('env','AWS_ENV_TAG') | default(env,True) }}"
 
 # Neo4j Variables
-NEO_SERVER_NAME: "agr.{{ env }}.neo4j.server"
+NEO_SERVER_NAME: "stage-neo4j.alliancegenome.org"
 NEO_DATA_IMAGE: "{{ REGISTRY }}/agr_neo4j_data_image:{{ NEO4J_DATA_IMAGE_FROM_AWS_TAG }}"
 NEO_ENV_IMAGE_NAME: "{{ REGISTRY }}/agr_neo4j_env:{{ NEO_ENV_IMAGE_FROM_AWS_TAG }}"
 
@@ -31,19 +31,12 @@ FILE_GENERATOR_IMAGE_NAME: "{{ REGISTRY }}/agr_file_generator_run:{{ FILE_GENERA
 QC_RUN_NAME: "agr.{{ env }}.qc"
 QC_IMAGE_NAME: "{{ REGISTRY }}/agr_qc_run:{{ QC_IMAGE_FROM_AWS_TAG }}"
 
-# Infinispan Variables
-INFINISPAN_SERVER_NAME: "agr.{{ env }}.infinispan.server"
-#INFINISPAN_ENV_IMAGE_NAME: "{{ REGISTRY }}/agr_infinispan_env:{{ INFINISPAN_ENV_IMAGE_FROM_AWS_TAG }}"
-INFINISPAN_ENV_IMAGE_NAME: "infinispan/server:15.2.1.Final"
-INFINISPAN_DATA_IMAGE: "{{ REGISTRY }}/agr_infinispan_data_image:{{ INFINISPAN_DATA_IMAGE_FROM_AWS_TAG }}"
-
 # Java Software Variables (used for Indexer, Cacher, and API)
 JAVA_SOFTWARE_RUN_IMAGE_NAME: "{{ REGISTRY }}/agr_java_software:{{ JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG }}"
 
 # Indexer Variables
 INDEXER_RUN_NAME: "agr.{{ env }}.indexer"
-MOD_VARIANT_INDEXER_RUN_NAME: "agr.{{ env }}.mod_variant.indexer"
-HUMAN_VARIANT_INDEXER_RUN_NAME: "agr.{{ env }}.human_variant.indexer"
+VARIANT_INDEXER_RUN_NAME: "agr.{{ env }}.variant.indexer"
 
 # Curation Variables
 CURATION_POSTGRES_SERVER_NAME: "agr.{{ env }}.curation.postgres.server"

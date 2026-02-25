@@ -1,7 +1,7 @@
 ---
 - import_playbook: playbook_launch_pre_tasks.yml
 
-- name: Run Cacher
+- name: Run Mod Variant Indexer
   hosts: remote
   user: core
   gather_facts: False
@@ -22,10 +22,10 @@
             msg: "Failed execute docker login."
         - set_fact:
             failed_flag: "failed"
-    - name: Build Cacher, Run Cacher
+    - name: Build Mod Variant Indexer, Run Mod Variant Indexer
       block:
         - include_tasks: tasks/build_java_software.yml
-        - include_tasks: tasks/run_cacher.yml
+        - include_tasks: tasks/run_variant_indexer.yml
         - set_fact:
             failed_flag: "passed"
       rescue:

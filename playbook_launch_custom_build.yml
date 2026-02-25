@@ -77,17 +77,6 @@
       when:
         - DOWNLOAD_NEO4J_DATA_IMAGE_FROM_AWS
 
-    - name: Start Infinispan
-      block:
-        - include_tasks: tasks/start_infinispan_env.yml
-        - set_fact:
-            failed_flag: "passed"
-      rescue:
-        - debug:
-            msg: "Error Detected Failing Build"
-        - set_fact:
-            failed_flag: "failed"
-
     - name: Build Indexer, Run Indexer
       block:
         - include_tasks: tasks/build_java_software.yml

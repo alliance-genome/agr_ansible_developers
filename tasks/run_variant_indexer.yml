@@ -1,6 +1,6 @@
-- name: Running Mod Variant Indexer
+- name: Running Variant Indexer
   docker_container:
-    name: "{{ MOD_VARIANT_INDEXER_RUN_NAME }}"
+    name: "{{ VARIANT_INDEXER_RUN_NAME }}"
     image: "{{ JAVA_SOFTWARE_RUN_IMAGE_NAME}}"
     detach: no
     recreate: yes
@@ -12,15 +12,14 @@
     networks:
       - name: "{{ NET }}"
     env:
-      ES_HOST: "es01,es02,es03,es04,es05,es06,es07,es08"
+      ES_HOST: "elasticsearch"
       NEO4J_HOST: "{{ NEO_SERVER_NAME }}"
       BOLT_LOG_LEVEL: INFO
       DEFAULT_LOG_LEVEL: INFO
+      ALLIANCE_RELEASE: "{{ ALLIANCE_RELEASE }}"
 
-      ES_INDEX_PREFIX: "mod"
       ES_INDEX: "variant_index"
       ES_INDEX_SUFFIX: "{{ NET }}"
-      VARIANTS_TO_INDEX: "MOD"
       VARIANT_INDEXER_SHARDS: "16"
       VARIANT_PRODUCER_THREADS: "20"
       VARIANT_SOURCE_DOCUMENT_CREATOR_THREADS: "8"

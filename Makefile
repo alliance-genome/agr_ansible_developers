@@ -4,7 +4,7 @@ TAG := stage
 AWS_DEFAULT_REGION := us-east-1
 
 # Change this value to match the folder name you created in environments.
-ENV=chris
+ENV=olin
 
 registry-docker-login:
 ifneq ($(shell echo ${REG} | egrep "ecr\..+\.amazonaws\.com"),)
@@ -59,7 +59,7 @@ check-password:
 build: pull registry-docker-login check-password
 	docker build -t ${LOCAL_RUN_CONTAINER}:${TAG} .
 
-pull: registry-docker-login
+pull: 
 	docker pull ${REG}/agr_base_linux_env:${TAG}
 
 bash:
@@ -101,20 +101,11 @@ run_file_generator:
 run_file_generator_no_upload:
 	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_file_generator_no_upload.yml --vault-password-file=.password
 
-start_infinispan:
-	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_infinispan.yml --vault-password-file=.password
-
 run_indexer:
 	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_indexer.yml --vault-password-file=.password
 
-run_mod_variant_indexer:
-	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_mod_variant_indexer.yml --vault-password-file=.password
-
-run_human_variant_indexer:
-	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_human_variant_indexer.yml --vault-password-file=.password
-
-run_cacher:
-	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_cacher.yml --vault-password-file=.password
+run_variant_indexer:
+	docker run --rm -it -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_variant_indexer.yml --vault-password-file=.password
 
 start_api:
 	docker run --rm -v `pwd`:/usr/src/ansible/ ${LOCAL_RUN_CONTAINER}:${TAG} ansible-playbook -e env=${ENV} -i hosts launch_api.yml --vault-password-file=.password

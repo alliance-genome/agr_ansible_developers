@@ -8,14 +8,14 @@
 # Do not leave this variable as "main".
 NET: "olin"
 
-ALLIANCE_RELEASE: 6.0.0
+ALLIANCE_RELEASE: 8.2.0
 
 # These values do not need to be altered often.
 PLAYBOOK_NAME: "{{ lookup('env','PLAYBOOK_NAME') or 'Olin Test Server' }}"
 THREADED: "{{ lookup('env','THREADED') or 'true' }}"
 DOWNLOAD_HOST: "download.alliancegenome.org"
 FMS_API_URL: "https://fms.alliancegenome.org"
-COMPUTE_INSTANCE_TYPE: r5d.xlarge
+COMPUTE_INSTANCE_TYPE: r5d.8xlarge
 
 # TODO Generating reports is not yet supported.
 GENERATE_REPORTS: false
@@ -129,7 +129,7 @@ JAVA_SOFTWARE_IMAGE_FROM_AWS_TAG: stage
 
 # If DOWNLOAD_JAVA_SOFTWARE_IMAGE_FROM_AWS is false, Java Software will be built from GitHub.
 # Please specify the GitHub branch to use in order to build Java Software.
-GITHUB_JAVA_SOFTWARE_BRANCH: "test_cacher"
+GITHUB_JAVA_SOFTWARE_BRANCH: "fix_variant_index"
 
 # To run specific classes of data with the cacher, please specify the names below.
 # Multiple class names can be used if separated by spaces.
