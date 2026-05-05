@@ -24,6 +24,8 @@
       # Termination is filtered by Name tag, take care if modifying.
       # Please change filter value in playbook_terminate_instance.yml if changed here.
       Name: "Ansible Generated - {{ NET }}-dev Server"
+      Team: "devops"
+      Project: "ansible"
       dns_name: "{{ NET }}"
       Product: "{{ AWS_PRODUCT_TAG }}"
       DeploymentEnvironment: "{{ AWS_ENV_TAG }}"
